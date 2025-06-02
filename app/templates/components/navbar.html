@@ -1,0 +1,64 @@
+<nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-lg" style="font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center me-4" href="{{ url_for('routes.render_index') }}">
+      <img src="{{ url_for('static', filename='images/logos/logo-me2u.png') }}" alt="Logo" height="40" class="me-2" />
+    </a>
+    <!-- Hamburger Menu Button -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Collapsible Navbar Items -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto" style="gap:2rem;">
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.render_index') }}">
+            <i class="fas fa-home me-2"></i>HOME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.achievements') }}">
+            <i class="fas fa-trophy me-2"></i>ACHIEVEMENTS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.techstack') }}">
+            <i class="fas fa-laptop-code me-2"></i>TECH STACK
+          </a>
+        </li>
+        <!--
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.cars') }}">
+            <i class="fas fa-car me-2"></i>CARS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.travels') }}">
+            <i class="fas fa-plane me-2"></i>TRAVELS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.sports') }}">
+            <i class="fas fa-basketball-ball me-2"></i>SPORTS
+          </a>
+        </li>
+        -->
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.education') }}">
+            <i class="fas fa-graduation-cap me-2"></i>EDUCATION
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.pets') }}">
+            <i class="fas fa-paw me-2"></i>PETS
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="{{ url_for('routes.certifications') }}">
+            <i class="fas fa-certificate me-2"></i>CERTIFICATIONS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

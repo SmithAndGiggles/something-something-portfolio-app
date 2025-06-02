@@ -1,0 +1,1594 @@
+/* ==== Sticky footer layout ==== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #301934;
+  color: #ffffff;
+  font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global font consistency for all pages */
+body, .card-text, .small, p, li, .navbar, .footer {
+  font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6, .card-title, .navbar-brand, .nav-link.active, .nav-link.selected {
+  font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+}
+.card-title {
+  font-weight: 700;
+}
+.card-text, .small, .card-body p, .card-body li {
+  font-weight: 400;
+}
+/* Ensure no card-text or small is bold unless explicitly styled */
+.card-text b, .small b {
+  font-weight: 700;
+}
+
+/* Keep navbar background transparent to show gradient */
+.navbar.bg-dark {
+    background: #040714 !important;
+    box-shadow: none;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #040714 !important;
+    height: 72px;
+    padding: 0 36px;
+    font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.8) !important;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+}
+
+.navbar-toggler {
+    padding: 0;
+    border: none;
+}
+
+.offcanvas {
+    background-color: #040714 !important;
+}
+
+.offcanvas-title {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Main content grows to fill space above footer */
+main.container-fluid.py-4 {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  margin-top: 0; /* Remove extra margin here */
+}
+
+.center-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0.25rem;
+  overflow: hidden;
+  margin-top: 72px; /* Push content below fixed navbar (navbar is 72px tall) */
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .center-wrapper {
+    margin-top: 56px; /* Match mobile navbar height */
+  }
+}
+
+/* Footer always at the bottom */
+footer {
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: 0.25rem;
+  background-color: #23242a !important;
+  border-top: 1px solid #222;
+  padding-top: 0;
+}
+
+/* --- FIX: Prevent carousel from being overlapped by the footer --- */
+.main-content.container, .carousel-container {
+  margin-bottom: 64px !important; /* Add enough space for the footer */
+}
+
+body, html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Ensure main content grows but never overlaps footer */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content.container {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+/* ==== Container for stacked logo + text ==== */
+.logo-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 0;
+}
+
+/* ==== "Click me!" animated banner ==== */
+.click-me {
+  font-size: 1.25rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bounce 1.5s infinite;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+/* ==== Animated arrow images ==== */
+.arrow-img {
+  width: 28px;
+  height: auto;
+  animation: bounce 1.5s infinite;
+}
+
+/* ==== Logo image for main content ==== */
+.logo {
+  width: 200px;
+  height: auto;
+}
+
+/* ==== Tagline or "Coming soon!" text ==== */
+.tagline {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+/* ==== Bouncing animation keyframes ==== */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Purple button style used in sidebar */
+.btn-purple {
+  background-color: #5c1a7c;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-purple:hover,
+.btn-purple:focus {
+  background-color: #7622a0;
+  color: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(124, 58, 147, 0.5);
+}
+
+/* Navbar height and logo sizing */
+.navbar {
+  min-height: 56px;
+  max-height: 64px;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: visible;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  height: 90px;
+  width: auto;
+  margin-top: -18px;
+  margin-bottom: -18px;
+}
+
+.navbar-text-small {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Footer social buttons spacing */
+footer .btn-floating {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+/* Footer icon row centering and spacing */
+footer .mb-4 {
+  margin-bottom: 1.5rem !important;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Footer copyright text */
+footer .text-center.p-3 {
+  font-size: 1rem;
+  color: #fff;
+  background-color: rgba(0,0,0,0.2) !important;
+  margin-top: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* ==== Achievements Carousel Styles ==== */
+#achievementsCarousel {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  flex: 1;
+}
+
+#achievementsCarousel .carousel-inner {
+  width: 100%;
+  height: calc(100vh - 220px);
+  max-height: 360px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+#achievementsCarousel .carousel-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+
+#achievementsCarousel .card {  
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+#achievementsCarousel .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#achievementsCarousel iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: unset !important;  
+}
+
+#achievementsCarousel .carousel-control-prev,
+#achievementsCarousel .carousel-control-next {
+  width: 5%;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 1rem;
+}
+
+#achievementsCarousel .carousel-indicators {
+  margin-bottom: -1rem;
+}
+
+#achievementsCarousel .carousel-indicators button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+
+/* Additional carousel text styles */
+#achievementsCarousel .card-title {
+  color: #1e0038;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+#achievementsCarousel .card-text {
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+#achievementsCarousel .card-text-container {
+  height: calc(100% - 80px);
+  overflow: hidden;
+  padding-right: 1rem;
+}
+
+#achievementsCarousel .card-text-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+#achievementsCarousel .card-text-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+#achievementsCarousel .card-text-container::-webkit-scrollbar-thumb {
+  background: #5c1a7c;
+  border-radius: 4px;
+}
+
+#achievementsCarousel .btn-outline-primary {
+  color: #5c1a7c;
+  border-color: #5c1a7c;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+#achievementsCarousel .btn-outline-primary:hover {
+  background-color: #5c1a7c;
+  color: #fff;
+}
+
+/* ==== Carousel Styles ==== */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    overflow: hidden;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid #000;
+    border-radius: 2rem;
+    box-shadow: 0 6px 24px 0 rgba(0,0,0,0.4);
+    background: #040714 !important; /* keep transparent if already set */
+}
+
+.carousel-container:hover {
+    box-shadow: 0 8px 40px rgba(255, 255, 255, 0.1);
+    outline: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+#achievementsCarousel {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    position: relative;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.45s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.slide-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));
+    color: white;
+}
+
+.slide-content h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.slide-content p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-arrow svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.carousel-arrow-left {
+    left: 16px;
+}
+
+.carousel-arrow-right {
+    right: 16px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 2;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.dot:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Prevent page scrolling when carousel is active */
+.carousel-active {
+    overflow: hidden;
+}
+
+/* Achievement Card Styles */
+.achievement-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #ffffff;
+    padding: 2rem 1.5rem;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    padding-top: 56px; /* 36px button height + 20px gap below button */
+}
+
+.achievement-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.achievement-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.news-date {
+    color: #e31837;  /* York University red */
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.achievement-text {
+    color: #444;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+.achievement-content {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+}
+
+.achievement-highlight {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #444;
+    margin: 0 0 1rem 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.achievement-highlight strong {
+    color: #5c1a7c;
+    font-weight: 600;
+}
+
+/* Strong links in achievement highlights should be bold */
+.achievement-highlight strong a {
+    font-weight: 700 !important;
+    color: #5c1a7c !important;
+}
+
+.achievement-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+    margin: 0;
+}
+
+.achievement-link {
+    display: inline-block;
+    color: #e31837;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.9rem;
+    font-family: Arial, sans-serif;
+    margin-top: 0.5rem;
+}
+
+.achievement-link:hover {
+    color: #b31329;
+    text-decoration: underline;
+}
+
+/* LinkedIn achievement card: white background fills card, image fully visible, no purple shows */
+.achievement-card.linkedin-post {
+  background: #fff !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10) !important;
+  border-radius: 8px !important;
+}
+
+.linkedin-image {
+  max-width: 100%;
+  max-height: 600px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* --- FIX: Always show full LinkedIn post image in achievements carousel, never crop or stretch --- */
+#achievementsCarousel .carousel-slide img.linkedin-image {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 80vh !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+}
+
+#achievementsCarousel .carousel-slide {
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* --- FINAL FIX: Always fit LinkedIn image fully inside the visible carousel area, never crop, always centered --- */
+#achievementsCarousel .carousel-inner {
+  max-height: 360px;
+  height: 360px;
+}
+
+#achievementsCarousel .carousel-slide,
+.achievement-card.linkedin-post {
+  height: 100% !important;
+}
+
+.carousel-container {
+  margin-bottom: 80px !important; /* Extra gap above footer */
+}
+
+/* --- FIX: Ensure carousel never exceeds viewport height and always fits on the page without vertical scroll --- */
+.carousel-container {
+  max-height: calc(100vh - 180px) !important; /* 180px = navbar + footer + safe gap */
+  overflow-y: auto !important;
+  margin-bottom: 40px !important; /* Reasonable gap above footer */
+}
+
+#achievementsCarousel .carousel-inner {
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+}
+
+#achievementsCarousel {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+#achievementsCarousel .carousel-slide,
+.achievement-card.linkedin-post {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Tech Stack Styles - Compact layout for one-page fit */
+.tech-stack-container {
+    max-width: none; /* Remove max-width constraint */
+    margin: 0; /* Remove auto centering */
+    padding: 0 2rem 0.5rem 2rem; /* Add left padding for Disney Plus style */
+    margin-top: 0;
+    width: 100%;
+}
+
+.tech-stack-title {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: left; /* Left-align for Disney Plus style */
+}
+
+.tech-section {
+    margin-bottom: 1rem; /* Reduced for better one-page fit */
+}
+
+.section-title {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem; /* Reduced for compact layout */
+    text-align: left;
+    font-weight: 600;
+    padding-left: 0; /* Remove left padding to align with cards */
+}
+
+.tech-horizontal-scroll {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping to keep 5 cards on one line */
+    gap: 1.8rem; /* Slightly reduced gap to ensure 5 cards fit */
+    justify-content: flex-start; /* Left-align the cards */
+    overflow-x: auto; /* Allow horizontal scroll if needed on smaller screens */
+    padding: 0; /* Remove padding to push cards further left */
+    max-width: none; /* Remove max-width constraint */
+    margin: 0;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    overflow: visible; /* Ensure hover effects are not clipped */
+}
+
+.tech-card {
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 18px;
+    padding: 0.8rem 0.6rem; /* Match cert-card padding */
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Left-align content */
+    gap: 0.8rem;
+    border: 2px solid #000000;
+    width: 280px; /* Match cert-card width */
+    height: 185px; /* Match cert-card height */
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.18);
+}
+
+.tech-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+    box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.22);
+}
+
+/* --- FIX: Remove extra padding and ensure .cert-image is always 100x100px, centered, with no extra padding or margin. --- */
+.cert-image {
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  min-height: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  margin-bottom: 0.5rem !important;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10) !important;
+  padding: 0 !important;
+}
+.cert-image img {
+  width: 60px !important;
+  height: 60px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 60px !important;
+  max-height: 60px !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+}
+
+/* --- ENSURE .cert-image IS ALWAYS THE SAME SIZE IN ALL CARDS --- */
+.cert-card .cert-image, .education-card .cert-image, .tech-card .cert-image {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 14px !important;
+  background: rgba(255,255,255,0.08) !important;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10) !important;
+  padding: 0 !important;
+  margin-bottom: 0.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.cert-card .cert-image img, .education-card .cert-image img, .tech-card .cert-image img {
+  width: 60px !important;
+  height: 60px !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  display: block !important;
+}
+
+@media (max-width: 1600px) {
+    .tech-horizontal-scroll {
+        gap: 1.8rem;
+        flex-wrap: nowrap;
+    }
+}
+
+@media (max-width: 1450px) {
+    .tech-horizontal-scroll {
+        gap: 1.5rem; /* Reduce gap further for tighter screens */
+        flex-wrap: nowrap;
+    }
+}
+
+@media (max-width: 1300px) {
+    .tech-horizontal-scroll {
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .tech-card {
+        width: 260px; /* Slightly smaller for tablets */
+        height: 130px;
+        padding: 0.7rem 0.5rem;
+    }
+    .tech-logo {
+        width: 30px;
+        height: 30px;
+    }
+    .tech-label {
+        font-size: 0.75rem;
+    }
+    .tech-horizontal-scroll {
+        gap: 1.5rem;
+    }
+    .main-content.container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .tech-stack-container {
+        padding: 0 1rem 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .tech-horizontal-scroll {
+        gap: 1.5rem;
+        justify-content: flex-start; /* Keep left-aligned on mobile */
+    }
+    .tech-card {
+        width: 260px; /* Consistent with tablet sizing */
+        height: 130px;
+    }
+    .tech-logo {
+        width: 28px;
+        height: 28px;
+    }
+    .tech-stack-title {
+        font-size: 1.5rem;
+    }
+    .tech-section {
+        margin-bottom: 1rem; /* Even more compact on mobile */
+    }
+    .main-content.container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* Home Page Hero Section Styles */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 72px); /* Subtract navbar height */
+    overflow: hidden;
+}
+
+.video-preview-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-placeholder:hover .play-button-overlay {
+    opacity: 1;
+}
+
+.video-details-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 4rem 3rem;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    color: #fff;
+}
+
+.video-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.video-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.video-actions .btn {
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+}
+
+.btn-outline-light {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.btn-outline-light:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Certifications Page Styles */
+.certifications-container {
+    max-width: none; /* Remove max-width constraint */
+    margin: 2rem 0; /* Remove auto centering */
+    padding: 0 2rem; /* Add left padding for Disney Plus style */
+}
+
+.certifications-title {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: left; /* Left-align for Disney Plus style */
+}
+
+.certifications-grid {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-start !important; /* Left-align certification cards */
+    align-items: flex-start;
+    gap: 1.8rem !important; /* Match tech stack compact spacing */
+    flex-wrap: wrap;
+}
+
+.cert-card {
+    background: rgba(255, 255, 255, 0.10) !important;
+    border-radius: 18px !important;
+    padding: 0.8rem 0.6rem !important; /* Match tech card padding */
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important; /* Left-align content within cards */
+    gap: 0.8rem !important;
+    border: 2px solid #000000 !important;
+    width: 280px !important; /* Match tech card width */
+    height: 185px !important; /* Updated height */
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.18) !important;
+}
+
+.cert-card:hover {
+    transform: translateY(-5px) scale(1.03) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 16px 48px 0 rgba(0,0,0,0.22) !important;
+}
+
+.cert-image {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.cert-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.cert-info {
+  text-align: left;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+.cert-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.cert-info p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+}
+
+.view-badge {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.2rem;
+}
+
+.cert-card .cert-info {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* Education cards inherit the same styling as certification and tech cards */
+.education-card {
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 18px;
+    padding: 0.8rem 0.6rem; /* Match tech card padding */
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Left-align content within cards */
+    gap: 0.8rem;
+    border: 2px solid #000000;
+    width: 280px; /* Match tech card width */
+    height: 185px; /* Updated height */
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.18);
+}
+
+.education-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+    box-shadow: 0 16px 48px 0 rgba(0,0,0,0.22);
+}
+
+/* Consistent image styling for all card types - OVERRIDDEN by .cert-image img for logo boxes */
+
+/* Consistent text styling for all card types */
+.cert-info, .tech-label, .education-info {
+  color: #fff;
+  text-align: left; /* Left-align all card text */
+}
+
+.cert-info h3, .tech-label, .education-info h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0.3rem 0 0.1rem 0;
+  color: #fff;
+  text-align: left; /* Left-align headings */
+}
+
+.cert_info p, .education-info p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 0.3rem 0;
+  text-align: left; /* Left-align paragraphs */
+}
+
+/* Consistent grid spacing for all card containers */
+.certifications-grid, .tech-stack-container, .education-grid {
+  gap: 3.2rem;
+}
+
+/* Education grid specific styling - 3x3 grid layout */
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1.8rem;
+  justify-items: center;
+  align-items: start;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Education grid responsive behavior */
+@media (max-width: 1200px) {
+  .education-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .education-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+/* Utility: ensure all main content is just below the fixed navbar (shorter gap) */
+.main-content {
+  padding-top: 48px !important; /* Reduced for a tighter gap below navbar */
+}
+
+/* Override Bootstrap container centering for Disney Plus style left-alignment */
+.main-content.container {
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    padding-top: 36px !important;
+  }
+}
+
+/* FINAL OVERRIDE: Set all card types to consistent sizing matching tech stack */
+.cert-card, .education-card, .tech-card {
+    width: 280px !important;
+    height: 185px !important;
+    border: 2px solid #000000 !important;
+    padding: 0.8rem 0.6rem !important;
+}
+
+.cert-card:hover, .education-card:hover, .tech-card:hover {
+    border-color: #ffffff !important;
+}
+
+/* Consistent grid spacing across all card containers - match tech stack compact spacing */
+.certifications-grid, .education-grid, .tech-horizontal-scroll {
+    gap: 1.8rem !important;
+}
+
+/* Tech stack specific layout behavior */
+.tech-horizontal-scroll {
+    flex-wrap: nowrap !important; /* Force 5 cards on one line */
+}
+
+/* Achievement Card Styles */
+.achievement-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #ffffff;
+    padding: 2rem 1.5rem;
+    border: 1px solid #e5e5e5;
+    position: relative;
+    padding-top: 60px; /* 36px button height + 20px gap below button */
+}
+
+.cert-card, .education-card, .tech-card {
+  position: relative;
+}
+
+.cert-image {
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  min-height: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+  margin-bottom: 0.5rem !important;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10) !important;
+  padding: 0 !important;
+  flex-shrink: 0;
+  flex-grow: 0;
+  align-self: flex-start;
+}
+
+.cert-info {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.cert-info h3, .cert-info p {
+  margin-top: 0;
+  margin-bottom: 0.2rem;
+}
+
+.view-badge {
+  margin-top: auto;
+  margin-bottom: 0.2rem;
+  padding-bottom: 0.1rem;
+}
+
+/* Remove internal vertical scroll bar from carousel and reduce height further */
+.carousel-container {
+  max-height: none !important;
+  overflow-y: visible !important;
+  margin-bottom: 32px !important;
+}
+
+#achievementsCarousel .carousel-inner {
+  max-height: 180px !important;
+  height: 180px !important;
+}
+
+#achievementsCarousel {
+  max-height: 180px !important;
+  height: 180px !important;
+}
+
+#achievementsCarousel .carousel-slide,
+.achievement-card.linkedin-post {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Set carousel height to 540px as requested */
+#achievementsCarousel .carousel-inner {
+  max-height: 540px !important;
+  height: 540px !important;
+}
+
+#achievementsCarousel {
+  max-height: 540px !important;
+  height: 540px !important;
+}
+
+.carousel-container {
+  max-height: 560px !important;
+}
+
+#achievementsCarousel .carousel-slide,
+.achievement-card.linkedin-post {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+#achievementsCarousel .carousel-slide img.linkedin-image {
+  max-height: 100% !important;
+  width: auto !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* Set carousel height to 720px as requested */
+#achievementsCarousel .carousel-inner {
+  max-height: 720px !important;
+  height: 720px !important;
+}
+
+#achievementsCarousel {
+  max-height: 720px !important;
+  height: 720px !important;
+}
+
+.carousel-container {
+  max-height: 740px !important;
+}
+
+#achievementsCarousel .carousel-slide,
+.achievement-card.linkedin-post {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+#achievementsCarousel .carousel-slide img.linkedin-image {
+  max-height: 100% !important;
+  width: auto !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* Shared achievement button overlay styles for perfectly identical buttons */
+.achievement-btn-overlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  background: #4c3c78;
+  color: #fff;
+  padding: 0.32rem 1.1rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background 0.2s, color 0.2s;
+  border: 2px solid #5c1a7c;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 210px;
+  height: 36px;
+  min-width: 210px;
+  min-height: 36px;
+  max-width: 210px;
+  max-height: 36px;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.achievement-btn-overlay:hover {
+  background: #3a2d5c;
+  color: #fff;
+  text-decoration: underline;
+}
+/* Remove all custom color/size for onix-linkedin-btn-overlay and yorku-article-btn-overlay */
+/* These classes are now only for semantic distinction, no styles needed. */
+
+.achievement-btn-overlay i.fas.fa-external-link-alt {
+  margin-left: 0.5em;
+  margin-right: 0.2em;
+  pointer-events: none;
+}
+
+/* Achievements carousel button overlay icon spacing (moved from achievements.html) */
+.achievement-btn-overlay svg, 
+.achievement-btn-overlay i {
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Center achievement-btn-overlay horizontally in achievement-card */
+.achievement-card .achievement-btn-overlay {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    width: 100%;
+    padding-left: 0;
+  }
+  .navbar-nav .nav-item {
+    width: 100%;
+  }
+  .navbar-nav .nav-link {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1rem;
+    text-align: left;
+    justify-content: flex-start;
+  }
+  .navbar-brand {
+    margin-bottom: 0.5rem;
+  }
+  .navbar-toggler {
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
+  .container-fluid {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-brand img {
+    height: 48px !important;
+    margin-top: -8px;
+    margin-bottom: -8px;
+  }
+  .navbar {
+    height: 56px;
+    min-height: 48px;
+    max-height: 56px;
+    padding: 0 8px;
+  }
+  .main-content.container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
+
+/* YorkU logo: 20px below the bottom of the overlay button in achievements carousel */
+.yorku-branding {
+  position: relative;
+}
+.yorku-logo {
+  margin-top: 15px !important;
+}
+
+@media (max-width: 600px) {
+  .yorku-logo {
+    margin-top: 12px !important;
+  }
+}
+
+/* Add border to the donkey sanctuary image */
+img[src="/static/images/content/donkey-santuary-5k-alan.jpg"] {
+  border: 2px solid #5c1a7c;
+  box-sizing: border-box;
+}
+
+/* Subtle stylish paragraph links */
+.achievement-text a, .achievement-highlight a, p a {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.achievement-text a:hover, .achievement-highlight a:hover, p a:hover {
+  color: #4338ca;
+  border-bottom-color: #6366f1;
+}
+
+/* Video and content spacing in achievement cards */
+.achievement-card .video-container {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.achievement-card video {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #000;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    border: 2px solid #5c1a7c; /* Thin purple border for visual emphasis */
+    box-sizing: border-box;
+}
+
+.achievement-card .achievement-content {
+    margin-top: 3rem;  /* Increased spacing between video and content */
+}
+
+/* Refined small source pill links */
+.source-pill {
+  display: inline-block;
+  margin: 0 3px 2px 0;
+  background: #f3f0ff;
+  border: 1px solid #e5deff;
+  border-radius: 12px;
+  padding: 0;
+  transition: all 0.2s ease;
+  font-size: 0.7rem;
+}
+
+.source-pill a {
+  display: block;
+  color: #475569 !important;
+  text-decoration: none !important;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: none !important;
+  background: none !important;
+}
+
+.source-pill:hover {
+  background: #e5deff;
+  border-color: #c4b5fd;
+  transform: translateY(-1px);
+}
+
+.source-pill:hover a {
+  color: #334155 !important;
+}
+
+/* Achievement overlay and video styles */
+.achievement-btn-overlay svg, 
+.achievement-btn-overlay i {
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.achievement-video {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #000;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    /* margin-top: 15px;  Remove this, handled by card padding */
+}
+
+

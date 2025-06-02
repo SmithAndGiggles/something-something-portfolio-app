@@ -1,0 +1,33 @@
+<footer class="bg-dark text-center text-white mt-auto" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
+  <div class="container p-2 pb-0">
+    <section class="mb-2 d-flex justify-content-center align-items-center" style="gap: 1rem;">
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/alan-r-smith/" target="_blank" aria-label="LinkedIn" style="display: flex; align-items: center; justify-content: center;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; background: #fff; border-radius: 18px; width: 64px; height: 36px; border: 2px solid #fff;">
+          <img src="{{ url_for('static', filename='images/logos/logo-linkedin.png') }}" alt="LinkedIn"
+               height="24" width="24"
+               style="object-fit: contain; display: block;" />
+        </span>
+      </a>
+      <!-- GitHub -->
+      <a href="https://github.com/SmithAndGiggles" target="_blank" aria-label="GitHub" style="display: flex; align-items: center; justify-content: center;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; background: #fff; border-radius: 18px; width: 64px; height: 36px; border: 2px solid #fff;">
+          <img src="{{ url_for('static', filename='images/logos/logo-github.png') }}" alt="GitHub"
+               height="24" width="24"
+               style="object-fit: contain; display: block;" />
+        </span>
+      </a>
+      <!-- Credly -->
+      <a href="https://www.credly.com/users/alan-smith.333907f0" target="_blank" aria-label="Credly" style="display: flex; align-items: center; justify-content: center;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; background: #fff; border-radius: 18px; width: 64px; height: 36px; border: 2px solid #fff;">
+          <img src="{{ url_for('static', filename='images/logos/logo-credly.svg') }}" alt="Credly"
+               height="24"
+               style="object-fit: contain; display: block;" />
+        </span>
+      </a>
+    </section>
+  </div>
+  <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2); font-size: 0.95rem;">
+    © {{ current_year }} Alan Smith. All rights reserved.
+  </div>
+</footer>
