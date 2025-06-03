@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5, h6, .card-title, .navbar-brand, .nav-link.active, .nav-link.
 
 /* Keep navbar background transparent to show gradient */
 .navbar.bg-dark {
-    background: #040714 !important;
+    background: #000000 !important;
     box-shadow: none;
 }
 
@@ -115,9 +115,19 @@ footer {
   flex-shrink: 0;
   width: 100%;
   margin-top: 0.25rem;
-  background-color: #23242a !important;
-  border-top: 1px solid #222;
-  padding-top: 0;
+  background: #000 !important;
+  background-color: #000 !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+
+footer .container {
+  background: #000 !important;
+}
+
+footer .text-center.p-2 {
+  background: #000 !important;
+  background-color: #000 !important;
 }
 
 /* --- FIX: Prevent carousel from being overlapped by the footer --- */
