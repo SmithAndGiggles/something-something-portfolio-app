@@ -72,3 +72,6 @@ Thumbs.db
 *.retry
 # terraform/bootstrap/bootstrap.tf
 # terraform/infrastructure/infra.tf
+
+# Ignore generated credentials from google-github-actions/auth
+gha-creds-*.json
