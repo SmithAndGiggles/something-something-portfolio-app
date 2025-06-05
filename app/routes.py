@@ -4,7 +4,7 @@ routes = Blueprint('routes', __name__)
 
 @routes.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 
 @routes.route('/home')
 def render_index():
@@ -41,3 +41,7 @@ def certifications():
 @routes.route('/techstack')
 def techstack():
     return render_template('tech_stack.html')
+
+@routes.route('/ping')
+def ping():
+    return "pong"

@@ -3,17 +3,27 @@
 
 {% block content %}
 <style>
+.video-preview-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0;
+    margin: 40px auto 24px auto;
+    max-width: 1400px;
+}
 .video-preview-card {
     max-width: 700px;
     width: 80vw;
-    margin: 40px auto 24px auto;
     box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-    border-radius: 18px;
-    /* Responsive height to fit page and show footer */
+    border-radius: 18px 0 0 18px;
     height: min(60vh, 700px);
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background: transparent;
+    margin: 0;
+    border-right: none;
 }
 .video-placeholder {
     width: 100%;
@@ -21,39 +31,68 @@
     max-height: 60vh;
     height: 100%;
     position: relative;
-    border-radius: 18px;
+    border-radius: 18px 0 0 18px;
     overflow: hidden;
+    background: #18191a; /* dark, but lighter than black */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 18px;
+    object-fit: contain; /* show full image, no cropping */
+    border-radius: 18px 0 0 18px;
+    display: block;
+    background: transparent;
+}
+.white-text-box {
+    max-width: 700px;
+    width: 80vw;
+    height: min(60vh, 700px);
+    background: #fff;
+    border-radius: 0 18px 18px 0;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 32px;
+    color: #222;
+    font-size: 1.25rem;
+    border-left: none;
+}
+@media (max-width: 1100px) {
+    .video-preview-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .video-preview-card, .white-text-box {
+        width: 98vw;
+        max-width: 98vw;
+        border-radius: 18px;
+    }
+    .video-placeholder, .preview-image, .white-text-box {
+        border-radius: 18px;
+    }
 }
 </style>
-<div class="hero-section">
-    <!-- Video Preview Card -->
-    <div class="video-preview-card">
-        <div class="video-placeholder">
-            <!-- Placeholder image until video is ready -->
-            <img src="{{ url_for('static', filename='images/content/cartoonized-alan-smith.png') }}" alt="Video Preview" class="preview-image">
-            <!-- Play button overlay -->
-            <div class="play-button-overlay">
-                <i class="fas fa-play"></i>
+<div class="hero-section" style="margin-top: 80px;">
+    <div class="video-preview-row">
+        <!-- Video Preview Card (Image only) -->
+        <div class="video-preview-card">
+            <div class="video-placeholder">
+                <img src="{{ url_for('static', filename='images/content/cartoonized-alan-smith.png') }}" alt="Video Preview" class="preview-image">
             </div>
-            <!-- Video details overlay -->
-            <div class="video-details-overlay">
-                <h1 class="video-title">Welcome to My Portfolio</h1>
-                <p class="video-description">A quick introduction about who I am and what I do.</p>
-                <!-- Action buttons -->
-                <div class="video-actions">
-                    <button class="btn btn-light btn-lg me-2">
-                        <i class="fas fa-play me-2"></i>Play
-                    </button>
-                    <button class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-info-circle me-2"></i>More Info
-                    </button>
-                </div>
+        </div>
+        <!-- White Text Box -->
+        <div class="white-text-box">
+            <div>
+                <h1 style="margin-bottom: 1rem;">Welcome to My Portfolio</h1>
+                <p style="margin-bottom: 0;">
+                    Hi, I'm Alan Smith—a technology enthusiast, lifelong learner, and passionate problem solver. This website is a showcase of my journey, projects, and achievements, designed to give you a glimpse into my professional world and personal growth. Explore my work, discover my story, and check out the certifications page—I'm hoping to have more than just three badges there soon!<i class="fas fa-face-wink" style="color:#f7b731; font-size:1.3em; vertical-align:middle;"></i>
+                </p>
             </div>
         </div>
     </div>

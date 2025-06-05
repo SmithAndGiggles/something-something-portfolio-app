@@ -58,12 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Optional: Auto advance slides
-    let autoAdvance = setInterval(() => moveToSlide(currentSlide + 1), 5000);
+    let autoAdvance = setInterval(() => moveToSlide(currentSlide + 1), 20000);
 
     // Pause auto-advance on hover
     carousel.addEventListener('mouseenter', () => clearInterval(autoAdvance));
     carousel.addEventListener('mouseleave', () => {
-        autoAdvance = setInterval(() => moveToSlide(currentSlide + 1), 5000);
+        autoAdvance = setInterval(() => moveToSlide(currentSlide + 1), 20000);
     });
 
     // Handle keyboard navigation

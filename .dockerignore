@@ -1,0 +1,57 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+.venv/
+abtme-venv-flask/
+
+# Ignore git and version control
+.git/
+.gitignore
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore test and docs
+*.log
+test/
+docs/
+
+# Ignore build and distribution
+build/
+dist/
+*.egg-info/
+
+# Ignore environment and config files
+.env
+.env.*
+*.env
+*.tfstate
+*.tfstate.*
+
+# Ignore editor/project files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore Docker-related files (except Dockerfile itself)
+.dockerignore
+
+# Ignore Terraform and cloud infra
+*.tf
+*.tfvars
+*.hcl
+*.terraform/
+
+# Ignore backup files
+*~
+*.bak
+*.tmp
+
+requirements.txt

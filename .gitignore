@@ -75,3 +75,13 @@ Thumbs.db
 
 # Ignore generated credentials from google-github-actions/auth
 gha-creds-*.json
+
+docs/
+
+setup-env.sh
+
+pyproject.toml
+
+build-push.sh
+
+requirements.txt

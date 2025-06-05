@@ -1,27 +1,35 @@
-# Use an official Python runtime as a parent image
-FROM python:3.13-slim
+# Use a minimal Python base image (Alpine for smallest footprint)
+FROM python:3.13-alpine
+
+# Create a non-root user and group
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy requirements file if you have one (optional)
-# If you don't have a requirements.txt file, install Flask separately
-# COPY requirements.txt requirements.txt
+# Install build dependencies only if needed, then remove (uncomment if you need to build wheels)
+# RUN apk add --no-cache build-base
 
-# Install any needed packages specified in requirements.txt
-# RUN pip install --no-cache-dir -r requirements.txt
+# Copy requirements and install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Flask (since your site may become dynamic later)
-RUN pip install Flask
+# Copy only necessary files
+COPY app ./app
+COPY main.py ./main.py
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Fix permissions for static files and all app content
+RUN chown -R appuser:appgroup /app
 
-# Set the environment variable to indicate that Flask should serve the app
+# Set environment variables for Flask production
 ENV FLASK_APP=main.py
+ENV FLASK_ENV=production
 
 # Expose the port that the app runs on
 EXPOSE 8080
 
-# Command to run the application
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
+# Change to non-root user
+USER appuser
+
+# Command to run the application with Gunicorn
+CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080", "--workers=2"]
