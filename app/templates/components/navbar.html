@@ -46,3 +46,18 @@
     </div>
   </div>
 </nav>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var offcanvasNavbar = document.getElementById('offcanvasNavbar');
+  if (offcanvasNavbar) {
+    offcanvasNavbar.querySelectorAll('.nav-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasNavbar);
+        if (offcanvas) {
+          offcanvas.hide();
+        }
+      });
+    });
+  }
+});
+</script>
