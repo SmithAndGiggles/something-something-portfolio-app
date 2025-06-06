@@ -1623,4 +1623,38 @@ img[src="/static/images/content/donkey-santuary-5k-alan.jpg"] {
     /* margin-top: 15px;  Remove this, handled by card padding */
 }
 
+@media (max-width: 600px) {
+  /* Target only the 5K achievement slide for mobile layout fixes */
+  .achievement-5k {
+    padding: 1rem 0.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-height: 0 !important;
+    height: auto !important;
+    box-sizing: border-box;
+  }
+  .achievement-5k-img {
+    width: 100% !important;
+    max-width: 95vw !important;
+    height: auto !important;
+    max-height: 55vw !important;
+    aspect-ratio: 4/5 !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto 1rem auto !important;
+    border: 2px solid #5c1a7c !important;
+    box-sizing: border-box !important;
+    background: #000 !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+  }
+  .achievement-5k .achievement-card {
+    align-items: center !important;
+    padding: 1rem 0.5rem !important;
+  }
+}
+
 
