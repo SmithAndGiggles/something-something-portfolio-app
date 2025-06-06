@@ -1,22 +1,37 @@
 /* ==== Sticky footer layout ==== */
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
+  height: auto !important;
+  max-height: none !important;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+  background: linear-gradient(to bottom, #000000 0%, #301934 100%) !important;
 }
 
 body {
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
+  height: auto !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  background: none !important;
+}
+
+.main-content, .hero-section {
+  background: transparent !important;
+  min-height: 0;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+body {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, #000000 0%, #301934 100%);
-  color: #ffffff;
-  font-family: 'SF Pro', 'SF Pro Display', 'Segoe UI', 'Arial', 'Helvetica Neue', Arial, sans-serif;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+  min-height: 100vh;
+}
+
+.main-content.container {
+  flex: 1 0 auto;
 }
 
 /* Global font consistency for all pages */
@@ -71,8 +86,9 @@ h1, h2, h3, h4, h5, h6, .card-title, .navbar-brand, .nav-link.active, .nav-link.
     border: none;
 }
 
-.offcanvas {
-    background-color: #040714 !important;
+.offcanvas, .offcanvas.offcanvas-end, .offcanvas.offcanvas-start {
+  background: #000 !important;
+  background-color: #000 !important;
 }
 
 .offcanvas-title {
@@ -1208,6 +1224,12 @@ footer .text-center.p-3 {
   margin: 0 !important;
   padding-left: 2rem !important;
   padding-right: 2rem !important;
+}
+
+@media (max-width: 991.98px) {
+  .main-content {
+    padding-top: 72px !important;
+  }
 }
 
 @media (max-width: 600px) {
