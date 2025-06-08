@@ -1,6 +1,8 @@
 # Use a minimal Python base image (Alpine for smallest footprint)
 FROM python:3.13-alpine
 
+LABEL version="mobile"
+
 # Create a non-root user and group
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 

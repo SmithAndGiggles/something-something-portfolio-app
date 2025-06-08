@@ -85,3 +85,5 @@ pyproject.toml
 build-push.sh
 
 requirements.txt
+
+test/

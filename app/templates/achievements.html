@@ -114,4 +114,60 @@
     </div>
 </div>
 </div>
+
+<style>
+.achievement-5k-img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: contain;
+  border-radius: 12px;
+  background: none;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 2px solid #222;
+  padding: 0;
+}
+.achievement-content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1rem;
+}
+.achievement-text-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+.achievement-highlight, .achievement-text {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+@media (max-width: 600px) {
+  .achievement-5k-img {
+    max-width: 95vw;
+    font-size: 0.95rem;
+  }
+  .achievement-content {
+    padding: 0 0.5rem;
+  }
+  .achievement-text-content {
+    font-size: 0.95rem;
+  }
+  .achievement-text, .achievement-highlight {
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+}
+@media (max-width: 400px) {
+  .achievement-5k-img {
+    max-width: 99vw;
+  }
+  .achievement-text-content,
+  .achievement-text, .achievement-highlight {
+    font-size: 0.85rem;
+  }
+}
+</style>
 {% endblock %}
