@@ -1,0 +1,45 @@
+{# Achievement Card Component
+   Usage:
+     {% set media_type = 'image' %}
+     {% set media_src = '...' %}
+     {% set media_alt = '...' %}
+     {% set media_poster = '...' %} {# optional for video #}
+     {% set title = '...' %}
+     {% set text = '...' %}
+     {% set button_href = '...' %}
+     {% set button_text = '...' %}
+     {% set sources = sources_list %}
+     {% include 'components/carousel/achievement_card.html' %}
+   Parameters:
+     - media_type: 'image' or 'video'
+     - media_src: path to image or video
+     - media_alt: alt text for image (optional for video)
+     - media_poster: poster image for video (optional)
+     - title: card title (optional)
+     - text: card description (optional)
+     - button_href: URL for button (optional)
+     - button_text: button label (optional)
+     - sources: list of {href, text} dicts (optional)
+#}
+<div class="achievement-card">
+  {% if media_type == 'image' %}
+    <img src="{{ media_src }}" alt="{{ media_alt }}" class="achievement-media" loading="lazy">
+  {% elif media_type == 'video' %}
+    <video class="achievement-media" controls{% if media_poster %} poster="{{ media_poster }}"{% endif %}>
+      <source src="{{ media_src }}">
+      Your browser does not support the video tag.
+    </video>
+  {% endif %}
+  <div class="achievement-content">
+    {% if title %}<h3 class="achievement-title">{{ title }}</h3>{% endif %}
+    {% if text %}<p class="achievement-text">{{ text }}</p>{% endif %}
+    {% if button_href and button_text %}
+      {% set href = button_href %}
+      {% set text = button_text %}
+      {% include 'components/common/purple_button.html' %}
+    {% endif %}
+    {% if sources %}
+      {% include 'components/common/sources.html' %}
+    {% endif %}
+  </div>
+</div>

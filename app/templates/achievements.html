@@ -18,7 +18,7 @@
             <img src="/static/images/content/linkedin-onix-genai-post.png" alt="LinkedIn post about Onix GenAI" class="linkedin-image">
             {% set href = 'https://www.linkedin.com/feed/update/urn:li:activity:7285343139874140160?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3Aactivity%3A7285343139874140160%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29' %}
             {% set text = 'Full LinkedIn post here' %}
-            {% include 'components/purple_button.html' %}
+            {% include 'components/common/purple_button.html' %}
           </div>
         </div>
 
@@ -27,17 +27,13 @@
           <div class="achievement-card">
             {% set href = 'https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/treatment/acute-promyelocytic-leukemia' %}
             {% set text = 'More on APL here' %}
-            {% include 'components/purple_button.html' %}
-            <video
-              src="/static/images/content/beat-cancer-bell.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-              controls
-              style="width: 100%; height: 350px; object-fit: cover; border-radius: 12px; background: #000; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; margin-bottom: 0; max-width: 100%;"
-              poster="/static/images/content/video-preview.jpg"
-            ></video>
+            {% include 'components/common/purple_button.html' %}
+            {% set media_type = 'video' %}
+            {% set media_src = '/static/images/content/beat-cancer-bell.mp4' %}
+            {% set media_alt = None %}
+            {% set media_poster = '/static/images/content/video-preview.jpg' %}
+            {% set media_style = 'width: 100%; height: 350px; object-fit: cover; border-radius: 12px; background: #000; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; margin-bottom: 0; max-width: 100%;' %}
+            {% include 'components/common/media.html' %}
             <div class="achievement-content" style="margin-top: 2rem;">
               <div class="achievement-text-content">
                 <p class="achievement-text" style="margin-bottom: 1.1rem;">
@@ -67,7 +63,7 @@
           <div class="achievement-card">
             {% set href = 'https://www.thedonkeysanctuary.ca' %}
             {% set text = 'More about the DSC' %}
-            {% include 'components/purple_button.html' %}
+            {% include 'components/common/purple_button.html' %}
             <div style="height: 55px;"></div>
             <img src="/static/images/content/donkey-santuary-5k-alan.jpg" alt="Alan at Donkey Sanctuary 5K" class="achievement-5k-img" style="width:100%; max-width:320px; height:420px; aspect-ratio: 4/5; object-fit:cover; border-radius:12px; background:none; display:block; margin:0 auto; box-shadow:0 2px 12px rgba(0,0,0,0.08); border: 2px solid #222; padding: 0;">
             <div class="achievement-content" style="margin-top: 2rem;">
@@ -88,7 +84,7 @@
           <div class="achievement-card">
             {% set href = 'https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/' %}
             {% set text = 'Read full article here' %}
-            {% include 'components/purple_button.html' %}
+            {% include 'components/common/purple_button.html' %}
             <div class="yorku-branding">
               <div class="yorku-bars">
                 <div class="bar-dark"></div>
@@ -112,10 +108,6 @@
         </svg>
       </button>
     </div>
-    <!-- <div class="carousel-dots">
-      <button class="dot active" aria-label="Go to slide 1"></button>
-      <button class="dot" aria-label="Go to slide 2"></button>
-    </div> -->
   </div>
 </div>
 

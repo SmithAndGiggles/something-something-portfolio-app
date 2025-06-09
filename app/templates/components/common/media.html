@@ -1,0 +1,11 @@
+{% if media_type == 'image' %}
+  <img src="{{ media_src }}" alt="{{ media_alt }}" class="achievement-media" loading="lazy"{% if media_style %} style="{{ media_style }}"{% endif %}>
+{% elif media_type == 'video' %}
+  <video class="achievement-media" controls
+    {% if media_poster %}poster="{{ media_poster }}"{% endif %}
+    {% if media_style %}style="{{ media_style }}"{% endif %}
+    autoplay muted loop playsinline>
+    <source src="{{ media_src }}">
+    Your browser does not support the video tag.
+  </video>
+{% endif %}

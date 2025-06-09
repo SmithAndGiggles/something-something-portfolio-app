@@ -1,0 +1,24 @@
+{# Carousel Arrow Component
+   Usage:
+     {% set direction = 'left' %}
+     {% set aria_label = 'Previous' %}
+     {% set extra_classes = 'carousel-arrow-left' %}
+     {% include 'components/carousel/arrow.html' %}
+   Parameters:
+     - direction: 'left' or 'right' (required)
+     - aria_label: string for accessibility (required)
+     - extra_classes: optional string for additional CSS classes
+#}
+<button type="button" class="carousel-arrow carousel-arrow-{{ direction }} {{ extra_classes|default('') }}" aria-label="{{ aria_label }}">
+  {% if direction == 'left' %}
+    <!-- Left Arrow SVG -->
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% else %}
+    <!-- Right Arrow SVG -->
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% endif %}
+</button>
