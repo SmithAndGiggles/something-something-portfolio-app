@@ -1505,10 +1505,47 @@ footer .text-center.p-3 {
   }
 }
 
-/* Add border to the donkey sanctuary image */
-img[src="/static/images/content/donkey-santuary-5k-alan.jpg"] {
-  border: 2px solid #5c1a7c;
-  box-sizing: border-box;
+/* Donkey Sanctuary 5K image: always show full image, border resizes responsively */
+img[src="/static/images/content/donkey-santuary-5k-alan.jpg"],
+.achievement-5k-img {
+  width: 100% !important;
+  max-width: 320px !important;
+  height: auto !important;
+  max-height: 340px !important;
+  aspect-ratio: 4/5 !important;
+  object-fit: contain !important;
+  border: 2px solid #5c1a7c !important;
+  border-radius: 12px !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  margin: 0 auto 1rem auto !important;
+  background: #000 !important;
+  padding: 0 !important;
+  transition: max-height 0.2s, width 0.2s;
+}
+
+@media (max-width: 900px) {
+  img[src="/static/images/content/donkey-santuary-5k-alan.jpg"],
+  .achievement-5k-img {
+    max-width: 90vw !important;
+    max-height: 260px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  img[src="/static/images/content/donkey-santuary-5k-alan.jpg"],
+  .achievement-5k-img {
+    max-width: 98vw !important;
+    max-height: 180px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  img[src="/static/images/content/donkey-santuary-5k-alan.jpg"],
+  .achievement-5k-img {
+    max-width: 99vw !important;
+    max-height: 120px !important;
+  }
 }
 
 /* Subtle stylish paragraph links */
