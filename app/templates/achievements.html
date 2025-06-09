@@ -42,14 +42,20 @@
               <div class="achievement-text-content">
                 <p class="achievement-text" style="margin-bottom: 1.1rem;">
                   Acute promyelocytic leukemia (APL) is a rare subtype of acute myeloid leukemia (AML) in Canada. Based on national statistics, around 1,160 Canadians were diagnosed with AML in 2019, and with APL making up approximately 5–10% of these cases, it's estimated that 58 to 116 new APL cases occur each year.<br><br>
-                  <strong>Sources:</strong> <span class="source-pill"><a href="https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/statistics" target="_blank">Canadian Cancer Society</a></span>
-                  <span class="source-pill"><a href="https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf" target="_blank">Alberta Health Services</a></span>
+                  {% set sources = [
+                    {'href': 'https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/statistics', 'text': 'Canadian Cancer Society'},
+                    {'href': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'text': 'Alberta Health Services'}
+                  ] %}
+                  {% include 'components/common/sources.html' %}
                 </p>
                 <p class="achievement-highlight" style="margin-bottom: 1.1rem;">
                   While APL is rare, it's one of the most treatable types of leukemia. Thanks to modern therapies, remission rates exceed 90%, and 5-year overall survival ranges from 80% to 90%, giving patients real hope for recovery.<br><br>
-                  <strong>Sources:</strong> <span class="source-pill"><a href="https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf" target="_blank">Alberta Health Services</a></span>
-                  <span class="source-pill"><a href="https://www.bloodcancers.ca/sites/default/files/2023-02/LSC22103_LLS1001E_AML%20Brochure_E_m4.pdf" target="_blank">Leukemia & Lymphoma Society</a></span>
-                  <span class="source-pill"><a href="https://bmccancer.biomedcentral.com/articles/10.1186/s12885-023-10612-z" target="_blank">BioMed Central</a></span>
+                  {% set sources = [
+                    {'href': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'text': 'Alberta Health Services'},
+                    {'href': 'https://www.bloodcancers.ca/sites/default/files/2023-02/LSC22103_LLS1001E_AML%20Brochure_E_m4.pdf', 'text': 'Leukemia & Lymphoma Society'},
+                    {'href': 'https://bmccancer.biomedcentral.com/articles/10.1186/s12885-023-10612-z', 'text': 'BioMed Central'}
+                  ] %}
+                  {% include 'components/common/sources.html' %}
                 </p>
               </div>
             </div>
@@ -106,10 +112,10 @@
         </svg>
       </button>
     </div>
-    <div class="carousel-dots">
+    <!-- <div class="carousel-dots">
       <button class="dot active" aria-label="Go to slide 1"></button>
       <button class="dot" aria-label="Go to slide 2"></button>
-    </div>
+    </div> -->
   </div>
 </div>
 
