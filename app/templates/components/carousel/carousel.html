@@ -27,7 +27,16 @@
                   {% include 'components/common/sources.html' %}
                 </div>
               {% elif slide.sources1 %}
-                <p class="text-white">{{ slide.text }}</p>
+                <div class="text-white">
+                  {% set paragraphs = slide.text.split('\n\n') %}
+                  {% for paragraph in paragraphs %}
+                    {% set p = paragraph %}
+                    {% if slide.team_links and 'Alan Smith' in p %}
+                      {% set p = p.replace('Alan Smith', '<a href=\'' ~ slide.team_links['Alan Smith'] ~ '\' target=\'_blank\'>Alan Smith</a>') %}
+                    {% endif %}
+                    <p>{{ p|safe }}</p>
+                  {% endfor %}
+                </div>
                 <div class="mb-3">
                   {% set sources = slide.sources1 %}
                   {% include 'components/common/sources.html' %}
