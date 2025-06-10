@@ -19,7 +19,21 @@
           <div class="col-md-6 bg-black text-white d-flex flex-column justify-content-center p-4 h-100">
             <div>
               <h3 class="text-white">{{ slide.title }}</h3>
-              <p class="text-white">{{ slide.text }}</p>
+              {# For the APL slide, show two paragraphs and sources in a stylish way #}
+              {% if slide.highlight and slide.sources1 and slide.sources2 %}
+                <p class="achievement-text" style="margin-bottom: 1.1rem;">{{ slide.text }}</p>
+                <div class="mb-3">
+                  {% set sources = slide.sources1 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+                <p class="achievement-highlight" style="margin-bottom: 1.1rem;">{{ slide.highlight }}</p>
+                <div class="mb-3">
+                  {% set sources = slide.sources2 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+              {% else %}
+                <p class="text-white">{{ slide.text }}</p>
+              {% endif %}
             </div>
           </div>
         </div>

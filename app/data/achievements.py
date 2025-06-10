@@ -7,8 +7,20 @@ def get_achievement_slides(url_for):
             'alt': 'First slide',
             'title': 'Acute Promyelocytic Leukemia (APL) Journey',
             'text': (
-                'Acute promyelocytic leukemia (APL) is a rare subtype of acute myeloid leukemia (AML) in Canada. Based on national statistics, around 1,160 Canadians were diagnosed with AML in 2019, and with APL making up approximately 5–10% of these cases, it\'s estimated that 58 to 116 new APL cases occur each year. While APL is rare, it\'s one of the most treatable types of leukemia. Thanks to modern therapies, remission rates exceed 90%, and 5-year overall survival ranges from 80% to 90%, giving patients real hope for recovery.'
-            )
+                'Acute promyelocytic leukemia (APL) is a rare subtype of acute myeloid leukemia (AML) in Canada. Based on national statistics, around 1,160 Canadians were diagnosed with AML in 2019, and with APL making up approximately 5–10% of these cases, it\'s estimated that 58 to 116 new APL cases occur each year.'
+            ),
+            'highlight': (
+                "While APL is rare, it's one of the most treatable types of leukemia. Thanks to modern therapies, remission rates exceed 90%, and 5-year overall survival ranges from 80% to 90%, giving patients real hope for recovery."
+            ),
+            'sources1': [
+                {'href': 'https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/statistics', 'text': 'Canadian Cancer Society'},
+                {'href': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'text': 'Alberta Health Services'}
+            ],
+            'sources2': [
+                {'href': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'text': 'Alberta Health Services'},
+                {'href': 'https://www.bloodcancers.ca/sites/default/files/2023-02/LSC22103_LLS1001E_AML%20Brochure_E_m4.pdf', 'text': 'Leukemia & Lymphoma Society'},
+                {'href': 'https://bmccancer.biomedcentral.com/articles/10.1186/s12885-023-10612-z', 'text': 'BioMed Central'}
+            ]
         },
         {
             'src': url_for('static', filename='images/logos/logo-york-u.png'),
