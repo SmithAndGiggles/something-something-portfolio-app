@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Hello, World!</h1>
-  <p>This is a hello world example using base.html.</p>
+  <div class="py-4 px-2 px-md-5">
+    {% set image_src = url_for('static', filename='images/content/cartoonized-alan-smith.png') %}
+    {% set image_alt = 'Cartoonized Alan Smith' %}
+    {% set card_title = 'Welcome to My Portfolio' %}
+    {% set card_text = "Hi, I'm Alan Smith—a technology enthusiast, lifelong learner, and passionate problem solver. This website is a showcase of my journey, projects, and achievements, designed to give you a glimpse into my professional world and personal growth. Explore my work, discover my story, and check out the certifications page—I'm hoping to have more than just three badges there soon!<i class='fas fa-face-wink' style='color:#f7b731; font-size:1.3em; vertical-align:middle;'></i>" %}
+    {% include 'components/common/horizontal_card.html' %}
+  </div>
 {% endblock %}

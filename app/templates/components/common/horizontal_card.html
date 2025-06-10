@@ -1,0 +1,19 @@
+<!-- filepath: app/templates/components/common/horizontal_card.html -->
+<div class="card mb-3 shadow rounded-4 overflow-hidden" style="max-width: 700px; margin: 0 auto;">
+  <div class="row g-0 align-items-center">
+    {% if image_src %}
+    <div class="col-md-4 bg-white">
+      <img src="{{ image_src }}" alt="{{ image_alt or '' }}" class="img-fluid rounded-start" style="object-fit:cover; width:100%; height:100%; min-height:180px;">
+    </div>
+    {% endif %}
+    <div class="col-md-8 bg-black">
+      <div class="card-body text-white">
+        <h1 style="margin-bottom: 1rem;">{{ card_title|safe }}</h1>
+        <p style="margin-bottom: 0;">{{ card_text|safe }}</p>
+        {% if card_footer %}
+        <p class="card-text"><small class="text-muted">{{ card_footer }}</small></p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
