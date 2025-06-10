@@ -6,18 +6,3 @@ body {
   color: #fff;
 }
 
-/* Make carousel take up 2/3 of the viewport height */
-.carousel-2-3-screen {
-  height: 66vh;
-  min-height: 300px;
-}
-.carousel-2-3-screen .carousel-inner,
-.carousel-2-3-screen .carousel-item,
-.carousel-2-3-screen .row,
-.carousel-2-3-screen .col-md-6 {
-  height: 100%;
-}
-.carousel-2-3-screen img {
-  max-height: 100%;
-  object-fit: contain;
-}

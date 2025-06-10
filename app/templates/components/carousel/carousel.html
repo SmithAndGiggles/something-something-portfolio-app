@@ -1,18 +1,22 @@
 {# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
-<div id="{{ carousel_id }}" class="carousel slide carousel-2-3-screen rounded-4 overflow-hidden" data-bs-ride="carousel">
+<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden" data-bs-ride="carousel" style="height:66vh;min-height:300px;">
   <ol class="carousel-indicators">
     {% for slide in slides %}
       <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
     {% endfor %}
   </ol>
-  <div class="carousel-inner">
+  <div class="carousel-inner h-100">
     {% for slide in slides %}
-      <div class="carousel-item{% if loop.first %} active{% endif %}">
-        <div class="row align-items-center g-0">
-          <div class="col-md-6 bg-white text-dark d-flex align-items-center justify-content-center">
-            <img class="d-block w-100" src="{{ slide.src }}" alt="{{ slide.alt }}">
+      <div class="carousel-item{% if loop.first %} active{% endif %} h-100">
+        <div class="row align-items-center g-0 h-100">
+          <div class="col-md-6 bg-white text-dark d-flex align-items-center justify-content-center h-100">
+            {# media/image/video here #}
+            {% set media_type = 'video' if slide.src.endswith('.mp4') else 'image' %}
+            {% set media_src = slide.src %}
+            {% set media_alt = slide.alt %}
+            {% include 'components/common/media.html' %}
           </div>
-          <div class="col-md-6 bg-black text-white d-flex flex-column justify-content-center p-4">
+          <div class="col-md-6 bg-black text-white d-flex flex-column justify-content-center p-4 h-100">
             <div>
               <h3 class="text-white">{{ slide.title }}</h3>
               <p class="text-white">{{ slide.text }}</p>
