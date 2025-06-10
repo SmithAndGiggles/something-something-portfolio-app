@@ -26,6 +26,12 @@
                   {% set sources = slide.sources2 %}
                   {% include 'components/common/sources.html' %}
                 </div>
+              {% elif slide.sources1 %}
+                <p class="text-white">{{ slide.text }}</p>
+                <div class="mb-3">
+                  {% set sources = slide.sources1 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
               {% else %}
                 <p class="text-white">{{ slide.text }}</p>
               {% endif %}
