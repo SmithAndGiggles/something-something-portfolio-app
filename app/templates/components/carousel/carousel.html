@@ -1,5 +1,5 @@
 {# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
-<div id="{{ carousel_id }}" class="carousel slide" data-bs-ride="carousel">
+<div id="{{ carousel_id }}" class="carousel slide carousel-2-3-screen rounded-4 overflow-hidden" data-bs-ride="carousel">
   <ol class="carousel-indicators">
     {% for slide in slides %}
       <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>

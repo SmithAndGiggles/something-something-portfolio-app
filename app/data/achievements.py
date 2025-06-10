@@ -3,7 +3,7 @@
 def get_achievement_slides(url_for):
     return [
         {
-            'src': url_for('static', filename='images/logos/logo-alan.png'),
+            'src': url_for('static', filename='images/content/beat-cancer-bell.mp4'),
             'alt': 'First slide',
             'title': 'Achievement One',
             'text': 'Description for achievement one.'
