@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
+from .data.achievements import get_achievement_slides
 
 routes = Blueprint('routes', __name__)
 
@@ -16,7 +17,8 @@ def education():
 
 @routes.route('/achievements')
 def achievements():
-    return render_template('achievements.html')
+    slides = get_achievement_slides(url_for)
+    return render_template('achievements.html', slides=slides, carousel_id='achievementsCarousel')
 
 @routes.route('/certifications')
 def certifications():
