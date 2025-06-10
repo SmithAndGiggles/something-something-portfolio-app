@@ -6,3 +6,23 @@ body {
   color: #fff;
 }
 
+.carousel-indicators li::before,
+.carousel-indicators li::after {
+  content: none !important;
+  display: none !important;
+}
+.carousel-indicators {
+  font-size: 0 !important;
+}
+.carousel-indicators li {
+  font-size: initial !important;
+  color: transparent !important;
+  background-color: #fff;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.carousel-indicators li.active {
+  opacity: 1;
+  background-color: #fff;
+}
+
