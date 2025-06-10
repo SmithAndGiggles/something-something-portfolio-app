@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Achievements{% endblock %}
+
+{% block content %}
+
+<div class="main-content py-4"> <!-- removed .container -->
+  <div class="carousel-container">
+    <div id="achievementsCarousel" class="carousel">
+      <button class="carousel-arrow carousel-arrow-left" aria-label="Previous">
+        <svg viewBox="0 0 36 36">
+          <path d="M22.324 28.008c.537.577.355 1.433-.326 1.809a1.44 1.44 0 0 1-.72.183c-.398 0-.786-.151-1.048-.438L10.06 18.588a1.126 1.126 0 0 1 0-1.555L20.233 6.09c.438-.468 1.198-.564 1.767-.25.681.377.863 1.23.325 1.808l-9.446 10.164 9.446 10.196z"/>
+        </svg>
+      </button>
+      <div class="carousel-track">
+        <!-- LinkedIn Post Slide -->
+        <div class="carousel-slide">
+          <div class="achievement-card linkedin-post">
+            <img src="/static/images/content/linkedin-onix-genai-post.png" alt="LinkedIn post about Onix GenAI" class="linkedin-image">
+            {% set href = 'https://www.linkedin.com/feed/update/urn:li:activity:7285343139874140160?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3Aactivity%3A7285343139874140160%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29' %}
+            {% set text = 'Full LinkedIn post here' %}
+            {% include 'components/common/purple_button.html' %}
+          </div>
+        </div>
+
+        <!-- Video Slide -->
+        <div class="carousel-slide">
+          <div class="achievement-card">
+            {% set href = 'https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/treatment/acute-promyelocytic-leukemia' %}
+            {% set text = 'More on APL here' %}
+            {% include 'components/common/purple_button.html' %}
+            {% set media_type = 'video' %}
+            {% set media_src = '/static/images/content/beat-cancer-bell.mp4' %}
+            {% set media_alt = None %}
+            {% set media_poster = '/static/images/content/video-preview.jpg' %}
+            {% set media_style = 'width: 100%; height: 350px; object-fit: cover; border-radius: 12px; background: #000; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; margin-bottom: 0; max-width: 100%;' %}
+            {% include 'components/common/media.html' %}
+            <div class="achievement-content" style="margin-top: 2rem;">
+              <div class="achievement-text-content">
+                <p class="achievement-text" style="margin-bottom: 1.1rem;">
+                  Acute promyelocytic leukemia (APL) is a rare subtype of acute myeloid leukemia (AML) in Canada. Based on national statistics, around 1,160 Canadians were diagnosed with AML in 2019, and with APL making up approximately 5–10% of these cases, it's estimated that 58 to 116 new APL cases occur each year.<br><br>
+                  {% set sources = [
+                    {'href': 'https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/statistics', 'text': 'Canadian Cancer Society'},
+                    {'href': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'text': 'Alberta Health Services'}
+                  ] %}
+                  {% include 'components/common/sources.html' %}
+                </p>
+                <p class="achievement-highlight" style="margin-bottom: 1.1rem;">
+                  While APL is rare, it's one of the most treatable types of leukemia. Thanks to modern therapies, remission rates exceed 90%, and 5-year overall survival ranges from 80% to 90%, giving patients real hope for recovery.<br><br>
+                  {% set sources = [
+                    {'href': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'text': 'Alberta Health Services'},
+                    {'href': 'https://www.bloodcancers.ca/sites/default/files/2023-02/LSC22103_LLS1001E_AML%20Brochure_E_m4.pdf', 'text': 'Leukemia & Lymphoma Society'},
+                    {'href': 'https://bmccancer.biomedcentral.com/articles/10.1186/s12885-023-10612-z', 'text': 'BioMed Central'}
+                  ] %}
+                  {% include 'components/common/sources.html' %}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donkey Sanctuary 5K Slide -->
+        <div class="carousel-slide achievement-5k">
+          <div class="achievement-card">
+            {% set href = 'https://www.thedonkeysanctuary.ca' %}
+            {% set text = 'More about the DSC' %}
+            {% include 'components/common/purple_button.html' %}
+            <div style="height: 55px;"></div>
+            <img src="/static/images/content/donkey-santuary-5k-alan.jpg" alt="Alan at Donkey Sanctuary 5K" class="achievement-5k-img" style="width:100%; max-width:320px; height:420px; aspect-ratio: 4/5; object-fit:cover; border-radius:12px; background:none; display:block; margin:0 auto; box-shadow:0 2px 12px rgba(0,0,0,0.08); border: 2px solid #222; padding: 0;">
+            <div class="achievement-content" style="margin-top: 2rem;">
+              <div class="achievement-text-content">
+                <p class="achievement-text" style="margin-bottom: 1.1rem;">
+                  I underwent intense chemotherapy treatments—six days a week, four weeks on and four weeks off—after a near-death experience in the ICU shortly following my diagnosis. Between October 2022 and June 2023, the incredible teams at Princess Margaret and Mount Sinai worked tirelessly to help me reach remission. Getting through this experience remains one of the most meaningful achievements of my life.
+                </p>
+                <p class="achievement-highlight" style="margin-top:0; margin-bottom:0;">
+                  Here's a photo from a 5K run I completed at <strong><a href="https://www.thedonkeysanctuary.ca" target="_blank">The Donkey Sanctuary of Canada</a></strong>. After spending weeks unable to walk or even go to the washroom without help, crossing that finish line meant so much more than a race—it was proof of progress, resilience, and how far I've come.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- York University News Slide -->
+        <div class="carousel-slide">
+          <div class="achievement-card">
+            {% set href = 'https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/' %}
+            {% set text = 'Read full article here' %}
+            {% include 'components/common/purple_button.html' %}
+            <div class="yorku-branding">
+              <div class="yorku-bars">
+                <div class="bar-dark"></div>
+                <div class="bar-maroon"></div>
+              </div>
+              <img src="/static/images/logos/logo-york-u.png" alt="York University Logo" class="yorku-logo" style="margin-top: 2.5rem; margin-bottom: 2rem; display: block; width: 100%; max-width: 100%; height: auto; object-fit: contain; margin-left: 0;">
+            </div>
+            <div class="achievement-content">
+              <div class="achievement-text-content" style="margin-top: 2rem;">
+                <p class="achievement-text"><span class="news-date">TORONTO, May 30, 2005 --</span> On Tuesday, May 31, 2005, the York University/Westview Partnership and the York University Faculty Association Trust will co-host a gala celebration honouring 25 graduates of York's innovative Advance Credit Experience (ACE) Project. The program provides an opportunity for "at risk" secondary students at Toronto's Westview Centennial Secondary School and Emery Collegiate Institute to gain firsthand exposure to post-secondary education before they graduate from high school.</p>
+                <p class="achievement-highlight">This year's top four graduates of ACE are eligible for scholarships to York worth up to $5,000. Last year's scholarship recipients are: Mohammed Ahmad, Claudine Reid, Ladonna Taylor and <strong><a href="https://www.linkedin.com/in/alan-r-smith/" target="_blank">Alan Smith</a></strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <button class="carousel-arrow carousel-arrow-right" aria-label="Next">
+        <svg viewBox="0 0 36 36">
+          <path d="M13.065 7.65c-.538-.578-.355-1.433.325-1.81a1.44 1.44 0 0 1 .72-.182c.398 0 .786.15 1.048.437L25.327 17.07a1.126 1.126 0 0 1 0 1.555L15.155 29.568c-.438.468-1.198.563-1.767.25-.681-.377-.863-1.23-.325-1.809l9.446-10.164L13.065 7.65z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

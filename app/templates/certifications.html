@@ -1,44 +1,5 @@
-{% extends "base.html" %}
-{% block title %}Certifications{% endblock %}
-
+{% extends 'base.html' %}
 {% block content %}
-<div class="main-content container py-4">
-    <div class="certifications-grid">
-        <!-- GCP Associate Cloud Engineer -->
-        <a href="https://www.credly.com/badges/acc75311-8a96-48e5-be8f-c928c9d52ca3" target="_blank" class="cert-card">
-            <div class="cert-image">
-                <img src="{{ url_for('static', filename='images/logos/logo-gcp-associate-engineer.png') }}" alt="Google Cloud Associate Cloud Engineer">
-            </div>
-            <div class="cert-info">
-                <h3>Google Cloud</h3>
-                <p>Associate Cloud Engineer</p>
-                <span class="view-badge">View Badge <i class="fas fa-external-link-alt"></i></span>
-            </div>
-        </a>
-
-        <!-- GCP Professional Cloud Architect -->
-        <a href="https://www.credly.com/badges/85110e1e-ea27-4687-9080-f83eed5694a0" target="_blank" class="cert-card">
-            <div class="cert-image">
-                <img src="{{ url_for('static', filename='images/logos/logo-gcp-professional-architect.png') }}" alt="Google Cloud Professional Cloud Architect">
-            </div>
-            <div class="cert-info">
-                <h3>Google Cloud</h3>
-                <p>Professional Cloud Architect</p>
-                <span class="view-badge">View Badge <i class="fas fa-external-link-alt"></i></span>
-            </div>
-        </a>
-
-        <!-- Terraform Associate -->
-        <a href="https://www.credly.com/badges/cdd46167-59b6-46be-9abd-29eebf7db00e" target="_blank" class="cert-card">
-            <div class="cert-image">
-                <img src="{{ url_for('static', filename='images/logos/logo-terraform.png') }}" alt="HashiCorp Terraform Associate">
-            </div>
-            <div class="cert-info">
-                <h3>HashiCorp</h3>
-                <p>Terraform Associate</p>
-                <span class="view-badge">View Badge <i class="fas fa-external-link-alt"></i></span>
-            </div>
-        </a>
-    </div>
-</div>
+  <h1>Hello, World!</h1>
+  <p>This is a hello world example using base.html.</p>
 {% endblock %}
