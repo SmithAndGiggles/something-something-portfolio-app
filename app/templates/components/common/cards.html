@@ -1,4 +1,4 @@
-<a href="{{ href }}" target="_blank" class="{{ card_class|default('card border-0 shadow-sm rounded-4 bg-black text-white h-100') }} text-white text-decoration-none hover-shadow" style="max-width: 320px; min-width: 220px; margin-left: auto; margin-right: auto;">
+<a href="{{ href }}" target="_blank" class="{{ card_class|default('card border-0 shadow-sm rounded-4 bg-black text-white h-100') }} text-white text-decoration-none hover-shadow" style="max-width: 320px; min-width: 220px; margin-left: auto; margin-right: auto; border: none;">
   <div class="d-flex align-items-center justify-content-center bg-black rounded-top-4" style="height: 96px;">
     <img src="{{ logo_src }}" alt="{{ logo_alt }}" class="img-fluid" style="max-height: 60px; object-fit: contain;">
   </div>
@@ -19,7 +19,7 @@
   background-position: center;
 }
 .card.border-0 {
-  border: 2px solid #444 !important;
+  border: none !important;
   box-sizing: border-box;
 }
 </style>
