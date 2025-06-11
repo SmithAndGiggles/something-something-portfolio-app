@@ -1,10 +1,10 @@
 {# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
-<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative" data-bs-ride="carousel" style="height:66vh;min-height:300px;">
+<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 min-vh-50" data-bs-ride="carousel">
   <div class="carousel-inner h-100">
     {% for slide in slides %}
       <div class="carousel-item{% if loop.first %} active{% endif %} h-100">
         <div class="row align-items-center g-0 h-100">
-          <div class="col-md-6 bg-white text-dark d-flex align-items-center justify-content-center h-100">
+          <div class="col-md-6 bg-black text-dark d-flex align-items-center justify-content-center h-100 p-4">
             {# media/image/video here #}
             {% set media_type = 'video' if slide.src.endswith('.mp4') else 'image' %}
             {% set media_src = slide.src %}
@@ -13,7 +13,7 @@
           </div>
           <div class="col-md-6 bg-black text-white d-flex flex-column justify-content-center p-4 h-100">
             <div>
-              <h3 class="text-white">{{ slide.title }}</h3>
+              <h3 class="text-white mb-3">{{ slide.title }}</h3>
               {# For the APL slide, show two paragraphs and sources in a stylish way #}
               {% if slide.highlight and slide.sources1 and slide.sources2 %}
                 <p class="achievement-text" style="margin-bottom: 1.1rem;">{{ slide.text }}</p>
@@ -51,7 +51,7 @@
     {% endfor %}
   </div>
 </div>
-<ol class="carousel-indicators d-flex justify-content-center gap-2 mt-3" style="position:static;">
+<ol class="carousel-indicators d-flex justify-content-center gap-2 mt-3 mb-2">
   {% for slide in slides %}
     <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}" style="background-color: white;"></li>
   {% endfor %}

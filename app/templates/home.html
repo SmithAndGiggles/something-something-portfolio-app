@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div class="py-4 px-2 px-md-5">
-    {% set image_src = url_for('static', filename='images/content/cartoonized-alan-smith.png') %}
-    {% set image_alt = 'Cartoonized Alan Smith' %}
-    {% set card_title = 'Welcome to My Portfolio' %}
-    {% set card_text = "Hi, I'm Alan Smith—a technology enthusiast, lifelong learner, and passionate problem solver. This website is a showcase of my journey, projects, and achievements, designed to give you a glimpse into my professional world and personal growth. Explore my work, discover my story, and check out the certifications page—I'm hoping to have more than just three badges there soon!<i class='fas fa-face-wink' style='color:#f7b731; font-size:1.3em; vertical-align:middle;'></i>" %}
-    <div class="mx-auto" style="max-width: 520px;">
-      {% include 'components/common/horizontal_card.html' %}
+    <div class="container py-4 px-2 px-md-5 mx-auto col-lg-8 col-xl-7">
+        {% set home_card = home_card %}
+        {% set image_src = url_for('static', filename=home_card.image_src) %}
+        {% set image_alt = home_card.image_alt %}
+        {% set card_title = home_card.card_title %}
+        {% set card_text = home_card.card_text %}
+        {% include 'components/common/horizontal_card.html' %}
     </div>
-  </div>
 {% endblock %}

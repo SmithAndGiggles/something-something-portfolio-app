@@ -7,6 +7,9 @@
     {% if media_poster %}poster="{{ media_poster }}"{% endif %}
     style="object-fit:contain;"
     playsinline
+    autoplay
+    muted
+    loop
   >
     <source src="{{ media_src }}">
     Your browser does not support the video tag.
