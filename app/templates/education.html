@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Hello, World!</h1>
-  <p>This is a hello world example using base.html.</p>
+  <h1>Education</h1>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for card in cards %}
+      <div class="col">
+        {% set href = card.href %}
+        {% set logo_src = card.logo_src %}
+        {% set logo_alt = card.logo_alt %}
+        {% set title = card.title %}
+        {% set subtitle = card.subtitle %}
+        {% set badge_text = card.badge_text %}
+        {% set card_class = card.card_class %}
+        {% include 'components/common/cards.html' %}
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

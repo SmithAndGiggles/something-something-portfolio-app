@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   {% include 'components/common/header/head.html' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cards.css') }}">
   <body>
     {% include 'components/common/navbar/navbar.html' %}
     {% block content %}{% endblock %}

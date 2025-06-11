@@ -1,0 +1,77 @@
+/* Disney Plus style card enhancements */
+.cert-card, .custom-card-class {
+  border: none;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #23272f 60%, #181a20 100%);
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.15);
+  transition: transform 0.2s cubic-bezier(.4,0,.2,1), box-shadow 0.2s cubic-bezier(.4,0,.2,1);
+  cursor: pointer;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+.cert-card:hover, .custom-card-class:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35), 0 3px 8px 0 rgba(0,0,0,0.18);
+}
+.cert-image {
+  background: #181a20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  padding: 1.5rem 1rem 0.5rem 1rem;
+}
+.cert-image img {
+  max-height: 70px;
+  max-width: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
+}
+.cert-info {
+  flex: 1 1 auto;
+  padding: 1rem 1.25rem 1.25rem 1.25rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.cert-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+.cert-info p, .cert-info .view-badge {
+  font-size: 0.98rem;
+  margin-bottom: 0.25rem;
+  color: #cfd8dc;
+}
+.view-badge {
+  display: inline-block;
+  background: #00b4e6;
+  color: #fff;
+  border-radius: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  box-shadow: 0 1px 4px 0 rgba(0,180,230,0.12);
+}
+@media (max-width: 576px) {
+  .cert-card, .custom-card-class {
+    min-height: 200px;
+  }
+  .cert-image {
+    height: 80px;
+    padding: 1rem 0.5rem 0.5rem 0.5rem;
+  }
+  .cert-info {
+    padding: 0.75rem 0.75rem 1rem 0.75rem;
+  }
+}

@@ -1,5 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Hello, World!</h1>
-  <p>This is a hello world example using base.html.</p>
+  <h1>Tech Stack</h1>
+  <h2 class="mt-4">Frontend</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    {% for card in frontend_cards %}
+      <div class="col">
+        {% set href = card.href %}
+        {% set logo_src = card.logo_src %}
+        {% set logo_alt = card.logo_alt %}
+        {% set title = card.title %}
+        {% set subtitle = card.subtitle %}
+        {% set badge_text = card.badge_text %}
+        {% set card_class = card.card_class %}
+        {% include 'components/common/cards.html' %}
+      </div>
+    {% endfor %}
+  </div>
+  <h2 class="mt-4">Backend</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    {% for card in backend_cards %}
+      <div class="col">
+        {% set href = card.href %}
+        {% set logo_src = card.logo_src %}
+        {% set logo_alt = card.logo_alt %}
+        {% set title = card.title %}
+        {% set subtitle = card.subtitle %}
+        {% set badge_text = card.badge_text %}
+        {% set card_class = card.card_class %}
+        {% include 'components/common/cards.html' %}
+      </div>
+    {% endfor %}
+  </div>
+  <h2 class="mt-4">Cloud/Infrastructure/Tools</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    {% for card in infra_cards %}
+      <div class="col">
+        {% set href = card.href %}
+        {% set logo_src = card.logo_src %}
+        {% set logo_alt = card.logo_alt %}
+        {% set title = card.title %}
+        {% set subtitle = card.subtitle %}
+        {% set badge_text = card.badge_text %}
+        {% set card_class = card.card_class %}
+        {% include 'components/common/cards.html' %}
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
