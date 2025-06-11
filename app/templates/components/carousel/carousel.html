@@ -1,10 +1,10 @@
 {# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
-<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 min-vh-50" data-bs-ride="carousel">
+<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 min-vh-50 border border-light" data-bs-ride="carousel">
   <div class="carousel-inner h-100">
     {% for slide in slides %}
       <div class="carousel-item{% if loop.first %} active{% endif %} h-100">
         <div class="row align-items-center g-0 h-100">
-          <div class="col-md-6 bg-black text-dark d-flex align-items-center justify-content-center h-100 p-4">
+          <div class="col-md-6 text-dark d-flex align-items-center justify-content-center h-100 p-4">
             {# media/image/video here #}
             {% set media_type = 'video' if slide.src.endswith('.mp4') else 'image' %}
             {% set media_src = slide.src %}
