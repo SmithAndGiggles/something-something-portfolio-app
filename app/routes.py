@@ -15,15 +15,15 @@ def render_index():
 @routes.route('/education')
 def education():
     education_cards = [
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-york-u.png'), "logo_alt": "York University logo", "title": "Kinesiology, B.A. Specialized Honours", "subtitle": "York University • 2005 - 2010", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Sport Marketing and Event Management, Certificate", "subtitle": "George Brown College • 2010 - 2011", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Introduction to Web Design and Development, Course", "subtitle": "George Brown College • 2012", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Web Page I – XHTML, Course", "subtitle": "George Brown College • 2013", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Web Page II – JavaScript/jQuery, Course", "subtitle": "George Brown College • 2013", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-centennial-college.jpg'), "logo_alt": "Centennial College logo", "title": "Introduction to Unix/Linux, Course", "subtitle": "Centennial College • 2015", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-humber-college.svg'), "logo_alt": "Humber College logo", "title": "Red Hat Enterprise Linux System Admin, Course", "subtitle": "Humber College • 2015", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Foundations of PHP, Course", "subtitle": "George Brown College • 2017", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-york-u.png'), "logo_alt": "York University logo", "title": "Full-Stack Web Development, Certificate", "subtitle": "York University • 2018 - 2019", "badge_text": "Learn More"}
+        {"href": "https://www.yorku.ca/", "logo_src": url_for('static', filename='images/logos/logo-york-u.png'), "logo_alt": "York University logo", "title": "Kinesiology, B.A. Specialized Honours", "subtitle": "York University • 2005 - 2010", "badge_text": "Learn More"},
+        {"href": "https://www.georgebrown.ca/", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Sport Marketing and Event Management, Certificate", "subtitle": "George Brown College • 2010 - 2011", "badge_text": "Learn More"},
+        {"href": "https://www.georgebrown.ca/", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Introduction to Web Design and Development, Course", "subtitle": "George Brown College • 2012", "badge_text": "Learn More"},
+        {"href": "https://www.georgebrown.ca/", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Web Page I – XHTML, Course", "subtitle": "George Brown College • 2013", "badge_text": "Learn More"},
+        {"href": "https://www.georgebrown.ca/", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Web Page II – JavaScript/jQuery, Course", "subtitle": "George Brown College • 2013", "badge_text": "Learn More"},
+        {"href": "https://www.centennialcollege.ca/", "logo_src": url_for('static', filename='images/logos/logo-centennial-college.jpg'), "logo_alt": "Centennial College logo", "title": "Introduction to Unix/Linux, Course", "subtitle": "Centennial College • 2015", "badge_text": "Learn More"},
+        {"href": "https://humber.ca/", "logo_src": url_for('static', filename='images/logos/logo-humber-college.svg'), "logo_alt": "Humber College logo", "title": "Red Hat Enterprise Linux System Admin, Course", "subtitle": "Humber College • 2015", "badge_text": "Learn More"},
+        {"href": "https://www.georgebrown.ca/", "logo_src": url_for('static', filename='images/logos/logo-george-brown-college.svg'), "logo_alt": "George Brown College logo", "title": "Foundations of PHP, Course", "subtitle": "George Brown College • 2017", "badge_text": "Learn More"},
+        {"href": "https://www.yorku.ca/", "logo_src": url_for('static', filename='images/logos/logo-york-u.png'), "logo_alt": "York University logo", "title": "Full-Stack Web Development, Certificate", "subtitle": "York University • 2018 - 2019", "badge_text": "Learn More"}
     ]
     return render_template('education.html', cards=education_cards)
 
@@ -44,22 +44,22 @@ def certifications():
 @routes.route('/techstack')
 def techstack():
     frontend_cards = [
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-html.svg'), "logo_alt": "HTML5", "title": "HTML5", "subtitle": "Markup Language", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-css.svg'), "logo_alt": "CSS3", "title": "CSS3", "subtitle": "Stylesheet Language", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-js.svg'), "logo_alt": "JavaScript", "title": "JavaScript", "subtitle": "Programming Language", "badge_text": "Learn More"}
+        {"href": "https://developer.mozilla.org/en-US/docs/Web/HTML", "logo_src": url_for('static', filename='images/logos/logo-html.svg'), "logo_alt": "HTML5", "title": "HTML5", "subtitle": "Markup Language", "badge_text": "Learn More"},
+        {"href": "https://developer.mozilla.org/en-US/docs/Web/CSS", "logo_src": url_for('static', filename='images/logos/logo-css.svg'), "logo_alt": "CSS3", "title": "CSS3", "subtitle": "Stylesheet Language", "badge_text": "Learn More"},
+        {"href": "https://developer.mozilla.org/en-US/docs/Web/JavaScript", "logo_src": url_for('static', filename='images/logos/logo-js.svg'), "logo_alt": "JavaScript", "title": "JavaScript", "subtitle": "Programming Language", "badge_text": "Learn More"}
     ]
     backend_cards = [
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-python-logo-notext.png'), "logo_alt": "Python", "title": "Python", "subtitle": "Programming Language", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-horn-flask.svg'), "logo_alt": "Flask", "title": "Flask", "subtitle": "Web Framework", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-pocoo-jinja-icon.png'), "logo_alt": "Jinja2", "title": "Jinja2", "subtitle": "Template Engine", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-gunicorn.svg'), "logo_alt": "Gunicorn", "title": "Gunicorn", "subtitle": "WSGI Server", "badge_text": "Learn More"}
+        {"href": "https://www.python.org/", "logo_src": url_for('static', filename='images/logos/logo-python-logo-notext.png'), "logo_alt": "Python", "title": "Python", "subtitle": "Programming Language", "badge_text": "Learn More"},
+        {"href": "https://flask.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-horn-flask.svg'), "logo_alt": "Flask", "title": "Flask", "subtitle": "Web Framework", "badge_text": "Learn More"},
+        {"href": "https://jinja.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-pocoo-jinja-icon.png'), "logo_alt": "Jinja2", "title": "Jinja2", "subtitle": "Template Engine", "badge_text": "Learn More"},
+        {"href": "https://gunicorn.org/", "logo_src": url_for('static', filename='images/logos/logo-gunicorn.svg'), "logo_alt": "Gunicorn", "title": "Gunicorn", "subtitle": "WSGI Server", "badge_text": "Learn More"}
     ]
     infra_cards = [
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-docker-mark-blue.png'), "logo_alt": "Docker", "title": "Docker", "subtitle": "Containerization", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/google-cloud/cloud-run.png'), "logo_alt": "Cloud Run", "title": "Google Cloud Run", "subtitle": "Serverless Platform", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-terraform.png'), "logo_alt": "Terraform", "title": "Terraform", "subtitle": "IaC Tool", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-kubernetes-logo-without-workmark.png'), "logo_alt": "Kubernetes", "title": "Kubernetes", "subtitle": "Container Orchestration", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-github-actions.png'), "logo_alt": "GitHub Actions", "title": "GitHub Actions", "subtitle": "CI/CD", "badge_text": "Learn More"},
-        {"href": "https://example.com", "logo_src": url_for('static', filename='images/logos/logo-terragrunt.png'), "logo_alt": "Terragrunt", "title": "Terragrunt", "subtitle": "IaC Wrapper", "badge_text": "Learn More"}
+        {"href": "https://www.docker.com/", "logo_src": url_for('static', filename='images/logos/logo-docker-mark-blue.png'), "logo_alt": "Docker", "title": "Docker", "subtitle": "Containerization", "badge_text": "Learn More"},
+        {"href": "https://cloud.google.com/run", "logo_src": url_for('static', filename='images/google-cloud/cloud-run.png'), "logo_alt": "Cloud Run", "title": "Google Cloud Run", "subtitle": "Serverless Platform", "badge_text": "Learn More"},
+        {"href": "https://www.terraform.io/", "logo_src": url_for('static', filename='images/logos/logo-terraform.png'), "logo_alt": "Terraform", "title": "Terraform", "subtitle": "IaC Tool", "badge_text": "Learn More"},
+        {"href": "https://kubernetes.io/", "logo_src": url_for('static', filename='images/logos/logo-kubernetes-logo-without-workmark.png'), "logo_alt": "Kubernetes", "title": "Kubernetes", "subtitle": "Container Orchestration", "badge_text": "Learn More"},
+        {"href": "https://github.com/features/actions", "logo_src": url_for('static', filename='images/logos/logo-github-actions.png'), "logo_alt": "GitHub Actions", "title": "GitHub Actions", "subtitle": "CI/CD", "badge_text": "Learn More"},
+        {"href": "https://terragrunt.gruntwork.io/", "logo_src": url_for('static', filename='images/logos/logo-terragrunt.png'), "logo_alt": "Terragrunt", "title": "Terragrunt", "subtitle": "IaC Wrapper", "badge_text": "Learn More"}
     ]
     return render_template('techstack.html', frontend_cards=frontend_cards, backend_cards=backend_cards, infra_cards=infra_cards)
