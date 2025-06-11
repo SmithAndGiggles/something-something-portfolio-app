@@ -1,5 +1,5 @@
 {# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
-<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 min-vh-50 border border-light" data-bs-ride="carousel">
+<div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 min-vh-50 border border-secondary" data-bs-ride="carousel">
   <div class="carousel-inner h-100">
     {% for slide in slides %}
       <div class="carousel-item{% if loop.first %} active{% endif %} h-100">
@@ -16,12 +16,12 @@
               <h3 class="text-white mb-3">{{ slide.title }}</h3>
               {# For the APL slide, show two paragraphs and sources in a stylish way #}
               {% if slide.highlight and slide.sources1 and slide.sources2 %}
-                <p class="achievement-text" style="margin-bottom: 1.1rem;">{{ slide.text }}</p>
+                <p class="achievement-text mb-3">{{ slide.text }}</p>
                 <div class="mb-3">
                   {% set sources = slide.sources1 %}
                   {% include 'components/common/sources.html' %}
                 </div>
-                <p class="achievement-highlight" style="margin-bottom: 1.1rem;">{{ slide.highlight }}</p>
+                <p class="achievement-highlight mb-3">{{ slide.highlight }}</p>
                 <div class="mb-3">
                   {% set sources = slide.sources2 %}
                   {% include 'components/common/sources.html' %}
