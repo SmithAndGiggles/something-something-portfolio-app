@@ -3,6 +3,20 @@
 def get_achievement_slides(url_for):
     return [
         {
+            'src': url_for('static', filename='images/content/linkedin-onix-genai-post.png'),
+            'alt': 'LinkedIn Onix GenAI Post',
+            'title': 'LinkedIn Onix GenAI Post',
+            'text': (
+                "We're proud to announce that Onix has achieved the Google Cloud Generative AI – Services Specialization as part of the Google Cloud Partner Advantage program! This recognition highlights our expertise in designing, deploying, and scaling cutting-edge generative AI solutions that drive real business transformation.\n\nOnix now holds 8 Google Cloud specializations—demonstrating our commitment to delivering innovative solutions that help businesses harness the power of hashtag#AI to improve productivity, efficiency, and creativity.\n\nAnd a huge 'thank you' to the team to helped bring this across the finish line: Steve Berrey Dan Ehlers Sean Gilley Ricardo de Andrade 🌎 Doug Hayden ♻️ James Vandermost Alan Smith Ronald deLara Kyle Clark Carolina (Ninna) Sampaio Paula Mannarino Dr. Ramnish Singh"
+            ),
+            'team_links': {
+                'Alan Smith': 'https://www.linkedin.com/in/alan-r-smith'
+            },
+            'sources1': [
+                {'href': 'https://www.linkedin.com/feed/update/urn:li:activity:7285343139874140160?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3Aactivity%3A7285343139874140160%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29', 'text': 'Full LinkedIn post here'}
+            ]
+        },
+        {
             'src': url_for('static', filename='images/content/beat-cancer-bell.mp4'),
             'alt': 'First slide',
             'title': 'Acute Promyelocytic Leukemia (APL) Journey',
@@ -23,31 +37,6 @@ def get_achievement_slides(url_for):
             ]
         },
         {
-            'src': url_for('static', filename='images/logos/logo-york-u.png'),
-            'alt': 'Second slide',
-            'title': 'York University ACE Graduate and Scholarship Recipient',
-            'text': (
-                "On Tuesday, May 31, 2005, the York University/Westview Partnership and the York University Faculty Association Trust co-hosted a gala celebration honouring 25 graduates of York's innovative Advance Credit Experience (ACE) Project. The program provides an opportunity for \"at risk\" secondary students at Toronto's Westview Centennial Secondary School and Emery Collegiate Institute to gain firsthand exposure to post-secondary education before they graduate from high school.\n\nThis year’s top four graduates of ACE are eligible for scholarships to York worth up to $5,000. Last year’s scholarship recipients are: Mohammed Ahmad, Claudine Reid, Ladonna Taylor and Alan Smith."
-            ),
-            'sources1': [
-                {'href': 'https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/', 'text': 'Read full article here'}
-            ]
-        },
-        {
-            'src': url_for('static', filename='images/content/linkedin-onix-genai-post.png'),
-            'alt': 'LinkedIn Onix GenAI Post',
-            'title': 'LinkedIn Onix GenAI Post',
-            'text': (
-                "We're proud to announce that Onix has achieved the Google Cloud Generative AI – Services Specialization as part of the Google Cloud Partner Advantage program! This recognition highlights our expertise in designing, deploying, and scaling cutting-edge generative AI solutions that drive real business transformation.\n\nOnix now holds 8 Google Cloud specializations—demonstrating our commitment to delivering innovative solutions that help businesses harness the power of hashtag#AI to improve productivity, efficiency, and creativity.\n\nAnd a huge 'thank you' to the team to helped bring this across the finish line: Steve Berrey Dan Ehlers Sean Gilley Ricardo de Andrade 🌎 Doug Hayden ♻️ James Vandermost Alan Smith Ronald deLara Kyle Clark Carolina (Ninna) Sampaio Paula Mannarino Dr. Ramnish Singh"
-            ),
-            'team_links': {
-                'Alan Smith': 'https://www.linkedin.com/in/alan-r-smith'
-            },
-            'sources1': [
-                {'href': 'https://www.linkedin.com/feed/update/urn:li:activity:7285343139874140160?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3Aactivity%3A7285343139874140160%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29', 'text': 'Full LinkedIn post here'}
-            ]
-        },
-        {
             'src': url_for('static', filename='images/content/donkey-santuary-5k-alan.jpg'),
             'alt': 'Third slide',
             'title': 'Donkey Sanctuary 5K',
@@ -56,6 +45,17 @@ def get_achievement_slides(url_for):
             ),
             'sources1': [
                 {'href': 'https://www.thedonkeysanctuary.ca', 'text': 'More about the DSC'}
+            ]
+        },
+        {
+            'src': url_for('static', filename='images/logos/logo-york-u.png'),
+            'alt': 'Second slide',
+            'title': 'York University ACE Graduate and Scholarship Recipient',
+            'text': (
+                "On Tuesday, May 31, 2005, the York University/Westview Partnership and the York University Faculty Association Trust co-hosted a gala celebration honouring 25 graduates of York's innovative Advance Credit Experience (ACE) Project. The program provides an opportunity for \"at risk\" secondary students at Toronto's Westview Centennial Secondary School and Emery Collegiate Institute to gain firsthand exposure to post-secondary education before they graduate from high school.\n\nThis year’s top four graduates of ACE are eligible for scholarships to York worth up to $5,000. Last year’s scholarship recipients are: Mohammed Ahmad, Claudine Reid, Ladonna Taylor and Alan Smith."
+            ),
+            'sources1': [
+                {'href': 'https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/', 'text': 'Read full article here'}
             ]
         }
     ]
