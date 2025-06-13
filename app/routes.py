@@ -140,6 +140,14 @@ def connect():
             "title": "GitHub",
             "subtitle": "See my projects on GitHub",
             "badge_text": "View GitHub"
+        },
+        {
+            "href": "mailto:42-daisy-focuses@icloud.com",
+            "logo_src": url_for('static', filename='images/logos/logo-gmail.png'),
+            "logo_alt": "Gmail Logo",
+            "title": "Email",
+            "subtitle": "Email me at 42-daisy-focuses@icloud.com",
+            "badge_text": "Send Email"
         }
     ]
     return render_template('connect.html', cards=connect_cards)
