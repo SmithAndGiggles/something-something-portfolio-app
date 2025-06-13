@@ -51,7 +51,7 @@ def techstack():
     backend_cards = [
         {"href": "https://www.python.org/", "logo_src": url_for('static', filename='images/logos/logo-python-logo-notext.png'), "logo_alt": "Python", "title": "Python", "subtitle": "Programming Language", "badge_text": "Learn More"},
         {"href": "https://flask.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-horn-flask.png'), "logo_alt": "Flask", "title": "Flask", "subtitle": "Web Framework", "badge_text": "Learn More"},
-        {"href": "https://jinja.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-pocoo-jinja-icon.png'), "logo_alt": "Jinja2", "title": "Jinja2", "subtitle": "Template Engine", "badge_text": "Learn More"},
+        {"href": "https://jinja.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-jinja-icon.svg'), "logo_alt": "Jinja2", "title": "Jinja2", "subtitle": "Template Engine", "badge_text": "Learn More"},
         {"href": "https://gunicorn.org/", "logo_src": url_for('static', filename='images/logos/logo-gunicorn.svg'), "logo_alt": "Gunicorn", "title": "Gunicorn", "subtitle": "WSGI Server", "badge_text": "Learn More"}
     ]
     infra_cards = [
@@ -60,7 +60,8 @@ def techstack():
         {"href": "https://www.terraform.io/", "logo_src": url_for('static', filename='images/logos/logo-terraform.png'), "logo_alt": "Terraform", "title": "Terraform", "subtitle": "IaC Tool", "badge_text": "Learn More"},
         {"href": "https://kubernetes.io/", "logo_src": url_for('static', filename='images/logos/logo-kubernetes-logo-without-workmark.png'), "logo_alt": "Kubernetes", "title": "Kubernetes", "subtitle": "Container Orchestration", "badge_text": "Learn More"},
         {"href": "https://github.com/features/actions", "logo_src": url_for('static', filename='images/logos/logo-github-actions.png'), "logo_alt": "GitHub Actions", "title": "GitHub Actions", "subtitle": "CI/CD", "badge_text": "Learn More"},
-        {"href": "https://terragrunt.gruntwork.io/", "logo_src": url_for('static', filename='images/logos/logo-terragrunt.png'), "logo_alt": "Terragrunt", "title": "Terragrunt", "subtitle": "IaC Wrapper", "badge_text": "Learn More"}
+        {"href": "https://terragrunt.gruntwork.io/", "logo_src": url_for('static', filename='images/logos/logo-terragrunt.png'), "logo_alt": "Terragrunt", "title": "Terragrunt", "subtitle": "IaC Wrapper", "badge_text": "Learn More"},
+        {"href": "https://yamlscript.org", "logo_src": url_for('static', filename='images/logos/logo-yamlscript.svg'), "logo_alt": "Yamlscript", "title": "Yamlscript", "subtitle": "YAML-based Scripting Language", "badge_text": "Learn More"}
     ]
     return render_template('techstack.html', frontend_cards=frontend_cards, backend_cards=backend_cards, infra_cards=infra_cards)
 
