@@ -53,6 +53,6 @@
 </div>
 <ol class="carousel-indicators d-flex justify-content-center gap-2 mt-3 mb-2">
   {% for slide in slides %}
-    <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}" style="background-color: white;"></li>
+    <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}" class="d-inline-block{% if loop.first %} active{% endif %}" aria-label="Go to slide {{ loop.index }}" aria-current="{% if loop.first %}true{% else %}false{% endif %}"></li>
   {% endfor %}
 </ol>
