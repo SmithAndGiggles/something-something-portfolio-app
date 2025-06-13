@@ -50,7 +50,7 @@ def techstack():
     ]
     backend_cards = [
         {"href": "https://www.python.org/", "logo_src": url_for('static', filename='images/logos/logo-python-logo-notext.png'), "logo_alt": "Python", "title": "Python", "subtitle": "Programming Language", "badge_text": "Learn More"},
-        {"href": "https://flask.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-horn-flask.svg'), "logo_alt": "Flask", "title": "Flask", "subtitle": "Web Framework", "badge_text": "Learn More"},
+        {"href": "https://flask.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-horn-flask.png'), "logo_alt": "Flask", "title": "Flask", "subtitle": "Web Framework", "badge_text": "Learn More"},
         {"href": "https://jinja.palletsprojects.com/", "logo_src": url_for('static', filename='images/logos/logo-pocoo-jinja-icon.png'), "logo_alt": "Jinja2", "title": "Jinja2", "subtitle": "Template Engine", "badge_text": "Learn More"},
         {"href": "https://gunicorn.org/", "logo_src": url_for('static', filename='images/logos/logo-gunicorn.svg'), "logo_alt": "Gunicorn", "title": "Gunicorn", "subtitle": "WSGI Server", "badge_text": "Learn More"}
     ]
@@ -63,3 +63,9 @@ def techstack():
         {"href": "https://terragrunt.gruntwork.io/", "logo_src": url_for('static', filename='images/logos/logo-terragrunt.png'), "logo_alt": "Terragrunt", "title": "Terragrunt", "subtitle": "IaC Wrapper", "badge_text": "Learn More"}
     ]
     return render_template('techstack.html', frontend_cards=frontend_cards, backend_cards=backend_cards, infra_cards=infra_cards)
+
+@routes.route('/irl')
+def irl():
+    from .data.irl import get_irl_slides
+    slides = get_irl_slides(url_for)
+    return render_template('irl.html', slides=slides, carousel_id='irlCarousel')

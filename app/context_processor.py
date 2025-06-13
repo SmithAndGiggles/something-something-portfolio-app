@@ -5,7 +5,8 @@ def inject_nav_links():
         {"href": url_for('routes.education'), "icon": "fas fa-graduation-cap", "label": "EDUCATION"},
         {"href": url_for('routes.certifications'), "icon": "fas fa-certificate", "label": "CERTIFICATIONS"},
         {"href": url_for('routes.achievements'), "icon": "fas fa-trophy", "label": "ACHIEVEMENTS"},
-        {"href": url_for('routes.techstack'), "icon": "fas fa-laptop-code", "label": "TECH STACK"},
+        {"href": url_for('routes.techstack'), "icon": "fas fa-laptop-code", "label": "PORTFOLIO TECH STACK"},
+        {"href": url_for('routes.irl'), "icon": "fas fa-users", "label": "IRL"},
     ]
     return dict(nav_links=nav_links)
 

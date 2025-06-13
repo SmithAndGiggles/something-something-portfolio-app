@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container py-4 px-2 px-md-5 mx-auto" style="max-width: 1100px;">
+    {% set slides = [
+      {
+        'src': url_for('static', filename='images/content/ingy-dot-net.jpg'),
+        'alt': 'Met the creator of YAML',
+        'title': '',
+        'text': "Met the creator of YAML at the Toronto Enterprise DevOps Group (Meetup). Learned how YS (YAML Script) brings real programming features right into YAML files, like variables, functions, and reusing code, while keeping everything readable and simple. Worth checking out if you ever work with YAML configs: yamlscript.org\n\nAbout the group: Toronto Enterprise DevOps Group is for people in the GTA interested in DevOps practices, automation, and modern infrastructure. All experience levels welcome.",
+        'sources1': [
+          {'href': 'https://www.meetup.com/toronto-enterprise-devops-user-group/', 'text': 'Toronto Enterprise DevOps Group on Meetup'}
+        ]
+      }
+    ] %}
+    {% set carousel_id = 'irlCarousel' %}
+    {% include 'components/carousel/carousel.html' %}
+  </div>
+{% endblock %}
