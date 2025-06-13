@@ -7,14 +7,14 @@ def inject_nav_links():
         {"href": url_for('routes.achievements'), "icon": "fas fa-trophy", "label": "ACHIEVEMENTS"},
         {"href": url_for('routes.techstack'), "icon": "fas fa-laptop-code", "label": "PORTFOLIO TECH STACK"},
         {"href": url_for('routes.irl'), "icon": "fas fa-users", "label": "IRL"},
+        {"href": url_for('routes.connect'), "icon": "fas fa-link", "label": "CONNECT"},
     ]
     return dict(nav_links=nav_links)
 
 def inject_footer_links():
     footer_links = [
         {"href": "https://www.linkedin.com/in/alan-r-smith/", "logo": url_for('static', filename='images/logos/logo-linkedin.png'), "label": "LinkedIn"},
-        {"href": "https://github.com/SmithAndGiggles", "logo": url_for('static', filename='images/logos/logo-github.png'), "label": "GitHub"},
-        {"href": "https://www.credly.com/users/alan-smith.333907f0", "logo": url_for('static', filename='images/logos/logo-credly.svg'), "label": "Credly"},
+        {"href": "https://github.com/SmithAndGiggles", "logo": url_for('static', filename='images/logos/logo-github-dark.png'), "label": "GitHub"},
     ]
     return dict(footer_links=footer_links)
 

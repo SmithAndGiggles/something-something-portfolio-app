@@ -46,7 +46,8 @@ def techstack():
     frontend_cards = [
         {"href": "https://developer.mozilla.org/en-US/docs/Web/HTML", "logo_src": url_for('static', filename='images/logos/logo-html.svg'), "logo_alt": "HTML5", "title": "HTML5", "subtitle": "Markup Language", "badge_text": "Learn More"},
         {"href": "https://developer.mozilla.org/en-US/docs/Web/CSS", "logo_src": url_for('static', filename='images/logos/logo-css.svg'), "logo_alt": "CSS3", "title": "CSS3", "subtitle": "Stylesheet Language", "badge_text": "Learn More"},
-        {"href": "https://developer.mozilla.org/en-US/docs/Web/JavaScript", "logo_src": url_for('static', filename='images/logos/logo-js.svg'), "logo_alt": "JavaScript", "title": "JavaScript", "subtitle": "Programming Language", "badge_text": "Learn More"}
+        {"href": "https://developer.mozilla.org/en-US/docs/Web/JavaScript", "logo_src": url_for('static', filename='images/logos/logo-js.svg'), "logo_alt": "JavaScript", "title": "JavaScript", "subtitle": "Programming Language", "badge_text": "Learn More"},
+        {"href": "https://getbootstrap.com", "logo_src": url_for('static', filename='images/logos/logo-bootstrap.png'), "logo_alt": "Bootstrap Logo", "title": "Bootstrap", "subtitle": "Responsive, mobile-first front-end web development framework.", "badge_text": "Learn More"}
     ]
     backend_cards = [
         {"href": "https://www.python.org/", "logo_src": url_for('static', filename='images/logos/logo-python-logo-notext.png'), "logo_alt": "Python", "title": "Python", "subtitle": "Programming Language", "badge_text": "Learn More"},
@@ -121,3 +122,24 @@ def test_carousel():
       </body>
     </html>
     ''')
+@routes.route('/connect')
+def connect():
+    connect_cards = [
+        {
+            "href": "https://www.linkedin.com/in/alan-r-smith/",
+            "logo_src": url_for('static', filename='images/logos/logo-linkedin-blue.png'),
+            "logo_alt": "LinkedIn Logo",
+            "title": "LinkedIn",
+            "subtitle": "Connect with me on LinkedIn",
+            "badge_text": "View Profile"
+        },
+        {
+            "href": "https://github.com/SmithAndGiggles",
+            "logo_src": url_for('static', filename='images/logos/logo-github.png'),
+            "logo_alt": "GitHub Logo",
+            "title": "GitHub",
+            "subtitle": "See my projects on GitHub",
+            "badge_text": "View GitHub"
+        }
+    ]
+    return render_template('connect.html', cards=connect_cards)
