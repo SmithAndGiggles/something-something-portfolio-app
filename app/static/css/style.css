@@ -25,9 +25,3 @@ body {
   opacity: 1;
   background-color: #fff;
 }
-
-/* Utility class for card images to use object-fit: cover */
-.card-img-cover {
-  object-fit: cover;
-}
-
