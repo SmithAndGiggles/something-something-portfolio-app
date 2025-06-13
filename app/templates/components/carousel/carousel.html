@@ -1,5 +1,10 @@
 {# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
 <div id="{{ carousel_id }}" class="carousel slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 min-vh-50 border border-secondary" data-bs-ride="carousel">
+  <ol class="carousel-indicators" style="z-index: 2;">
+    {% for slide in slides %}
+      <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}"{% if loop.first %} class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
   <div class="carousel-inner h-100">
     {% for slide in slides %}
       <div class="carousel-item{% if loop.first %} active{% endif %} h-100">
@@ -51,8 +56,3 @@
     {% endfor %}
   </div>
 </div>
-<ol class="carousel-indicators">
-  {% for slide in slides %}
-    <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}"{% if loop.first %} class="active"{% endif %}></li>
-  {% endfor %}
-</ol>
