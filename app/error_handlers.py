@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
+from .data.nothing_to_see_here import get_nothing_to_see_here_content
 
 errors = Blueprint('errors', __name__)
 
@@ -6,7 +7,13 @@ errors = Blueprint('errors', __name__)
 @errors.app_errorhandler(404)
 @errors.app_errorhandler(401)
 def not_found_error(error):
-    return render_template("nothing_to_see_here.html", message="Nothing to see here"), error.code
+    content = get_nothing_to_see_here_content(url_for)
+    return render_template(
+        "nothing_to_see_here.html",
+        image_src=content["image_src"],
+        image_alt=content["image_alt"],
+        message=content["message"]
+    ), error.code
 
 # 5xx → something failed on your server
 @errors.app_errorhandler(500)

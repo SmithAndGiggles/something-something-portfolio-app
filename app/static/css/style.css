@@ -1,9 +1,15 @@
-body {
+html, body {
   background: #000;
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
   color: #fff;
+  overscroll-behavior-y: contain;
+}
+
+.container, .main-content, main {
+  min-height: 100vh;
+  padding-bottom: 2.5rem;
 }
 
 .carousel-indicators {
@@ -29,4 +35,5 @@ body {
 .carousel-indicators li::marker, .carousel-indicators li::before, .carousel-indicators li::after {
   content: none !important;
 }
+
 
