@@ -102,3 +102,4 @@ def connect():
         }
     ]
     return render_template('connect.html', cards=connect_cards)
+
