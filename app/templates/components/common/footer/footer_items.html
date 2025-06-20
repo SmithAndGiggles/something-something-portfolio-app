@@ -1,0 +1,10 @@
+{# Macro for rendering footer social links as <li> for Bootstrap footers #}
+{% macro footer_items(items) %}
+  {% for item in items %}
+    <li class="ms-3">
+      <a class="text-body-secondary" href="{{ item.href }}" target="_blank" aria-label="{{ item.label }}">
+        <img src="{{ item.logo }}" alt="{{ item.label }}" height="24" width="24" style="object-fit: contain; display: block; border-radius: 50%; background: #fff; border: 2px solid #fff;" />
+      </a>
+    </li>
+  {% endfor %}
+{% endmacro %}

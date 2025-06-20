@@ -1,4 +1,8 @@
-<span class="sources-label">Sources:</span>
-{% for source in sources %}
-  <span class="source-pill"><a href="{{ source.href }}" target="_blank">{{ source.text }}</a></span>
-{% endfor %}
+<div class="mb-1">
+  <span class="sources-label">Sources:</span>
+</div>
+<div class="btn-group btn-group-sm" role="group" aria-label="Sources">
+  {% for source in sources %}
+    <a href="{{ source.href }}" class="btn btn-outline-light" target="_blank" rel="noopener">{{ source.text }}</a>
+  {% endfor %}
+</div>

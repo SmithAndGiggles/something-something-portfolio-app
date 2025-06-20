@@ -1,0 +1,83 @@
+{# DRY Bootstrap carousel with image and text side by side. Usage: pass slides (list of dicts with src, alt, title, text) and carousel_id. #}
+<div id="{{ carousel_id }}" class="carousel carousel-fixed-size slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 border border-secondary" data-bs-ride="carousel" data-bs-interval="20000">
+  <ol class="carousel-indicators">
+    {% for slide in slides %}
+      <li data-bs-target="#{{ carousel_id }}" data-bs-slide-to="{{ loop.index0 }}"{% if loop.first %} class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner h-100">
+    {% for slide in slides %}
+      <div class="carousel-item{% if loop.first %} active{% endif %} h-100">
+        <div class="row align-items-center g-0 h-100">
+          <div class="col-md-6 text-dark d-flex align-items-center justify-content-center h-100 p-4">
+            {# media/image/video here #}
+            {% set media_type = 'video' if slide.src.endswith('.mp4') else 'image' %}
+            {% set media_src = slide.src %}
+            {% set media_alt = slide.alt %}
+            {% include 'components/common/media.html' %}
+          </div>
+          <div class="col-md-6 bg-black text-white d-flex flex-column justify-content-center p-4 h-100">
+            <div>
+              <h3 class="text-white mb-3">{{ slide.title }}</h3>
+              {# For the APL slide, show two paragraphs and sources in a stylish way #}
+              {% if slide.highlight and slide.sources1 and slide.sources2 %}
+                <p class="achievement-text mb-3">{{ slide.text }}</p>
+                <div class="mb-3">
+                  {% set sources = slide.sources1 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+                <p class="achievement-highlight mb-3">{{ slide.highlight }}</p>
+                <div class="mb-3">
+                  {% set sources = slide.sources2 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+              {% elif slide.sources1 %}
+                <div class="text-white">
+                  {% set paragraphs = slide.text.split('\n\n') %}
+                  {% for paragraph in paragraphs %}
+                    {% set p = paragraph %}
+                    {% if slide.team_links and 'Alan Smith' in p %}
+                      {% set p = p.replace('Alan Smith', '<a href=\'' ~ slide.team_links['Alan Smith'] ~ '\' target=\'_blank\'>Alan Smith</a>') %}
+                    {% endif %}
+                    <p>{{ p|safe }}</p>
+                  {% endfor %}
+                </div>
+                <div class="mb-3">
+                  {% set sources = slide.sources1 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+              {% else %}
+                <p class="text-white">{{ slide.text }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  /* Responsive fixed height for carousel */
+  @media (min-width: 768px) {
+    .carousel-fixed-size {
+      min-height: 600px;
+      height: auto;
+      max-height: none;
+    }
+    .carousel-fixed-size .carousel-inner,
+    .carousel-fixed-size .carousel-item,
+    .carousel-fixed-size .row,
+    .carousel-fixed-size .col-md-6 {
+      min-height: 600px;
+      height: 100%;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .carousel-fixed-size {
+      min-height: 320px;
+      height: auto;
+      max-height: none;
+    }
+  }
+</style>

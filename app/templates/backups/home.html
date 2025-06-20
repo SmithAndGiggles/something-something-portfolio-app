@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+.video-preview-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0;
+    margin: 40px auto 24px auto;
+    max-width: 1400px;
+}
+.video-preview-card {
+    max-width: 700px;
+    width: 80vw;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    border-radius: 18px 0 0 18px;
+    height: min(60vh, 700px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: transparent;
+    margin: 0;
+    border-right: none;
+}
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    max-height: 60vh;
+    height: 100%;
+    position: relative;
+    border-radius: 18px 0 0 18px;
+    overflow: hidden;
+    background: #18191a; /* dark, but lighter than black */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* show full image, no cropping */
+    border-radius: 18px 0 0 18px;
+    display: block;
+    background: transparent;
+}
+.white-text-box {
+    max-width: 700px;
+    width: 80vw;
+    height: min(60vh, 700px);
+    background: #fff;
+    border-radius: 0 18px 18px 0;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 32px;
+    color: #222;
+    font-size: 1.25rem;
+    border-left: none;
+}
+@media (max-width: 1100px) {
+    .video-preview-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    .video-preview-card, .white-text-box {
+        width: 98vw;
+        max-width: 98vw;
+        border-radius: 18px;
+    }
+    .video-placeholder, .preview-image, .white-text-box {
+        border-radius: 18px;
+    }
+}
+</style>
+<div class="hero-section" style="margin-top: 80px;">
+    <div class="video-preview-row">
+        <!-- Video Preview Card (Image only) -->
+        <div class="video-preview-card">
+            <div class="video-placeholder">
+                <img src="{{ url_for('static', filename='images/content/cartoonized-alan-smith.png') }}" alt="Video Preview" class="preview-image">
+            </div>
+        </div>
+        <!-- White Text Box -->
+        <div class="white-text-box">
+            <div>
+                <h1 style="margin-bottom: 1rem;">Welcome to My Portfolio</h1>
+                <p style="margin-bottom: 0;">
+                    Hi, I'm Alan Smith—a technology enthusiast, lifelong learner, and passionate problem solver. This website is a showcase of my journey, projects, and achievements, designed to give you a glimpse into my professional world and personal growth. Explore my work, discover my story, and check out the certifications page—I'm hoping to have more than just three badges there soon!<i class="fas fa-face-wink" style="color:#f7b731; font-size:1.3em; vertical-align:middle;"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Future autoplay video logic will go here
+});
+</script>
+{% endblock %}
+
+

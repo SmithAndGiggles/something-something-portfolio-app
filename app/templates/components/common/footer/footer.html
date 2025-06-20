@@ -1,0 +1,9 @@
+{% import 'components/common/footer/footer_items.html' as footer %}
+<footer class="fixed-bottom d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-black">
+  <div class="col-md-4 d-flex align-items-center">
+    <span class="mb-3 mb-md-0">© {{ current_year }} Alan Smith. All rights reserved.</span>
+  </div>
+  <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+    {{ footer.footer_items(footer_links) }}
+  </ul>
+</footer>
