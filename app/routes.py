@@ -1,11 +1,24 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, url_for, request
 from .data.achievements import get_achievement_slides
 from .data.home_card import get_home_card
 
 routes = Blueprint('routes', __name__)
 
+
+# @routes.route('/', methods=['GET'])
+# def landing_page():
+#     # Check if request is coming from me2u.place domain
+#     if request.host == 'me2u.place':
+#         return render_template('landing.html')
+#     else:
+#         # Default behavior for other domains
+#         return render_template('index.html')
+
 @routes.route('/')
 def home():
+    # Check if the request is coming from me2u.place
+    if request.host.startswith('me2u.place'):
+        return render_template('me2u_place_landing.html')
     return render_template('home.html', home_card=get_home_card())
 
 @routes.route('/home')
@@ -59,7 +72,7 @@ def techstack():
         {"href": "https://www.docker.com/", "logo_src": url_for('static', filename='images/logos/logo-docker-mark-blue.png'), "logo_alt": "Docker", "title": "Docker", "subtitle": "Containerization", "badge_text": "Learn More"},
         {"href": "https://cloud.google.com/run", "logo_src": url_for('static', filename='images/google-cloud/cloud-run.png'), "logo_alt": "Cloud Run", "title": "Google Cloud Run", "subtitle": "Serverless Platform", "badge_text": "Learn More"},
         {"href": "https://www.terraform.io/", "logo_src": url_for('static', filename='images/logos/logo-terraform.png'), "logo_alt": "Terraform", "title": "Terraform", "subtitle": "IaC Tool", "badge_text": "Learn More"},
-        {"href": "https://kubernetes.io/", "logo_src": url_for('static', filename='images/logos/logo-kubernetes-logo-without-workmark.png'), "logo_alt": "Kubernetes", "title": "Kubernetes", "subtitle": "Container Orchestration", "badge_text": "Learn More"},
+        # {"href": "https://kubernetes.io/", "logo_src": url_for('static', filename='images/logos/logo-kubernetes-logo-without-workmark.png'), "logo_alt": "Kubernetes", "title": "Kubernetes", "subtitle": "Container Orchestration", "badge_text": "Learn More"},
         {"href": "https://github.com/features/actions", "logo_src": url_for('static', filename='images/logos/logo-github-actions.png'), "logo_alt": "GitHub Actions", "title": "GitHub Actions", "subtitle": "CI/CD", "badge_text": "Learn More"},
         {"href": "https://github.com", "logo_src": url_for('static', filename='images/logos/logo-github.png'), "logo_alt": "GitHub", "title": "GitHub", "subtitle": "Source Code Hosting & Collaboration", "badge_text": "Learn More"},
         {"href": "https://terragrunt.gruntwork.io/", "logo_src": url_for('static', filename='images/logos/logo-terragrunt.png'), "logo_alt": "Terragrunt", "title": "Terragrunt", "subtitle": "IaC Wrapper", "badge_text": "Learn More"},
@@ -97,9 +110,14 @@ def connect():
             "logo_src": url_for('static', filename='images/logos/logo-gmail.png'),
             "logo_alt": "Gmail Logo",
             "title": "Email",
-            "subtitle": "Email me at 42-daisy-focuses@icloud.com",
+            "subtitle": "Email me!",
             "badge_text": "Send Email"
         }
     ]
     return render_template('connect.html', cards=connect_cards)
+
+@routes.route('/me2u-place')
+def me2u_place_landing():
+    """Dedicated route for me2u.place landing page"""
+    return render_template('me2u_place_landing.html')
 

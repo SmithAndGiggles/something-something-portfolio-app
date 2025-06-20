@@ -2,42 +2,45 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: me2u-prj-app-prod-3aa8
+  REGION: us-central1
+  SERVICE: me2u-cloudrun-app-750162622024
+  REPOSITORY: me2u-artifact-docker
+  IMAGE: me2u
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write # Required for Workload Identity Federation
-      contents: read
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Google Cloud SDK
+      - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          token_format: 'access_token'
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
 
-      - name: Configure Docker for Artifact Registry
-        run: |
-          gcloud auth configure-docker ${{ secrets.GCP_ARTIFACT_REGISTRY_REGION }}-docker.pkg.dev
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.GCP_ARTIFACT_REGISTRY_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/portfolio-app:${{ github.sha }} .
-
-      - name: Push Docker image
-        run: |
-          docker push ${{ secrets.GCP_ARTIFACT_REGISTRY_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/portfolio-app:${{ github.sha }}
+          gcloud builds submit \
+            --tag us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }} \
-            --image=${{ secrets.GCP_ARTIFACT_REGISTRY_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPOSITORY }}/portfolio-app:${{ github.sha }} \
-            --region=${{ secrets.GCP_REGION }} \
-            --platform=managed \
-            --quiet
+          gcloud run deploy ${{ env.SERVICE }} \
+            --image us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated
