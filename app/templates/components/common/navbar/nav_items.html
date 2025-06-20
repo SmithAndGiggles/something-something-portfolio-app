@@ -1,0 +1,16 @@
+{# Macro for rendering nav links in W3Schools-style topnav, with active class for current page #}
+{% macro nav_items(items, as_li=False) %}
+  {% for item in items %}
+    {% if as_li %}
+      <li class="nav-item">
+        <a href="{{ item.href }}" class="nav-link{% if request.path == item.href %} active{% endif %}">
+          <i class="{{ item.icon }}"></i> {{ item.label }}
+        </a>
+      </li>
+    {% else %}
+      <a href="{{ item.href }}" class="{% if request.path == item.href %}active{% endif %}">
+        <i class="{{ item.icon }}"></i> {{ item.label }}
+      </a>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

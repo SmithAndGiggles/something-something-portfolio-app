@@ -1,0 +1,17 @@
+{# Pure Bootstrap 5 responsive navbar using nav_links macro for DRYness #}
+{% import 'components/common/navbar/nav_items.html' as nav %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-black">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('routes.home') }}">
+      <i class="fas fa-home"></i> HOME
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {{ nav.nav_items(nav_links, as_li=True) }}
+      </ul>
+    </div>
+  </div>
+</nav>

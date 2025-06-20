@@ -1,10 +1,16 @@
 {% if media_type == 'image' %}
-  <img src="{{ media_src }}" alt="{{ media_alt }}" class="achievement-media" loading="lazy"{% if media_style %} style="{{ media_style }}"{% endif %}>
+  <img src="{{ media_src }}" alt="{{ media_alt }}" class="achievement-media w-100 h-100" loading="lazy" style="object-fit:contain;">
 {% elif media_type == 'video' %}
-  <video class="achievement-media" controls
+  <video class="achievement-media w-100 h-100"
+    controls
+    preload="none"
     {% if media_poster %}poster="{{ media_poster }}"{% endif %}
-    {% if media_style %}style="{{ media_style }}"{% endif %}
-    autoplay muted loop playsinline>
+    style="object-fit:contain;"
+    playsinline
+    autoplay
+    muted
+    loop
+  >
     <source src="{{ media_src }}">
     Your browser does not support the video tag.
   </video>

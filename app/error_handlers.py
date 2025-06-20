@@ -1,17 +1,40 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
+import importlib
+
+error_400 = importlib.import_module('.data.400_error', __package__)
+error_404 = importlib.import_module('.data.404_error', __package__)
+error_500 = importlib.import_module('.data.500_error', __package__)
 
 errors = Blueprint('errors', __name__)
 
-# 404 or 401 → user tried to access something invalid or restricted
-@errors.app_errorhandler(404)
-@errors.app_errorhandler(401)
-def not_found_error(error):
-    return render_template("nothing_to_see_here.html", message="Nothing to see here"), error.code
+@errors.app_errorhandler(400)
+def bad_request_error(error):
+    content = error_400.get_400_error_content(url_for)
+    return render_template(
+        "400-page.html",
+        image_src=content["image_src"],
+        image_alt=content["image_alt"],
+        message=content["message"]
+    ), 400
 
-# 5xx → something failed on your server
+@errors.app_errorhandler(404)
+def not_found_error(error):
+    content = error_404.get_400_error_content(url_for)
+    return render_template(
+        "404-page.html",
+        image_src=content["image_src"],
+        image_alt=content["image_alt"],
+        message=content["message"]
+    ), 404
+
 @errors.app_errorhandler(500)
-@errors.app_errorhandler(502)
-@errors.app_errorhandler(503)
-@errors.app_errorhandler(504)
-def server_error(error):
-    return render_template("nothing_to_see_here.html", message="Oops, something went wrong on our end."), error.code
+def internal_server_error(error):
+    content = error_500.get_500_error_content(url_for)
+    return render_template(
+        "500-page.html",
+        image_src=content["image_src"],
+        image_alt=content["image_alt"],
+        message=content["message"]
+    ), 500
+
+
