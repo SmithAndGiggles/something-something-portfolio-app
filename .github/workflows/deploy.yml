@@ -36,12 +36,24 @@ jobs:
         run: |
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud config list
+        env:
+          CLOUDSDK_CORE_PROJECT: ${{ env.PROJECT_ID }}
+          CLOUDSDK_PROJECT: ${{ env.PROJECT_ID }}
+          GCLOUD_PROJECT: ${{ env.PROJECT_ID }}
+          GCP_PROJECT: ${{ env.PROJECT_ID }}
+          GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
 
       - name: Build Docker image
         run: |
           gcloud builds submit \
             --project=${{ env.PROJECT_ID }} \
             --tag us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest
+        env:
+          CLOUDSDK_CORE_PROJECT: ${{ env.PROJECT_ID }}
+          CLOUDSDK_PROJECT: ${{ env.PROJECT_ID }}
+          GCLOUD_PROJECT: ${{ env.PROJECT_ID }}
+          GCP_PROJECT: ${{ env.PROJECT_ID }}
+          GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
 
       - name: Deploy to Cloud Run
         run: |
@@ -51,3 +63,9 @@ jobs:
             --project ${{ env.PROJECT_ID }} \
             --platform managed \
             --allow-unauthenticated
+        env:
+          CLOUDSDK_CORE_PROJECT: ${{ env.PROJECT_ID }}
+          CLOUDSDK_PROJECT: ${{ env.PROJECT_ID }}
+          GCLOUD_PROJECT: ${{ env.PROJECT_ID }}
+          GCP_PROJECT: ${{ env.PROJECT_ID }}
+          GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
