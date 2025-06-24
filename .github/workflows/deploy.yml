@@ -32,8 +32,9 @@ jobs:
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure gcloud project
+      - name: Unset and set project env vars
         run: |
+          unset CLOUDSDK_CORE_PROJECT CLOUDSDK_PROJECT GCLOUD_PROJECT GCP_PROJECT GOOGLE_CLOUD_PROJECT
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud config list
         env:
