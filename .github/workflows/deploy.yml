@@ -2,15 +2,8 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [main]
+    branches: [main, prod, dev, stg, test]
   workflow_dispatch:
-
-env:
-  PROJECT_ID: me2u-prj-app-prod-3aa8
-  REGION: us-central1
-  SERVICE: me2u-cloudrun-app-750162622024
-  REPOSITORY: me2u-artifact-docker
-  IMAGE: me2u
 
 jobs:
   deploy:
@@ -19,15 +12,51 @@ jobs:
       contents: 'read'
       id-token: 'write'
 
+    env:
+      ENV: ${{ github.ref_name == 'main' && 'PROD' || github.ref_name == 'prod' && 'PROD' || github.ref_name == 'stg' && 'STG' || github.ref_name == 'dev' && 'DEV' || github.ref_name == 'test' && 'TEST' }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set environment-specific secrets
+        id: set-secrets
+        run: |
+          if [[ "$ENV" == "PROD" ]]; then
+            echo "GCP_SERVICE_ACCOUNT_EMAIL=${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" >> $GITHUB_ENV
+            echo "GCP_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PROD }}" >> $GITHUB_ENV
+            echo "GCP_PROJECT=${{ secrets.GCP_PROJECT_PROD }}" >> $GITHUB_ENV
+            echo "GCP_REGION=${{ secrets.GCP_REGION_PROD }}" >> $GITHUB_ENV
+            echo "GCP_REPOSITORY=${{ secrets.GCP_REPOSITORY_PROD }}" >> $GITHUB_ENV
+            echo "GCP_IMAGE=${{ secrets.GCP_IMAGE_PROD }}" >> $GITHUB_ENV
+          elif [[ "$ENV" == "STG" ]]; then
+            echo "GCP_SERVICE_ACCOUNT_EMAIL=${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_STG }}" >> $GITHUB_ENV
+            echo "GCP_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_STG }}" >> $GITHUB_ENV
+            echo "GCP_PROJECT=${{ secrets.GCP_PROJECT_STG }}" >> $GITHUB_ENV
+            echo "GCP_REGION=${{ secrets.GCP_REGION_STG }}" >> $GITHUB_ENV
+            echo "GCP_REPOSITORY=${{ secrets.GCP_REPOSITORY_STG }}" >> $GITHUB_ENV
+            echo "GCP_IMAGE=${{ secrets.GCP_IMAGE_STG }}" >> $GITHUB_ENV
+          elif [[ "$ENV" == "DEV" ]]; then
+            echo "GCP_SERVICE_ACCOUNT_EMAIL=${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_DEV }}" >> $GITHUB_ENV
+            echo "GCP_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_DEV }}" >> $GITHUB_ENV
+            echo "GCP_PROJECT=${{ secrets.GCP_PROJECT_DEV }}" >> $GITHUB_ENV
+            echo "GCP_REGION=${{ secrets.GCP_REGION_DEV }}" >> $GITHUB_ENV
+            echo "GCP_REPOSITORY=${{ secrets.GCP_REPOSITORY_DEV }}" >> $GITHUB_ENV
+            echo "GCP_IMAGE=${{ secrets.GCP_IMAGE_DEV }}" >> $GITHUB_ENV
+          elif [[ "$ENV" == "TEST" ]]; then
+            echo "GCP_SERVICE_ACCOUNT_EMAIL=${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_TEST }}" >> $GITHUB_ENV
+            echo "GCP_WORKLOAD_IDENTITY_PROVIDER=${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_TEST }}" >> $GITHUB_ENV
+            echo "GCP_PROJECT=${{ secrets.GCP_PROJECT_TEST }}" >> $GITHUB_ENV
+            echo "GCP_REGION=${{ secrets.GCP_REGION_TEST }}" >> $GITHUB_ENV
+            echo "GCP_REPOSITORY=${{ secrets.GCP_REPOSITORY_TEST }}" >> $GITHUB_ENV
+            echo "GCP_IMAGE=${{ secrets.GCP_IMAGE_TEST }}" >> $GITHUB_ENV
+          fi
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
@@ -35,38 +64,38 @@ jobs:
       - name: Unset and set project env vars
         run: |
           unset CLOUDSDK_CORE_PROJECT CLOUDSDK_PROJECT GCLOUD_PROJECT GCP_PROJECT GOOGLE_CLOUD_PROJECT
-          gcloud config set project ${{ env.PROJECT_ID }}
+          gcloud config set project ${{ env.GCP_PROJECT }}
           gcloud config list
         env:
-          CLOUDSDK_CORE_PROJECT: ${{ env.PROJECT_ID }}
-          CLOUDSDK_PROJECT: ${{ env.PROJECT_ID }}
-          GCLOUD_PROJECT: ${{ env.PROJECT_ID }}
-          GCP_PROJECT: ${{ env.PROJECT_ID }}
-          GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
+          CLOUDSDK_CORE_PROJECT: ${{ env.GCP_PROJECT }}
+          CLOUDSDK_PROJECT: ${{ env.GCP_PROJECT }}
+          GCLOUD_PROJECT: ${{ env.GCP_PROJECT }}
+          GCP_PROJECT: ${{ env.GCP_PROJECT }}
+          GOOGLE_CLOUD_PROJECT: ${{ env.GCP_PROJECT }}
 
       - name: Build Docker image
         run: |
           gcloud builds submit \
-            --project=${{ env.PROJECT_ID }} \
-            --tag us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest
+            --project=${{ env.GCP_PROJECT }} \
+            --tag us-central1-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest
         env:
-          CLOUDSDK_CORE_PROJECT: ${{ env.PROJECT_ID }}
-          CLOUDSDK_PROJECT: ${{ env.PROJECT_ID }}
-          GCLOUD_PROJECT: ${{ env.PROJECT_ID }}
-          GCP_PROJECT: ${{ env.PROJECT_ID }}
-          GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
+          CLOUDSDK_CORE_PROJECT: ${{ env.GCP_PROJECT }}
+          CLOUDSDK_PROJECT: ${{ env.GCP_PROJECT }}
+          GCLOUD_PROJECT: ${{ env.GCP_PROJECT }}
+          GCP_PROJECT: ${{ env.GCP_PROJECT }}
+          GOOGLE_CLOUD_PROJECT: ${{ env.GCP_PROJECT }}
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ env.SERVICE }} \
-            --image us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.IMAGE }}:latest \
-            --region ${{ env.REGION }} \
-            --project ${{ env.PROJECT_ID }} \
+          gcloud run deploy ${{ env.GCP_SERVICE }} \
+            --image us-central1-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest \
+            --region ${{ env.GCP_REGION }} \
+            --project ${{ env.GCP_PROJECT }} \
             --platform managed \
             --allow-unauthenticated
         env:
-          CLOUDSDK_CORE_PROJECT: ${{ env.PROJECT_ID }}
-          CLOUDSDK_PROJECT: ${{ env.PROJECT_ID }}
-          GCLOUD_PROJECT: ${{ env.PROJECT_ID }}
-          GCP_PROJECT: ${{ env.PROJECT_ID }}
-          GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
+          CLOUDSDK_CORE_PROJECT: ${{ env.GCP_PROJECT }}
+          CLOUDSDK_PROJECT: ${{ env.GCP_PROJECT }}
+          GCLOUD_PROJECT: ${{ env.GCP_PROJECT }}
+          GCP_PROJECT: ${{ env.GCP_PROJECT }}
+          GOOGLE_CLOUD_PROJECT: ${{ env.GCP_PROJECT }}
