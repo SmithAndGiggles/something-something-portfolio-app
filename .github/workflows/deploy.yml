@@ -77,7 +77,8 @@ jobs:
         run: |
           gcloud builds submit \
             --project=${{ env.GCP_PROJECT }} \
-            --tag us-central1-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest
+            --service-account=projects/${{ env.GCP_PROJECT }}/serviceAccounts/${{ env.GCP_SERVICE_ACCOUNT_EMAIL }} \
+            --tag ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest
         env:
           CLOUDSDK_CORE_PROJECT: ${{ env.GCP_PROJECT }}
           CLOUDSDK_PROJECT: ${{ env.GCP_PROJECT }}
@@ -87,8 +88,8 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ env.GCP_SERVICE }} \
-            --image us-central1-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest \
+          gcloud run deploy ${{ env.GCP_IMAGE }} \
+            --image ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest \
             --region ${{ env.GCP_REGION }} \
             --project ${{ env.GCP_PROJECT }} \
             --platform managed \
