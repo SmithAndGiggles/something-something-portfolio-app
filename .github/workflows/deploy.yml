@@ -79,7 +79,7 @@ jobs:
             --project=${{ env.GCP_PROJECT }} \
             --service-account=projects/${{ env.GCP_PROJECT }}/serviceAccounts/${{ env.GCP_SERVICE_ACCOUNT_EMAIL }} \
             --tag ${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ env.GCP_REPOSITORY }}/${{ env.GCP_IMAGE }}:latest \
-            --logging=CLOUD_LOGGING_ONLY
+            --logging=cloud_logging_only
         env:
           CLOUDSDK_CORE_PROJECT: ${{ env.GCP_PROJECT }}
           CLOUDSDK_PROJECT: ${{ env.GCP_PROJECT }}
