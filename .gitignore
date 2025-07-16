@@ -88,4 +88,7 @@ requirements.txt
 
 test/
 
+# Virtual environments
+me2u-venv-flask/
+
 .terragrunt-cache/
