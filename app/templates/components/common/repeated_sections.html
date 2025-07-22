@@ -1,0 +1,60 @@
+# filepath: something-something-portfolio-app/app/templates/components/common/repeated_sections.html
+
+{# 
+  DRY template macros for commonly repeated sections.
+  This reduces template code duplication.
+#}
+
+{# Macro for consistent card grids #}
+{% macro card_grid(cards, grid_cols="row-cols-1 row-cols-md-3 g-4") %}
+  <div class="row {{ grid_cols }}">
+    {% for card in cards %}
+      <div class="col">
+        {% set href = card.href %}
+        {% set logo_src = card.logo_src %}
+        {% set logo_alt = card.logo_alt %}
+        {% set title = card.title %}
+        {% set subtitle = card.subtitle %}
+        {% set badge_text = card.badge_text %}
+        {% set card_class = card.card_class %}
+        {% include 'components/common/cards.html' %}
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{# Macro for page headers with consistent styling #}
+{% macro page_header(title, subtitle="") %}
+  <div class="page-header mb-4">
+    <h1>{{ title }}</h1>
+    {% if subtitle %}
+      <p class="lead text-muted">{{ subtitle }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{# Macro for section headers #}
+{% macro section_header(title, classes="mt-4") %}
+  <h2 class="{{ classes }}">{{ title }}</h2>
+{% endmacro %}
+
+{# Macro for achievement media with consistent styling #}
+{% macro achievement_media(media_type, src, alt=None, poster=None, style=None) %}
+  {% set media_type = media_type %}
+  {% set media_src = src %}
+  {% set media_alt = alt %}
+  {% set media_poster = poster %}
+  {% set media_style = style %}
+  {% include 'components/common/media.html' %}
+{% endmacro %}
+
+{# Macro for button with consistent styling #}
+{% macro action_button(href, text, btn_class="btn btn-primary") %}
+  <a href="{{ href }}" class="{{ btn_class }}" target="_blank" rel="noopener">{{ text }}</a>
+{% endmacro %}
+
+{# Macro for source citations with consistent styling #}
+{% macro source_citations(sources_list) %}
+  {% set sources = sources_list %}
+  {% include 'components/common/sources.html' %}
+{% endmacro %}

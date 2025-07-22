@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "me2u-portfolio"
+version = "0.1.0"
+description = "A Flask portfolio application - me to you"
+dependencies = [
+    "Flask>=2.3.0",
+    "gunicorn>=21.0.0",
+]
+
+# ================================
+# YOUR APP CONFIGURATION
+# ================================
+
+[tool.me2u]
+# Basic app settings
+app_name = "me2u Portfolio"
+version = "0.1.0"
+debug = true
+host = "0.0.0.0"
+port = 8080
+
+# Google Cloud settings
+gcp_project_id = "me2u-prj-app-prod-3aa8"
+gcp_region = "us-central1"
+artifact_registry = "me2u-artifact-docker"
+docker_image_name = "me2u"
+docker_tag = "latest"
