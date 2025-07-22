@@ -1,0 +1,150 @@
+/* 
+  DRY utility classes to reduce inline styles in templates.
+  These replace repetitive style attributes throughout HTML.
+*/
+
+/* Media utilities */
+.media-container {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #000;
+  display: block;
+  margin: 15px auto 0 auto;
+  max-width: 100%;
+}
+
+.media-full-width {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 18px;
+  display: block;
+  background: transparent;
+}
+
+/* Achievement specific */
+.achievement-media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.achievement-content {
+  margin-top: 2rem;
+}
+
+.achievement-text {
+  margin-bottom: 1.1rem;
+}
+
+.achievement-highlight {
+  margin-bottom: 1rem;
+}
+
+/* Layout utilities */
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+.container-max-width {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Spacing utilities */
+.mt-custom {
+  margin-top: 2rem;
+}
+
+.mb-custom {
+  margin-bottom: 2rem;
+}
+
+.py-section {
+  padding: 4rem 0;
+}
+
+/* Card utilities */
+.card-hover-transform {
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-hover-transform:hover {
+  transform: translateY(-2px);
+}
+
+.card-shadow-soft {
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+.card-border-radius {
+  border-radius: 18px;
+}
+
+/* Text utilities */
+.text-accent {
+  color: #f7b731;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Background utilities */
+.bg-gradient-dark {
+  background: linear-gradient(135deg, #1a1a1a 0%, #111214 100%);
+}
+
+.bg-dark-card {
+  background-color: #111214;
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .container-max-width {
+    padding: 0 1rem;
+  }
+  
+  .media-container {
+    height: 250px;
+  }
+}
+
+/* Animation utilities */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
