@@ -99,7 +99,9 @@ def get_techstack_cards():
         tech_card("https://developer.mozilla.org/en-US/docs/Web/JavaScript", "logo-js.svg", "JavaScript", 
                  "JavaScript", "Programming Language"),
         tech_card("https://getbootstrap.com", "logo-bootstrap.png", "Bootstrap Logo", 
-                 "Bootstrap", "Responsive, mobile-first front-end web development framework.")
+                 "Bootstrap", "Responsive, mobile-first front-end web development framework."),
+        tech_card("https://tailwindcss.com/", "logo-tailwindcss.png", "Tailwind CSS Logo", 
+                 "Tailwind CSS", "Utility-first CSS framework for rapid UI development.")
     ]
     
     backend = [
@@ -110,7 +112,9 @@ def get_techstack_cards():
         tech_card("https://jinja.palletsprojects.com/", "logo-jinja-icon.svg", "Jinja2", 
                  "Jinja2", "Template Engine"),
         tech_card("https://gunicorn.org/", "logo-gunicorn.svg", "Gunicorn", 
-                 "Gunicorn", "WSGI Server")
+                 "Gunicorn", "WSGI Server"),
+        tech_card("https://toml.io/en/", "logo-toml.png", "TOML Logo", 
+                 "TOML", "Tom's Obvious, Minimal Language for config files.")
     ]
     
     infra = [
