@@ -1,0 +1,112 @@
+{# Ultra-DRY Bootstrap carousel with Tailwind styling #}
+<div id="{{ carousel_id }}" 
+     class="carousel slide rounded-2xl overflow-hidden relative mb-4 p-2 md:p-4 border border-gray-600 bg-gradient-to-br from-gray-900 to-gray-800 min-h-[600px]"
+     data-bs-ride="carousel" 
+     data-bs-interval="{{ interval|default(20000) }}">
+  
+  <!-- Indicators with Tailwind styling -->
+  <div class="carousel-indicators">
+    {% for slide in slides %}
+      <button type="button" 
+              data-bs-target="#{{ carousel_id }}" 
+              data-bs-slide-to="{{ loop.index0 }}"
+              class="w-3 h-3 rounded-full bg-white/70 hover:bg-white transition-all duration-200{% if loop.first %} active bg-white{% endif %}"
+              aria-current="{% if loop.first %}true{% else %}false{% endif %}"
+              aria-label="Slide {{ loop.index }}"></button>
+    {% endfor %}
+  </div>
+
+  <!-- Carousel content -->
+  <div class="carousel-inner h-full">
+    {% for slide in slides %}
+      <div class="carousel-item h-full{% if loop.first %} active{% endif %}">
+        <div class="row items-center g-0 h-full">
+          
+          <!-- Media column -->
+          <div class="col-md-6 text-dark flex items-center justify-center h-full p-4">
+            {% set media_type = 'video' if slide.src.endswith('.mp4') else 'image' %}
+            {% set media_src = slide.src %}
+            {% set media_alt = slide.alt %}
+            {% include 'components/common/media.html' %}
+          </div>
+          
+          <!-- Content column -->
+          <div class="col-md-6 bg-black text-white flex flex-col justify-center p-4 h-full">
+            <div class="animate-fade-in">
+              {% if slide.title %}
+                <h3 class="text-white mb-4 text-xl font-semibold">{{ slide.title }}</h3>
+              {% endif %}
+              
+              <!-- Multi-paragraph content with sources -->
+              {% if slide.highlight and slide.sources1 and slide.sources2 %}
+                <p class="text-gray-100 mb-4">{{ slide.text }}</p>
+                <div class="mb-4">
+                  {% set sources = slide.sources1 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+                <p class="text-yellow-300 mb-4 font-medium">{{ slide.highlight }}</p>
+                <div class="mb-4">
+                  {% set sources = slide.sources2 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+              {% elif slide.sources1 %}
+                <div class="text-white prose prose-invert">
+                  {% set paragraphs = slide.text.split('\n\n') %}
+                  {% for paragraph in paragraphs %}
+                    {% set p = paragraph %}
+                    {% if slide.team_links and 'Alan Smith' in p %}
+                      {% set p = p.replace('Alan Smith', '<a href="' ~ slide.team_links['Alan Smith'] ~ '" target="_blank" class="text-blue-400 hover:text-blue-300">Alan Smith</a>') %}
+                    {% endif %}
+                    <p class="mb-3">{{ p|safe }}</p>
+                  {% endfor %}
+                </div>
+                <div class="mb-4">
+                  {% set sources = slide.sources1 %}
+                  {% include 'components/common/sources.html' %}
+                </div>
+              {% else %}
+                <p class="text-white leading-relaxed">{{ slide.text }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <!-- Navigation arrows with Tailwind -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon bg-black/50 rounded-full p-2 hover:bg-black/70 transition-all" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#{{ carousel_id }}" data-bs-slide="next">
+    <span class="carousel-control-next-icon bg-black/50 rounded-full p-2 hover:bg-black/70 transition-all" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+<style>
+  /* Responsive fixed height for carousel */
+  @media (min-width: 768px) {
+    .carousel-fixed-size {
+      min-height: 600px;
+      height: auto;
+      max-height: none;
+    }
+    .carousel-fixed-size .carousel-inner,
+    .carousel-fixed-size .carousel-item,
+    .carousel-fixed-size .row,
+    .carousel-fixed-size .col-md-6 {
+      min-height: 600px;
+      height: 100%;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .carousel-fixed-size {
+      min-height: 320px;
+      height: auto;
+      max-height: none;
+    }
+  }
+</style>

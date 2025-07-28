@@ -1,4 +1,4 @@
-from flask import url_for
+from flask import url_for, current_app
 
 def inject_nav_links():
     nav_links = [
@@ -9,7 +9,7 @@ def inject_nav_links():
         {"href": url_for('routes.irl'), "icon": "fas fa-users", "label": "IRL"},
         {"href": url_for('routes.connect'), "icon": "fas fa-link", "label": "CONNECT"},
     ]
-    return dict(nav_links=nav_links)
+    return dict(nav_links=nav_links, app_name=current_app.config.get("APP_NAME", "me2u Portfolio"))
 
 def inject_footer_links():
     footer_links = [

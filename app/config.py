@@ -5,6 +5,7 @@ Reads from pyproject.toml for DRY principles.
 
 import os
 import tomllib
+import toml
 from pathlib import Path
 
 
@@ -68,3 +69,16 @@ class Config:
 
 # Global instance
 config = Config()
+
+
+def load_app_config():
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    toml_path = os.path.join(base_dir, "pyproject.toml")
+    config = toml.load(toml_path)
+    return config.get("tool", {}).get("me2u", {})
+
+
+def apply_config(app):
+    app_config = load_app_config()
+    for key, value in app_config.items():
+        app.config[key.upper()] = value

@@ -1,0 +1,5 @@
+{% for paragraph in paragraphs %}
+  <p{% if paragraph.class %} class="{{ paragraph.class }}"{% else %} class="achievement-text"{% endif %}{% if paragraph.style %} style="{{ paragraph.style }}"{% endif %}>
+    {{ paragraph.text|safe }}
+  </p>
+{% endfor %}

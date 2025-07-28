@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to me2u.place{% endblock %}
+{% block content %}
+    <div class="container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-primary mb-3">Welcome to me2u.place</h1>
+            <p class="text-lg text-gray-400 mb-4">Your gateway to my professional portfolio</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-user-tie fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Portfolio</h5>
+                        <p class="card-text">Explore my professional journey, skills, and achievements</p>
+                        <a href="https://portfolio.me2u.space/" class="btn btn-primary">View Portfolio</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-envelope fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Contact</h5>
+                        <p class="card-text">Get in touch for opportunities and collaborations</p>
+                        <a href="https://portfolio.me2u.space/connect" class="btn btn-success">Contact Me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="card-title mb-2">Cloud & DevOps Engineer</h5>
+                                <p class="card-text text-muted mb-0">
+                                    Specializing in Google Cloud Platform, Terraform, Kubernetes, and modern DevOps practices
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <span class="badge bg-primary">GCP</span>
+                                    <span class="badge bg-secondary">Terraform</span>
+                                    <span class="badge bg-info">Kubernetes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <p class="text-muted">
+                <small>This domain redirects to my main portfolio at 
+                <a href="https://portfolio.me2u.space/" class="text-decoration-none">portfolio.me2u.space</a></small>
+            </p>
+        </div>
+    </div>
+{% endblock %}

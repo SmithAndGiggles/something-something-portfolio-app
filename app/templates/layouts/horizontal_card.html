@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="{{ content_class|default('container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl') }}">
+  {% if title %}
+    <h1 class="text-3xl font-bold mb-8 animate-fade-in">{{ title }}</h1>
+  {% endif %}
+  
+  {% set image_src = url_for('static', filename=card_data.image_src) %}
+  {% set image_alt = card_data.image_alt %}
+  {% set card_title = card_data.card_title %}
+  {% set card_text = card_data.card_text %}
+  {% include 'components/common/horizontal_card.html' %}
+</div>
+{% endblock %}
