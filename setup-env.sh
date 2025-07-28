@@ -38,6 +38,12 @@ echo "⬆️  Upgrading pip..."
 echo "📦 Installing package from pyproject.toml..."
 "$VENV_DIR/bin/pip" install -e .
 
+# Ensure toml is installed for config loading
+source me2u-venv-flask/bin/activate
+pip install --upgrade pip
+pip install toml
+deactivate
+
 # Confirm Flask is properly installed
 echo "✅ Verifying Flask installation..."
 "$VENV_DIR/bin/python" -c "import flask; print('✅ Flask is installed and available.')"

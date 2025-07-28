@@ -1,0 +1,12 @@
+{# Carousel Dot Component
+   Usage:
+     {% set is_active = True %}
+     {% set index = 0 %}
+     {% set aria_label = 'Go to slide 1' %}
+     {% include 'components/common/dot.html' %}
+   Parameters:
+     - is_active: boolean (True if this dot is active)
+     - index: integer (slide index)
+     - aria_label: string for accessibility
+#}
+<button type="button" class="carousel-dot{% if is_active %} active{% endif %}" data-slide-to="{{ index }}" aria-label="{{ aria_label }}" aria-current="{{ 'true' if is_active else 'false' }}"></button>

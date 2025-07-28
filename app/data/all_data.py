@@ -57,6 +57,12 @@ def get_certification_cards():
         cert_card("https://www.credly.com/badges/85110e1e-ea27-4687-9080-f83eed5694a0", 
                  "logo-gcp-professional-architect.png", "Google Cloud Professional Cloud Architect",
                  "Google Cloud", "Professional Cloud Architect"),
+        cert_card("https://www.credly.com/badges/9543b3ca-8ec4-4ca6-aa7b-b68853078cd9/public_url", 
+                 "logo-gcp-devops-engineer-certification.png", "Google Cloud DevOps Engineer",
+                 "Google Cloud", "Professional Cloud DevOps Engineer"),
+        cert_card("https://www.credly.com/badges/5f4be6a1-71e2-48dc-8b6e-7fbcf26163f9", 
+                 "logo-aws-certified-cloud-practitioner.png", "AWS Cloud Practitioner",
+                 "AWS", "Certified Cloud Practitioner"),
         cert_card("https://www.credly.com/badges/cdd46167-59b6-46be-9abd-29eebf7db00e", 
                  "logo-terraform.png", "HashiCorp Terraform Associate",
                  "HashiCorp", "Terraform Associate")
