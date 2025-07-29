@@ -13,9 +13,9 @@ WORKDIR /app
 # Install build dependencies only if needed, then remove (uncomment if you need to build wheels)
 # RUN apk add --no-cache build-base
 
-# Copy requirements and install dependencies
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy pyproject.toml and install dependencies
+COPY pyproject.toml ./
+RUN pip install --no-cache-dir .
 
 # Copy only necessary files
 COPY app ./app
