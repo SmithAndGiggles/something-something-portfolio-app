@@ -1,11 +1,10 @@
 {% if media_type == 'image' %}
-  <img src="{{ media_src }}" alt="{{ media_alt }}" class="achievement-media w-100 h-100" loading="lazy" style="object-fit:contain;">
+  <img src="{{ media_src }}" alt="{{ media_alt }}" class="max-w-full max-h-full object-contain" loading="lazy">
 {% elif media_type == 'video' %}
-  <video class="achievement-media w-100 h-100"
+  <video class="max-w-full max-h-full object-contain"
     controls
     preload="none"
     {% if media_poster %}poster="{{ media_poster }}"{% endif %}
-    style="object-fit:contain;"
     playsinline
     autoplay
     muted

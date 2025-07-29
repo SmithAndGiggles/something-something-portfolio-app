@@ -1,6 +1,7 @@
 {# Ultra-DRY Bootstrap carousel with Tailwind styling #}
 <div id="{{ carousel_id }}" 
-     class="carousel slide rounded-2xl overflow-hidden relative mb-4 p-2 md:p-4 border border-gray-600 bg-gradient-to-br from-gray-900 to-gray-800 min-h-[600px]"
+     class="carousel slide rounded-2xl overflow-hidden relative mb-4 p-2 md:p-4 border-4 border-white bg-gradient-to-br from-gray-900 to-gray-800"
+     style="height: 60vh; min-height: 350px; max-height: 600px;"
      data-bs-ride="carousel" 
      data-bs-interval="{{ interval|default(20000) }}">
   
@@ -20,23 +21,20 @@
   <div class="carousel-inner h-full">
     {% for slide in slides %}
       <div class="carousel-item h-full{% if loop.first %} active{% endif %}">
-        <div class="row items-center g-0 h-full">
-          
-          <!-- Media column -->
-          <div class="col-md-6 text-dark flex items-center justify-center h-full p-4">
+        <div class="flex w-full h-full">
+          <!-- Image column - Left side -->
+          <div class="w-1/2 flex items-center justify-center h-full p-4 bg-black border-r-2 border-white">
             {% set media_type = 'video' if slide.src.endswith('.mp4') else 'image' %}
             {% set media_src = slide.src %}
             {% set media_alt = slide.alt %}
             {% include 'components/common/media.html' %}
           </div>
-          
-          <!-- Content column -->
-          <div class="col-md-6 bg-black text-white flex flex-col justify-center p-4 h-full">
-            <div class="animate-fade-in">
+          <!-- Text column - Right side -->
+          <div class="w-1/2 flex flex-col justify-center p-4 h-full overflow-auto bg-black text-white">
+            <div class="animate-fade-in w-full">
               {% if slide.title %}
                 <h3 class="text-white mb-4 text-xl font-semibold">{{ slide.title }}</h3>
               {% endif %}
-              
               <!-- Multi-paragraph content with sources -->
               {% if slide.highlight and slide.sources1 and slide.sources2 %}
                 <p class="text-gray-100 mb-4">{{ slide.text }}</p>
@@ -90,23 +88,57 @@
   /* Responsive fixed height for carousel */
   @media (min-width: 768px) {
     .carousel-fixed-size {
-      min-height: 600px;
+      min-height: 400px;
       height: auto;
-      max-height: none;
+      max-height: 80vh;
     }
     .carousel-fixed-size .carousel-inner,
     .carousel-fixed-size .carousel-item,
     .carousel-fixed-size .row,
     .carousel-fixed-size .col-md-6 {
-      min-height: 600px;
+      min-height: 400px;
       height: 100%;
+      max-height: 80vh;
     }
   }
   @media (max-width: 767.98px) {
     .carousel-fixed-size {
-      min-height: 320px;
+      min-height: 200px;
       height: auto;
-      max-height: none;
+      max-height: 60vh;
     }
+  }
+
+  /* Specific styling for achievements and irl page images */
+  #achievementsCarousel img,
+  #irlCarousel img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Ensure side-by-side layout for achievements and irl carousels */
+  #achievementsCarousel .carousel-item > div,
+  #irlCarousel .carousel-item > div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+  }
+
+  #achievementsCarousel .carousel-item > div > div,
+  #irlCarousel .carousel-item > div > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Center images in their containers */
+  #achievementsCarousel .carousel-item > div > div:first-child,
+  #irlCarousel .carousel-item > div > div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
