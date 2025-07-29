@@ -9,6 +9,7 @@ description = "A Flask portfolio application - me to you"
 dependencies = [
     "Flask>=2.3.0",
     "gunicorn>=21.0.0",
+    "toml>=0.10.0",
 ]
 
 # ================================

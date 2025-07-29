@@ -32,6 +32,8 @@ def get_education_cards():
                  "Introduction to Unix/Linux, Course", "Centennial College • 2015"),
         edu_card("https://humber.ca/", "logo-humber-college.svg", "Humber College logo", 
                  "Red Hat Enterprise Linux System Admin, Course", "Humber College • 2015"),
+        edu_card("https://www.senecapolytechnic.ca/home.html", "logo-seneca.png", "Seneca Polytechnic logo", 
+                 "Introduction to Databases", "Seneca Polytechnic • 2017"),
         edu_card("https://www.georgebrown.ca/", "logo-george-brown-college.svg", "George Brown College logo", 
                  "Foundations of PHP, Course", "George Brown College • 2017"),
         edu_card("https://www.yorku.ca/", "logo-york-u.png", "York University logo", 

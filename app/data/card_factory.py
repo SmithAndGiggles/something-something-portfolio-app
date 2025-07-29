@@ -60,6 +60,13 @@ def get_education_cards():
             logo_alt="York University logo",
             title="Full-Stack Web Development Certificate",
             subtitle="York University • 2018 - 2019"
+        ),
+        generate_card_data(
+            href="https://www.senecapolytechnic.ca/home.html",
+            logo_src=url_for('static', filename='images/logos/logo-seneca.png'),
+            logo_alt="Seneca Polytechnic logo",
+            title="Introduction to Databases",
+            subtitle="Seneca Polytechnic • 2017"
         )
     ]
 
