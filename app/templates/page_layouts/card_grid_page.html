@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="{{ content_class|default('container py-4 px-2 md:px-8 mx-auto max-w-6xl') }}">
+<div class="{{ content_class|default('container py-4 px-2 px-md-4 mx-auto container-standard') }}">
   {% include 'components/common/page_title.html' %}
   
   <div class="{{ grid_class|default('row row-cols-1 row-cols-md-3 g-4') }}">

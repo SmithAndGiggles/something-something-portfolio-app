@@ -1,165 +1,216 @@
 /* 
-  DRY utility classes to reduce inline styles in templates.
-  These replace repetitive style attributes throughout HTML.
+  Utility Classes for Portfolio Application
+  ========================================
+  
+  DRY (Don't Repeat Yourself) utility classes to reduce inline styles 
+  throughout templates. These classes provide consistent styling patterns
+  and improve maintainability by centralizing common style combinations.
 */
 
-/* Scrolling and layout fixes */
+/* === LAYOUT & SCROLLING === */
+
+/* Smooth scrolling behavior for better UX */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth;              /* Smooth anchor link transitions */
 }
 
+/* Prevent horizontal scroll while allowing vertical */
 body {
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-x: hidden;                   /* No horizontal scrollbar */
+  overflow-y: auto;                     /* Allow vertical scrolling */
 }
 
-/* Error page container */
+/* Error page layout container */
 .error-container {
-  min-height: 70vh;
+  min-height: 70vh;                     /* Minimum height for error pages */
 }
 
-/* Media utilities */
+/* === MEDIA CONTENT UTILITIES === */
+
+/* Standard media container for carousel and content images */
 .media-container {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #000;
-  display: block;
-  margin: 15px auto 0 auto;
-  max-width: 100%;
+  width: 100%;                          /* Full container width */
+  height: 350px;                        /* Fixed height for consistency */
+  object-fit: cover;                    /* Crop image to fit dimensions */
+  border-radius: 12px;                  /* Rounded corners */
+  background: #000;                     /* Black background for loading state */
+  display: block;                       /* Block display for proper spacing */
+  margin: 15px auto 0 auto;             /* Center with top margin */
+  max-width: 100%;                      /* Responsive width limit */
 }
 
+/* Full-width media display (for featured content) */
 .media-full-width {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 18px;
-  display: block;
-  background: transparent;
+  width: 100%;                          /* Full container width */
+  height: 100%;                         /* Full container height */
+  object-fit: contain;                  /* Preserve aspect ratio */
+  border-radius: 18px;                  /* Larger rounded corners */
+  display: block;                       /* Block display */
+  background: transparent;              /* No background color */
 }
 
-/* Achievement specific */
+/* Achievement-specific media styling */
 .achievement-media {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  width: 100%;                          /* Full width for achievement content */
+  height: 100%;                         /* Full height for achievement content */
+  object-fit: contain;                  /* Maintain aspect ratio for achievements */
 }
 
+/* Achievement content section spacing */
 .achievement-content {
-  margin-top: 2rem;
+  margin-top: 2rem;                     /* Top spacing for achievement text */
 }
 
+/* Achievement text content spacing */
 .achievement-text {
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.1rem;                /* Spacing between achievement paragraphs */
 }
 
+/* Achievement highlight sections */
 .achievement-highlight {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem;                  /* Spacing for highlighted achievement text */
 }
 
-/* Layout utilities */
+/* === LAYOUT UTILITIES === */
+
+/* Flexbox centering utility */
 .center-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex;                        /* Flexbox layout */
+  align-items: center;                  /* Vertical centering */
+  justify-content: center;              /* Horizontal centering */
 }
 
+/* Full viewport height utility */
 .full-height {
-  height: 100vh;
+  height: 100vh;                        /* Full viewport height */
 }
 
-.container-max-width {
-  max-width: 1100px;
-  margin: 0 auto;
+/* === CONTAINER WIDTH UTILITIES === */
+
+/* Standard container for most content pages (education, tech stack, etc.) */
+.container-standard {
+  max-width: 1152px;                    /* 1152px max width for content readability */
+  margin: 0 auto;                       /* Center container horizontally */
 }
 
-/* Spacing utilities */
+/* Narrow container for focused content (landing page, single cards) */
+.container-narrow {
+  max-width: 1024px;                    /* 1024px max width for narrower content */
+  margin: 0 auto;                       /* Center container horizontally */
+}
+
+/* Carousel-optimized container width */
+.container-carousel {
+  max-width: 1100px;                    /* 1100px max width optimized for carousel content */
+  margin: 0 auto;                       /* Center container horizontally */
+}
+
+/* === SPACING UTILITIES === */
+
+/* Custom margin utilities for consistent spacing */
 .mt-custom {
-  margin-top: 2rem;
+  margin-top: 2rem;                     /* Standard top margin (32px) */
 }
 
 .mb-custom {
-  margin-bottom: 2rem;
+  margin-bottom: 2rem;                  /* Standard bottom margin (32px) */
 }
 
+/* Section padding utility */
 .py-section {
-  padding: 4rem 0;
+  padding: 4rem 0;                      /* Large vertical padding for content sections */
 }
 
-/* Card utilities */
+/* === CARD INTERACTION UTILITIES === */
+
+/* Smooth hover animation for interactive cards */
 .card-hover-transform {
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out; /* Smooth transform transition */
 }
 
 .card-hover-transform:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px);          /* Subtle lift effect on hover */
 }
 
+/* Soft shadow for enhanced card depth */
 .card-shadow-soft {
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08); /* Subtle soft shadow */
 }
 
+/* Consistent border radius for modern card design */
 .card-border-radius {
-  border-radius: 18px;
+  border-radius: 18px;                  /* Rounded corners for modern appearance */
 }
 
-/* Text utilities */
+/* === TEXT STYLING UTILITIES === */
+
+/* Accent color for highlighted text */
 .text-accent {
-  color: #f7b731;
+  color: #f7b731;                       /* Yellow accent color for highlights */
 }
 
+/* Text shadow for improved readability on dark backgrounds */
 .text-shadow {
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Subtle text shadow for depth */
 }
 
-/* Background utilities */
+/* === BACKGROUND UTILITIES === */
+
+/* Dark gradient background utility */
+/* Dark gradient background utility */
 .bg-gradient-dark {
-  background: linear-gradient(135deg, #1a1a1a 0%, #111214 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #111214 100%); /* Diagonal dark gradient */
 }
 
+/* Solid dark background for cards */
 .bg-dark-card {
-  background-color: #111214;
+  background-color: #111214;            /* Dark background color for cards */
 }
 
-/* Responsive utilities */
+/* === RESPONSIVE DESIGN === */
+
+/* Mobile and tablet responsive adjustments */
 @media (max-width: 768px) {
-  .container-max-width {
-    padding: 0 1rem;
-  }
-  
-  .media-container {
-    height: 250px;
+  .container-standard,
+  .container-narrow,
+  .container-carousel {
+    max-width: 95%;                     /* Reduce width on mobile */
+    padding: 0 15px;                    /* Add horizontal padding on mobile */
   }
 }
 
-/* Animation utilities */
+/* === ANIMATION UTILITIES === */
+
+/* Fade-in animation utility class */
 .fade-in {
-  animation: fadeIn 0.5s ease-in;
+  animation: fadeIn 0.5s ease-in;       /* Apply fade-in animation */
 }
 
+/* Fade-in keyframe animation */
 @keyframes fadeIn {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 0;                         /* Start transparent */
+    transform: translateY(20px);        /* Start slightly below */
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1;                         /* End fully visible */
+    transform: translateY(0);           /* End at normal position */
   }
 }
 
+/* Slide-up animation utility class */
 .slide-up {
-  animation: slideUp 0.6s ease-out;
+  animation: slideUp 0.6s ease-out;     /* Apply slide-up animation */
 }
 
+/* Slide-up keyframe animation */
 @keyframes slideUp {
   from {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 0;                         /* Start transparent */
+    transform: translateY(30px);        /* Start further below */
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1;                         /* End fully visible */
+    transform: translateY(0);           /* End at normal position */
   }
 }

@@ -1,58 +1,28 @@
 /* 
-  Ultra-minimal custom CSS - only what Tailwind + Bootstrap can't handle
-  Everything else should be Tailwind utility classes
+  Custom CSS for Portfolio Application
+  ===================================
+  
+  Additional custom styles that extend Bootstrap functionality.
+  This file contains component-specific overrides and custom
+  animations that aren't covered by the main stylesheet.
+  
+  Purpose:
+  - Custom animation definitions for enhanced user experience
+  - Future extensibility for additional custom styling
+  - Separation of concerns from main style.css
 */
 
-/* Tailwind custom animations via @layer utilities */
-@layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-in;
-  }
-  
-  .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
-  }
+/* === CUSTOM ANIMATIONS === */
+
+/* Fade-in animation for smooth element transitions */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in;       /* Smooth fade-in over 0.5 seconds */
 }
 
-/* Bootstrap overrides for global styles */
-html, body {
-  background: #000;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  color: #fff;
+/* Slide-up animation for content that enters from below */
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;     /* Smooth slide-up over 0.6 seconds */
 }
 
-.container, .main-content, main {
-  padding-bottom: 2.5rem;
-}
-
-/* Keep carousel styles (Bootstrap component styling) */
-.carousel-indicators {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.carousel-indicators li {
-  background-color: #fff;
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  margin: 0 6px;
-  display: inline-block;
-  border: 1px solid #888;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.carousel-indicators li.active {
-  opacity: 1;
-  background-color: #fff;
-}
-
-.carousel-indicators li::marker, 
-.carousel-indicators li::before, 
-.carousel-indicators li::after {
-  content: none !important;
-}
+/* === FUTURE EXTENSIONS === */
+/* Additional custom styles can be added here as needed */

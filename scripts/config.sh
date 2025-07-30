@@ -7,9 +7,9 @@
 # ================================================================
 # Application Configuration
 # ================================================================
-export APP_NAME="me2u Portfolio"
+export APP_NAME="Portfolio"
 export APP_VERSION="1.0.0"
-export DOCKER_IMAGE_NAME="me2u-app"
+export DOCKER_IMAGE_NAME="portfolio-app"
 export DEFAULT_IMAGE_TAG="latest"
 
 # ================================================================
@@ -73,7 +73,7 @@ import tomllib
 try:
     with open('pyproject.toml', 'rb') as f:
         data = tomllib.load(f)
-    value = data.get('tool', {}).get('me2u', {}).get('$toml_key', '')
+    value = data.get('tool', {}).get('portfolio', {}).get('$toml_key', '')
     print(value) if value else exit(1)
 except Exception:
     exit(1)
