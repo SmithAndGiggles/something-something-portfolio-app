@@ -50,7 +50,7 @@ def bad_request_error(error):
     """
     content = error_400.get_400_error_content(url_for)
     return render_template(
-        "400-page.html",
+        "pages/400-page.html",
         image_src=content["image_src"],
         image_alt=content["image_alt"],
         message=content["message"]
@@ -71,9 +71,9 @@ def not_found_error(error):
         Tuple of (rendered error template, 404 status code)
         Template includes custom image, alt text, and helpful user message
     """
-    content = error_404.get_400_error_content(url_for)
+    content = error_404.get_404_error_content(url_for)
     return render_template(
-        "404-page.html",
+        "pages/404-page.html",
         image_src=content["image_src"],
         image_alt=content["image_alt"],
         message=content["message"]
@@ -99,7 +99,7 @@ def internal_server_error(error):
     """
     content = error_500.get_500_error_content(url_for)
     return render_template(
-        "500-page.html",
+        "pages/500-page.html",
         image_src=content["image_src"],
         image_alt=content["image_alt"],
         message=content["message"]

@@ -31,7 +31,7 @@ class Config:
     Cloud-agnostic configuration manager with environment variable overrides.
     
     This class implements a hierarchical configuration system:
-    1. Default values from pyproject.toml [tool.me2u] section
+    1. Default values from pyproject.toml [tool.portfolio] section
     2. Environment variables override defaults (higher priority)
     3. Type conversion and validation for configuration values
     
@@ -48,7 +48,7 @@ class Config:
         with open(config_file, "rb") as f:
             data = tomllib.load(f)
         
-        self._config = data.get("tool", {}).get("me2u", {})
+        self._config = data.get("tool", {}).get("portfolio", {})
     
     def get(self, key: str, default=None):
         """
@@ -71,7 +71,7 @@ class Config:
     @property
     def app_name(self) -> str:
         """Application display name - safe to use default from pyproject.toml."""
-        return self.get("app_name", "me2u Portfolio")
+        return self.get("app_name", "Portfolio")
     
     @property
     def version(self) -> str:
@@ -108,11 +108,11 @@ class Config:
     
     @property
     def artifact_registry(self) -> str:
-        return self.get("artifact_registry", "me2u-artifact-docker")
+        return self.get("artifact_registry", "portfolio-artifact-docker")
     
     @property
     def docker_image_name(self) -> str:
-        return self.get("docker_image_name", "me2u")
+        return self.get("docker_image_name", "portfolio-app")
     
     @property
     def docker_tag(self) -> str:
@@ -127,7 +127,7 @@ def load_app_config():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     toml_path = os.path.join(base_dir, "pyproject.toml")
     config = toml.load(toml_path)
-    return config.get("tool", {}).get("me2u", {})
+    return config.get("tool", {}).get("portfolio", {})
 
 
 def apply_config(app):
