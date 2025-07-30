@@ -16,7 +16,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "me2u-portfolio"
+name = "portfolio"
 version = "0.1.0"
 description = "A cloud-agnostic Flask portfolio application showcasing professional experience"
 dependencies = [
@@ -42,9 +42,9 @@ dependencies = [
 # 2. .env file values (development)
 # 3. Environment variables (highest priority - production)
 
-[tool.me2u]
+[tool.portfolio]
 # Application Identity - Safe defaults for display and metadata
-app_name = "me2u Portfolio"           # Display name shown in UI and logs
+app_name = "Portfolio"                # Display name shown in UI and logs
 version = "0.1.0"                     # Application version (semantic versioning)
 
 # Development Server Configuration - Local development defaults

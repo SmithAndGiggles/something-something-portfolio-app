@@ -1,37 +1,60 @@
+/* 
+  Main Stylesheet for Portfolio Application
+  ========================================
+  
+  Core styles for the portfolio website including global layout,
+  background, typography, and component-specific styling.
+*/
+
+/* Global Layout & Background */
 html, body {
-  background: #000;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  color: #fff;
+  background: #000;                    /* Dark theme background */
+  background-repeat: no-repeat;        /* Prevent background tiling */
+  background-attachment: fixed;        /* Keep background fixed during scroll */
+  min-height: 100vh;                   /* Ensure full viewport height */
+  color: #fff;                         /* Default text color for dark theme */
 }
 
+/* Container Spacing - Prevents Footer Overlap */
 .container, .main-content, main {
-  padding-bottom: 2.5rem;
+  padding-bottom: 300px;               /* Extra large bottom padding for fixed footer clearance */
+  margin-bottom: 150px;                /* Additional margin for visual separation */
 }
 
+/* Card Grid Layout - Extra spacing for last row */
+.row:last-child {
+  margin-bottom: 200px;                /* Ensures last row of cards has proper spacing */
+}
+
+/* Bootstrap Carousel Indicators - Custom Styling */
 .carousel-indicators {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style: none;                    /* Remove default list styling */
+  margin: 0;                           /* Reset default margins */
+  padding: 0;                          /* Reset default padding */
 }
+
 .carousel-indicators li {
-  background-color: #fff;
-  border-radius: 50%;
-  width: 12px;
-  height: 12px;
-  margin: 0 6px;
-  display: inline-block;
-  border: 1px solid #888;
-  opacity: 0.7;
-  transition: opacity 0.2s;
+  background-color: #fff;              /* White indicator dots */
+  border-radius: 50%;                  /* Circular indicators */
+  width: 12px;                         /* Fixed width for consistency */
+  height: 12px;                        /* Fixed height for consistency */
+  margin: 0 6px;                       /* Spacing between indicators */
+  display: inline-block;               /* Horizontal layout */
+  border: 1px solid #888;              /* Subtle border for definition */
+  opacity: 0.7;                        /* Inactive state opacity */
+  transition: opacity 0.2s;            /* Smooth hover/active transitions */
 }
+
 .carousel-indicators li.active {
-  opacity: 1;
-  background-color: #fff;
+  opacity: 1;                          /* Full opacity for active indicator */
+  background-color: #fff;              /* Ensure active indicator is white */
 }
-.carousel-indicators li::marker, .carousel-indicators li::before, .carousel-indicators li::after {
-  content: none !important;
+
+/* Remove unwanted pseudo-elements from indicators */
+.carousel-indicators li::marker, 
+.carousel-indicators li::before, 
+.carousel-indicators li::after {
+  content: none !important;            /* Force removal of any pseudo-elements */
 }
 
 
