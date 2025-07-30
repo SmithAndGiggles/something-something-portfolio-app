@@ -157,7 +157,6 @@ body {
 /* === BACKGROUND UTILITIES === */
 
 /* Dark gradient background utility */
-/* Dark gradient background utility */
 .bg-gradient-dark {
   background: linear-gradient(135deg, #1a1a1a 0%, #111214 100%); /* Diagonal dark gradient */
 }
