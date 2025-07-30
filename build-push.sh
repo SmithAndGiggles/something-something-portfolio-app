@@ -26,7 +26,7 @@ import sys
 try:
     with open('pyproject.toml', 'rb') as f:
         data = tomllib.load(f)
-    value = data.get('tool', {}).get('me2u', {}).get('$key', '$default')
+    value = data.get('tool', {}).get('portfolio', {}).get('$key', '$default')
     print(value)
 except Exception as e:
     print('$default')
