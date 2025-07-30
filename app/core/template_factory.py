@@ -30,7 +30,7 @@ contexts without duplicating layout and styling configuration.
 """
 
 from flask import url_for
-from ..data.constants import CAROUSEL_INTERVAL
+from ..data.constants import UI_CONFIG
 
 # CSS Constants - Centralized styling patterns
 # ===========================================
@@ -151,7 +151,7 @@ class ComponentFactory:
     """
     
     @staticmethod
-    def carousel_config(carousel_id, slides, interval=CAROUSEL_INTERVAL):
+    def carousel_config(carousel_id, slides, interval=UI_CONFIG['carousel']['interval']):
         """
         Generate standard carousel component configuration
         

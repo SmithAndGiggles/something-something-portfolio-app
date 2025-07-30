@@ -15,26 +15,32 @@ Single source of truth for logos, URLs, titles, and common strings.
 # These values can be overridden by environment variables in production
 
 # UI Configuration
-CAROUSEL_INTERVAL = 20000  # Carousel auto-advance interval in milliseconds
-CARD_BACKGROUND_COLOR = '#111214'  # Dark card background color
-ERROR_IMAGE_WIDTH = '600px'  # Error page image width
-ERROR_IMAGE_MAX_WIDTH = '90vw'  # Error page responsive max width
+UI_CONFIG = {
+    'carousel': {
+        'interval': 20000,  # Carousel auto-advance interval in milliseconds
+        'height': '60vh',
+        'min_height': '350px',
+        'max_height': '600px'
+    },
+    'cards': {
+        'background_color': '#111214',  # Dark card background color
+        'max_width': '320px',
+        'min_width': '220px',
+        'logo_height': '96px',
+        'logo_max_height': '60px'
+    },
+    'errors': {
+        'image_width': '600px',  # Error page image width
+        'image_max_width': '90vw'  # Error page responsive max width
+    }
+}
 
 # Contact Information
-PORTFOLIO_EMAIL = 'alan@me2u.space'  # Primary contact email
-PORTFOLIO_DOMAIN = 'portfolio.me2u.space'  # Portfolio domain
-CONTACT_URL_PATH = '/connect'  # Contact page path
-
-# Card Dimensions
-CARD_MAX_WIDTH = '320px'
-CARD_MIN_WIDTH = '220px'
-CARD_LOGO_HEIGHT = '96px'
-CARD_LOGO_MAX_HEIGHT = '60px'
-
-# Carousel Dimensions  
-CAROUSEL_HEIGHT = '60vh'
-CAROUSEL_MIN_HEIGHT = '350px'
-CAROUSEL_MAX_HEIGHT = '600px'
+CONTACT_CONFIG = {
+    'email': 'fillips.chants-7v@icloud.com',  # Primary contact email
+    'domain': 'portfolio.me2u.space',  # Portfolio domain
+    'contact_path': '/connect'  # Contact page path
+}
 
 # INSTITUTIONAL DATA
 # ==================
@@ -162,6 +168,7 @@ TECHNOLOGIES = {
     },
     
     # Infrastructure & DevOps
+    # Container Technologies
     'docker': {
         'name': 'Docker',
         'url': 'https://www.docker.com/',
@@ -178,6 +185,8 @@ TECHNOLOGIES = {
         'category': 'infra',
         'description': 'Container Orchestration'
     },
+    
+    # Infrastructure as Code
     'terraform': {
         'name': 'Terraform',
         'url': 'https://www.terraform.io/',
@@ -186,6 +195,26 @@ TECHNOLOGIES = {
         'category': 'infra',
         'description': 'IaC Tool'
     },
+    'terragrunt': {
+        'name': 'Terragrunt',
+        'url': 'https://terragrunt.gruntwork.io/',
+        'logo': 'logo-terragrunt.png',
+        'alt': 'Terragrunt',
+        'category': 'infra',
+        'description': 'IaC Wrapper'
+    },
+    
+    # Cloud Platforms
+    'cloud_run': {
+        'name': 'Google Cloud Run',
+        'url': 'https://cloud.google.com/run',
+        'logo': 'logo-gcp-cloud-run.png',
+        'alt': 'Cloud Run',
+        'category': 'infra',
+        'description': 'Serverless Platform'
+    },
+    
+    # Source Control & CI/CD
     'github': {
         'name': 'GitHub',
         'url': 'https://github.com',
@@ -202,14 +231,8 @@ TECHNOLOGIES = {
         'category': 'infra',
         'description': 'CI/CD'
     },
-    'terragrunt': {
-        'name': 'Terragrunt',
-        'url': 'https://terragrunt.gruntwork.io/',
-        'logo': 'logo-terragrunt.png',
-        'alt': 'Terragrunt',
-        'category': 'infra',
-        'description': 'IaC Wrapper'
-    },
+    
+    # Configuration & Scripting
     'yamlscript': {
         'name': 'Yamlscript',
         'url': 'https://yamlscript.org',
@@ -217,14 +240,6 @@ TECHNOLOGIES = {
         'alt': 'Yamlscript',
         'category': 'infra',
         'description': 'YAML-based Scripting Language'
-    },
-    'cloud_run': {
-        'name': 'Google Cloud Run',
-        'url': 'https://cloud.google.com/run',
-        'logo': 'logo-gcp-cloud-run.png',
-        'alt': 'Cloud Run',
-        'category': 'infra',
-        'description': 'Serverless Platform'
     }
 }
 
@@ -340,21 +355,14 @@ SOCIAL_LINKS = {
     'linkedin': {
         'name': 'LinkedIn',
         'url': 'https://www.linkedin.com/in/alan-smith-ca/',
-        'logo': 'logo-linkedin.png',  # or logo-linkedin-blue.png depending on usage
+        'logo': 'logo-linkedin.png',
         'alt': 'LinkedIn Logo',
         'description': 'Connect with me on LinkedIn'
     },
-    'github': {
-        'name': 'GitHub',
-        'url': 'https://github.com/SmithAndGiggles',
-        'logo': 'logo-github.png',
-        'alt': 'GitHub Logo',
-        'description': 'See my projects on GitHub'
-    },
     'email': {
         'name': 'Email',
-        'url': f'mailto:{PORTFOLIO_EMAIL}',  # Use centralized email
-        'logo': 'logo-gmail.png',  # or logo-email.png
+        'url': f'mailto:{CONTACT_CONFIG["email"]}',
+        'logo': 'logo-gmail.png',
         'alt': 'Gmail Logo',
         'description': 'Email me!'
     }
@@ -377,14 +385,21 @@ BADGE_TEXT = {
 # =============================================================================
 
 EXTERNAL_URLS = {
+    # Health & Medical Resources
     'mayo_clinic_picc': 'https://www.mayoclinic.org/tests-procedures/picc-line/about/pac-20468748',
     'cancer_society': 'https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/statistics',
     'alberta_health_apl': 'https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf',
     'leukemia_society': 'https://www.bloodcancers.ca/sites/default/files/2023-02/LSC22103_LLS1001E_AML%20Brochure_E_m4.pdf',
     'biomedcentral': 'https://bmccancer.biomedcentral.com/articles/10.1186/s12885-023-10612-z',
+    
+    # Organizations & Communities
     'donkey_sanctuary': 'https://www.thedonkeysanctuary.ca',
-    'york_ace_article': 'https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/',
     'toronto_devops_meetup': 'https://www.meetup.com/toronto-enterprise-devops-user-group/',
+    
+    # Educational & News
+    'york_ace_article': 'https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/',
+    
+    # Travel & Recreation
     'valley_of_fire': 'https://parks.nv.gov/parks/valley-of-fire'
 }
 
@@ -395,8 +410,8 @@ EXTERNAL_URLS = {
 LANDING_PAGE_CONFIG = {
     'title': 'Welcome to me2u.place',
     'subtitle': 'Alan Smith - Portfolio & Professional Experience',
-    'portfolio_url': f'https://{PORTFOLIO_DOMAIN}/',
-    'contact_url': f'https://{PORTFOLIO_DOMAIN}{CONTACT_URL_PATH}',
+    'portfolio_url': f'https://{CONTACT_CONFIG["domain"]}/',
+    'contact_url': f'https://{CONTACT_CONFIG["domain"]}{CONTACT_CONFIG["contact_path"]}',
     'domain_text': 'This domain redirects to my main portfolio at',
     'professional_title': 'Cloud & DevOps Engineer',
     'professional_description': 'Specializing in Google Cloud Platform, Terraform, Kubernetes, and modern DevOps practices',
