@@ -17,13 +17,13 @@ html, body {
 
 /* Container Spacing - Prevents Footer Overlap */
 .container, .main-content, main {
-  padding-bottom: 300px;               /* Extra large bottom padding for fixed footer clearance */
-  margin-bottom: 150px;                /* Additional margin for visual separation */
+  padding-bottom: 120px;               /* Reduced bottom padding for fixed footer clearance */
+  margin-bottom: 50px;                 /* Reduced margin for visual separation */
 }
 
 /* Card Grid Layout - Extra spacing for last row */
 .row:last-child {
-  margin-bottom: 200px;                /* Ensures last row of cards has proper spacing */
+  margin-bottom: 80px;                 /* Reduced spacing for last row of cards */
 }
 
 /* Bootstrap Carousel Indicators - Custom Styling */
