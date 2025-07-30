@@ -1,0 +1,15 @@
+  <h2 class="text-2xl font-semibold mt-4 mb-4 text-white">{{ section_title }}</h2>
+  <div class="row row-cols-1 row-cols-md-3 g-4 mb-8">
+    {% for card in section_cards %}
+      <div class="col">
+        {% set href = card.href %}
+        {% set logo_src = card.logo_src %}
+        {% set logo_alt = card.logo_alt %}
+        {% set title = card.title %}
+        {% set subtitle = card.subtitle %}
+        {% set badge_text = card.badge_text %}
+        {% set card_class = card.card_class %}
+        {% include 'components/common/cards.html' %}
+      </div>
+    {% endfor %}
+  </div>

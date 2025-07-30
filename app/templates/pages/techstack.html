@@ -1,56 +1,7 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="{{ content_class|default('container py-4 px-2 md:px-8 mx-auto max-w-6xl') }}">
-  {% if title %}
-    <h1 class="text-3xl font-bold mb-8 animate-fade-in">{{ title }}</h1>
-  {% endif %}
-  
-  <h2 class="text-2xl font-semibold mt-4 mb-4 text-white">Frontend</h2>
-  <div class="row row-cols-1 row-cols-md-3 g-4 mb-8">
-    {% for card in frontend_cards %}
-      <div class="col">
-        {% set href = card.href %}
-        {% set logo_src = card.logo_src %}
-        {% set logo_alt = card.logo_alt %}
-        {% set title = card.title %}
-        {% set subtitle = card.subtitle %}
-        {% set badge_text = card.badge_text %}
-        {% set card_class = card.card_class %}
-        {% include 'components/common/cards.html' %}
-      </div>
-    {% endfor %}
-  </div>
-  
-  <h2 class="text-2xl font-semibold mt-4 mb-4 text-white">Backend</h2>
-  <div class="row row-cols-1 row-cols-md-3 g-4 mb-8">
-    {% for card in backend_cards %}
-      <div class="col">
-        {% set href = card.href %}
-        {% set logo_src = card.logo_src %}
-        {% set logo_alt = card.logo_alt %}
-        {% set title = card.title %}
-        {% set subtitle = card.subtitle %}
-        {% set badge_text = card.badge_text %}
-        {% set card_class = card.card_class %}
-        {% include 'components/common/cards.html' %}
-      </div>
-    {% endfor %}
-  </div>
-  
-  <h2 class="text-2xl font-semibold mt-4 mb-4 text-white">Cloud/Infrastructure/Tools</h2>
-  <div class="row row-cols-1 row-cols-md-3 g-4 mb-8">
-    {% for card in infra_cards %}
-      <div class="col">
-        {% set href = card.href %}
-        {% set logo_src = card.logo_src %}
-        {% set logo_alt = card.logo_alt %}
-        {% set title = card.title %}
-        {% set subtitle = card.subtitle %}
-        {% set badge_text = card.badge_text %}
-        {% set card_class = card.card_class %}
-        {% include 'components/common/cards.html' %}
-      </div>
-    {% endfor %}
-  </div>
-</div>
-{% endblock %}
+{% extends 'page_layouts/multi_section_page.html' %}
+{% set title = 'Technology Stack' %}
+{% set sections = [
+  {'title': 'Frontend', 'cards': frontend_cards},
+  {'title': 'Backend', 'cards': backend_cards},
+  {'title': 'Cloud/Infrastructure/Tools', 'cards': infra_cards}
+] %}

@@ -1,11 +1,2 @@
-{% extends 'base.html' %}
-{% block content %}
-    <div class="container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl">
-        {% set home_card = home_card %}
-        {% set image_src = url_for('static', filename=home_card.image_src) %}
-        {% set image_alt = home_card.image_alt %}
-        {% set card_title = home_card.card_title %}
-        {% set card_text = home_card.card_text %}
-        {% include 'components/common/horizontal_card.html' %}
-    </div>
-{% endblock %}
+{% extends 'page_layouts/single_card_page.html' %}
+{% set card_data = home_card %}
