@@ -9,8 +9,35 @@ Single source of truth for logos, URLs, titles, and common strings.
 """
 
 # =============================================================================
-# INSTITUTIONS & EDUCATION
-# =============================================================================
+# CONFIGURATION CONSTANTS
+# =======================
+# Centralized configuration values used across the application
+# These values can be overridden by environment variables in production
+
+# UI Configuration
+CAROUSEL_INTERVAL = 20000  # Carousel auto-advance interval in milliseconds
+CARD_BACKGROUND_COLOR = '#111214'  # Dark card background color
+ERROR_IMAGE_WIDTH = '600px'  # Error page image width
+ERROR_IMAGE_MAX_WIDTH = '90vw'  # Error page responsive max width
+
+# Contact Information
+PORTFOLIO_EMAIL = 'alan@me2u.space'  # Primary contact email
+PORTFOLIO_DOMAIN = 'portfolio.me2u.space'  # Portfolio domain
+CONTACT_URL_PATH = '/connect'  # Contact page path
+
+# Card Dimensions
+CARD_MAX_WIDTH = '320px'
+CARD_MIN_WIDTH = '220px'
+CARD_LOGO_HEIGHT = '96px'
+CARD_LOGO_MAX_HEIGHT = '60px'
+
+# Carousel Dimensions  
+CAROUSEL_HEIGHT = '60vh'
+CAROUSEL_MIN_HEIGHT = '350px'
+CAROUSEL_MAX_HEIGHT = '600px'
+
+# INSTITUTIONAL DATA
+# ==================
 
 INSTITUTIONS = {
     'york_university': {
@@ -330,7 +357,7 @@ SOCIAL_LINKS = {
     },
     'email': {
         'name': 'Email',
-        'url': 'mailto:alan@me2u.space',  # Updated to match shared_data.py
+        'url': f'mailto:{PORTFOLIO_EMAIL}',  # Use centralized email
         'logo': 'logo-gmail.png',  # or logo-email.png
         'alt': 'Gmail Logo',
         'description': 'Email me!'
@@ -369,11 +396,11 @@ EXTERNAL_URLS = {
 # LANDING PAGE CONFIGURATION
 # =============================================================================
 
-LANDING_PAGE = {
+LANDING_PAGE_CONFIG = {
     'title': 'Welcome to me2u.place',
-    'subtitle': 'Your gateway to my professional portfolio',
-    'portfolio_url': 'https://portfolio.me2u.space/',
-    'contact_url': 'https://portfolio.me2u.space/connect',
+    'subtitle': 'Alan Smith - Portfolio & Professional Experience',
+    'portfolio_url': f'https://{PORTFOLIO_DOMAIN}/',
+    'contact_url': f'https://{PORTFOLIO_DOMAIN}{CONTACT_URL_PATH}',
     'domain_text': 'This domain redirects to my main portfolio at',
     'professional_title': 'Cloud & DevOps Engineer',
     'professional_description': 'Specializing in Google Cloud Platform, Terraform, Kubernetes, and modern DevOps practices',

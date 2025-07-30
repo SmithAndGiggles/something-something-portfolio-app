@@ -3,7 +3,8 @@
 from flask import url_for
 from .constants import (
     INSTITUTIONS, EDUCATION_PROGRAMS, CERTIFICATIONS, 
-    TECHNOLOGIES, GCP_TECHNOLOGIES, SOCIAL_LINKS, BADGE_TEXT
+    TECHNOLOGIES, GCP_TECHNOLOGIES, SOCIAL_LINKS, BADGE_TEXT,
+    PORTFOLIO_EMAIL
 )
 
 # Shared data utilities
@@ -38,7 +39,7 @@ def get_shared_data():
             'github_profile': 'https://github.com/SmithAndGiggles',
             'credly_base': 'https://www.credly.com/badges/',
             'mayo_clinic_picc': 'https://www.mayoclinic.org/tests-procedures/picc-line/about/pac-20468748',
-            'portfolio_email': 'mailto:alan@me2u.space'
+            'portfolio_email': f'mailto:{PORTFOLIO_EMAIL}'
         },
         'meta_data': {
             'site_title': 'Alan Smith - Portfolio',

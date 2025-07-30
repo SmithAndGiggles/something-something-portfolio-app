@@ -2,6 +2,45 @@
 
 This directory contains scripts for development environment setup and cloud deployment of the portfolio application.
 
+## 🔧 Environment Configuration
+
+### Environment Files Setup
+
+This directory uses environment-specific configuration files for secure and flexible deployment:
+
+#### `.env.example` (Template - Safe to Commit)
+- Contains empty values and comprehensive documentation
+- **Copy this file** to create your environment-specific configurations
+- Reference for all available configuration options
+
+#### `.env.development` (Git Ignored)
+- Your local development settings
+- Copy from `.env.example` and fill in development values
+- Used by development scripts
+
+#### `.env.production` (Git Ignored)
+- Your production deployment settings
+- Copy from `.env.example` and fill in production values
+- Used by production deployment scripts
+
+### Quick Setup
+```bash
+# Copy template files
+cp .env.example .env.development
+cp .env.example .env.production
+
+# Edit with your values
+nano .env.development    # Add development settings
+nano .env.production     # Add production settings
+```
+
+### Required for GCP Deployment
+- `GCP_PROJECT_ID` - Your Google Cloud project ID
+- `GCP_REGION` - Deployment region (e.g., "us-central1")
+- `ARTIFACT_REGISTRY` - Container registry name
+
+**Security Note**: Only `.env.example` is committed to git. Actual environment files are automatically ignored for security.
+
 ## 🚀 Available Scripts
 
 ### `setup-env.sh`
