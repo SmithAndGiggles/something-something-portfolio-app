@@ -26,8 +26,8 @@ A modern, responsive portfolio website built with Flask and Bootstrap 5.
 
 2. **Create Virtual Environment**
    ```bash
-   python -m venv me2u-venv-flask
-   source me2u-venv-flask/bin/activate  # On Windows: me2u-venv-flask\Scripts\activate
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. **Install Dependencies**
@@ -169,9 +169,9 @@ pip install -e .
 **Virtual Environment Issues**
 ```bash
 # Recreate virtual environment
-rm -rf me2u-venv-flask
-python -m venv me2u-venv-flask
-source me2u-venv-flask/bin/activate
+rm -rf venv
+python -m venv venv
+source venv/bin/activate
 pip install -e .
 ```
 
