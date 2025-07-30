@@ -3,7 +3,7 @@
 {% block content %}
 <div class="{{ content_class|default('container py-4 px-2 md:px-8 mx-auto max-w-[1100px]') }}">
   {% if title %}
-    <h1 class="text-3xl font-bold mb-8 animate-fade-in">{{ title }}</h1>
+    {% include 'components/common/page_title.html' %}
   {% endif %}
   
   {% include 'components/common/carousel.html' %}

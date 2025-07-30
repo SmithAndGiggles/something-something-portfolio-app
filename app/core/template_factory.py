@@ -31,6 +31,15 @@ contexts without duplicating layout and styling configuration.
 
 from flask import url_for
 
+# CSS Constants - Centralized styling patterns
+# ===========================================
+BASE_CONTAINER = "container py-4 px-2 md:px-8 mx-auto"
+WIDTH_SMALL = "max-w-[1100px]"
+WIDTH_MEDIUM = "max-w-6xl"
+WIDTH_LARGE = "max-w-4xl xl:max-w-5xl"
+FADE_ANIMATION = "animate-fade-in"
+PAGE_TITLE_CLASSES = "text-3xl font-bold mb-8 animate-fade-in"
+
 class TemplateFactory:
     """
     Factory class for generating consistent template data structures
@@ -41,7 +50,7 @@ class TemplateFactory:
     """
     
     @staticmethod
-    def page_layout(title, content_class="container py-4 px-2 md:px-8 mx-auto", max_width="max-w-[1100px]"):
+    def page_layout(title, content_class=BASE_CONTAINER, max_width=WIDTH_SMALL):
         """
         Generate standard page layout configuration
         
@@ -59,7 +68,7 @@ class TemplateFactory:
         return {
             "title": title,
             "content_class": f"{content_class} {max_width}",
-            "fade_in": "animate-fade-in"
+            "fade_in": FADE_ANIMATION
         }
     
     @staticmethod
@@ -125,7 +134,7 @@ class TemplateFactory:
         Returns:
             dict: Complete horizontal card page configuration for template rendering
         """
-        layout = TemplateFactory.page_layout(title, max_width="max-w-4xl xl:max-w-5xl")
+        layout = TemplateFactory.page_layout(title, max_width=WIDTH_LARGE)
         return {
             **layout,
             "card_data": card_data,
@@ -160,7 +169,7 @@ class ComponentFactory:
             "id": carousel_id,
             "slides": slides,
             "interval": interval,
-            "classes": "carousel carousel-fixed-size slide rounded-2xl overflow-hidden relative mb-4 p-2 md:p-4 border border-gray-600",
+            "classes": "carousel carousel-fixed-size slide rounded-4 overflow-hidden position-relative mb-4 p-2 p-md-4 border border-secondary",
             "inner_classes": "carousel-inner h-full",
             "item_classes": "carousel-item h-full",
             "indicators_classes": "carousel-indicators"
@@ -207,22 +216,22 @@ class ComponentFactory:
 PAGE_TEMPLATES = {
     "card_grid": {
         "template": "layouts/card_grid.html",
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-6xl",
+        "content_class": f"{BASE_CONTAINER} {WIDTH_MEDIUM}",
         "description": "Grid layout for card-based content (education, certifications, techstack)"
     },
     "carousel": {
         "template": "layouts/carousel.html", 
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-[1100px]",
+        "content_class": f"{BASE_CONTAINER} {WIDTH_SMALL}",
         "description": "Interactive carousel for multimedia content (achievements, irl)"
     },
     "horizontal_card": {
         "template": "layouts/horizontal_card.html",
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl",
+        "content_class": f"{BASE_CONTAINER} {WIDTH_LARGE}",
         "description": "Large horizontal card layout for featured content (home page)"
     },
     "landing": {
         "template": "layouts/landing.html",
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl",
+        "content_class": f"{BASE_CONTAINER} {WIDTH_LARGE}",
         "description": "Landing page layout for custom domain entry points"
     },
     "error": {
