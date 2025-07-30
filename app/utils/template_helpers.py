@@ -66,11 +66,11 @@ def generate_card_data(href, logo_src, logo_alt, title, subtitle="", badge_text=
 
 def generate_carousel_slide(src, alt, title, text, sources1=None, sources2=None, highlight=None):
     """
-    Generate standardized carousel slide data structure
+    Generate standardized carousel slide data structure with automatic video detection
     
     Creates consistent slide data for achievements.html and irl.html carousels.
-    Supports optional metadata for rich content presentation including
-    source citations and highlighted content.
+    Automatically detects video files from .mp4, .webm, .mov, .avi extensions
+    and adds media_type information for templates to handle videos properly.
     
     Args:
         src (str): Image or video source path for slide content
@@ -82,17 +82,23 @@ def generate_carousel_slide(src, alt, title, text, sources1=None, sources2=None,
         highlight (str, optional): Key highlight or call-out text
         
     Returns:
-        dict: Template-ready carousel slide data structure
+        dict: Template-ready carousel slide data structure with media_type
         
     Template Usage:
         Structure optimized for carousel.html template rendering
-        with flexible optional metadata support.
+        with automatic video support and flexible optional metadata.
     """
+    # Auto-detect video files from extensions
+    video_extensions = ('.mp4', '.webm', '.mov', '.avi')
+    is_video = any(src.lower().endswith(ext) for ext in video_extensions)
+    media_type = 'video' if is_video else 'image'
+    
     slide = {
         'src': src,
         'alt': alt,
         'title': title,
-        'text': text
+        'text': text,
+        'media_type': media_type  # Auto-detected for template use
     }
     
     if sources1:
