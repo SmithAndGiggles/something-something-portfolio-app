@@ -1,38 +1,60 @@
-# Use a minimal Python base image (Alpine for smallest footprint)
+# ============================================================================
+# Production Dockerfile for Flask Portfolio Application
+# ============================================================================
+# 
+# This Dockerfile creates a secure, minimal container optimized for production:
+# - Uses Alpine Linux for smallest attack surface and image size (~50MB base)
+# - Non-root user execution for security best practices
+# - Cloud-agnostic design - works with any container platform
+# - Production-ready Gunicorn WSGI server with optimized worker configuration
+# - Efficient layer caching for faster builds in CI/CD pipelines
+
+# Base Image: Python 3.13 on Alpine Linux for minimal footprint
 FROM python:3.13-alpine
 
-LABEL time="2025-06-10-01:30" \
-      description="A minimal Dockerfile for a Flask application with Gunicorn"
+# Container Metadata: Used by container registries and orchestration platforms
+LABEL maintainer="Portfolio Application" \
+      description="Production Flask portfolio application" \
+      version="1.0.0" \
+      created="2025-07-29"
 
-# Create a non-root user and group
+# Security: Create non-root user for running the application
+# This prevents potential privilege escalation attacks and follows container security best practices
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Set the working directory in the container
+# Working Directory: Set consistent location for application files
 WORKDIR /app
 
-# Install build dependencies only if needed, then remove (uncomment if you need to build wheels)
+# Build Optimization: Install system dependencies if needed
+# Uncomment the line below if you need to compile Python packages with native extensions
 # RUN apk add --no-cache build-base
 
-# Copy pyproject.toml and install dependencies
+# Dependency Installation: Copy requirements first for better Docker layer caching
+# This allows Docker to cache the pip install step when only application code changes
 COPY pyproject.toml ./
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir . && \
+    pip cache purge
 
-# Copy only necessary files
+# Application Code: Copy source files after dependencies for optimal caching
 COPY app ./app
 COPY main.py ./main.py
 
-# Fix permissions for static files and all app content
+# Security: Set proper file ownership for the non-root user
 RUN chown -R appuser:appgroup /app
 
-# Set environment variables for Flask production
-ENV FLASK_APP=main.py
-ENV FLASK_ENV=production
+# Flask Configuration: Set production environment variables
+ENV FLASK_APP=main.py \
+    FLASK_ENV=production \
+    PYTHONUNBUFFERED=1
 
-# Expose the port that the app runs on
+# Network: Expose the application port (configurable via environment)
 EXPOSE 8080
 
-# Change to non-root user
+# Security: Switch to non-root user for application execution
 USER appuser
 
-# Command to run the application with Gunicorn
-CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080", "--workers=2"]
+# Production Server: Use Gunicorn WSGI server with optimized configuration
+# - 2 workers for small to medium traffic (adjust based on CPU cores)
+# - Bind to all interfaces for container networking
+# - Timeout settings optimized for web applications
+CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8080", "--workers=2", "--timeout=30", "--keep-alive=2"]

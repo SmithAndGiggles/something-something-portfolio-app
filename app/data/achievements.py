@@ -1,6 +1,62 @@
-# app/data/achievements.py
+"""
+Professional Achievements Data Module
+=====================================
+
+Provides carousel slide data for showcasing significant professional and personal
+achievements. This module generates dynamic content for the achievements carousel,
+including professional recognitions, personal milestones, and impactful projects.
+
+Features:
+- Dynamic URL generation for achievement images and videos
+- Rich content structure with titles, descriptions, and sources
+- Support for multimedia content (images and videos)
+- Professional achievement documentation
+- Personal milestone and journey sharing
+
+Architecture:
+- Slide-based data structure for carousel rendering
+- Dynamic asset path generation via Flask url_for
+- Rich metadata including team links and source citations
+- Flexible content types supporting various achievement formats
+
+Content Types:
+- Professional accomplishments and team achievements
+- Personal journey documentation and milestone celebrations
+- Industry recognition and specialization achievements
+- Community impact and awareness initiatives
+
+Template Integration:
+Generates slide data for achievements.html carousel with consistent
+structure for professional and personal achievement presentation.
+"""
 
 def get_achievement_slides(url_for):
+    """
+    Generate achievement carousel slides with dynamic content
+    
+    Creates comprehensive achievement showcases including professional
+    accomplishments, team recognitions, and personal milestone journeys.
+    Uses dynamic URL generation for multimedia content paths.
+    
+    Args:
+        url_for: Flask URL generation function for dynamic asset paths
+        
+    Returns:
+        list: Achievement slide contexts for carousel rendering
+        
+    Slide Structure:
+        - src: Dynamic image/video path for visual content
+        - alt: Accessibility text for multimedia content
+        - title: Achievement headline and primary focus
+        - text: Detailed achievement description and context
+        - highlight: (optional) Key success metrics or outcomes
+        - team_links: (optional) Professional network connections
+        - sources: Reference links for achievement validation
+        
+    Content Philosophy:
+        Balances professional achievements with personal journey sharing
+        to present a complete picture of growth, resilience, and success.
+    """
     return [
         {
             'src': url_for('static', filename='images/content/linkedin-onix-genai-post.png'),

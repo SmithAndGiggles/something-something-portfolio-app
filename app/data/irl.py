@@ -1,4 +1,62 @@
+"""
+Personal Interest and Lifestyle Data Module
+===========================================
+
+Provides carousel slide data for "In Real Life" (IRL) content showcasing
+personal interests, life experiences, and the human side beyond professional
+achievements. This module creates authentic personal storytelling content.
+
+Features:
+- Personal milestone and life event documentation
+- Community engagement and networking experiences
+- Creative personal projects and meaningful symbolism
+- Authentic storytelling with personal context
+- Balance between professional and personal identity
+
+Architecture:
+- Slide-based data structure for carousel presentation
+- Dynamic URL generation for personal photography
+- Rich narrative content with personal storytelling
+- Meaningful context and backstory for life events
+
+Content Philosophy:
+Demonstrates authenticity, resilience, and personal growth through
+real-life experiences. Shows the complete person behind the professional
+achievements, creating genuine human connection with portfolio visitors.
+
+Template Integration:
+Generates slide data for irl.html carousel with personal photography
+and narrative content for authentic personal brand presentation.
+"""
+
 def get_irl_slides(url_for):
+    """
+    Generate personal interest and lifestyle carousel slides
+    
+    Creates authentic personal content showcasing life experiences,
+    community involvement, and meaningful personal projects that
+    demonstrate character, interests, and personal growth.
+    
+    Args:
+        url_for: Flask URL generation function for dynamic image paths
+        
+    Returns:
+        list: Personal slide contexts for carousel rendering
+        
+    Slide Content:
+        - Community Engagement: Professional networking and learning experiences
+        - Life Milestones: Significant personal achievements and celebrations
+        - Creative Expression: Personal projects with meaningful symbolism
+        
+    Storytelling Approach:
+        Each slide combines visual content with authentic narrative,
+        providing context and personal meaning behind life experiences.
+        Balances vulnerability with inspiration to create genuine connection.
+        
+    Content Philosophy:
+        Shows resilience, creativity, and authentic human experience
+        beyond professional accomplishments, creating complete personal brand.
+    """
     return [
         {
             "src": url_for('static', filename='images/content/ingy-dot-net.jpg'),
