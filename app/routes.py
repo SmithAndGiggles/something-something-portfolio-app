@@ -23,9 +23,10 @@ from .data.all_data import (
     get_education_cards, get_certification_cards, get_techstack_cards,
     get_connect_cards, get_home_card, get_shared_data
 )
-from .data.achievements import get_achievement_slides
-from .data.irl import get_irl_slides
-from .data.landing_data import get_landing_page_data# Blueprint registration for modular route organization
+from .data.carousel_factory import get_achievement_slides, get_irl_slides
+from .data.landing_data import get_landing_page_data
+
+# Blueprint registration for modular route organization
 # Enables clean separation of routing logic from application factory
 routes = Blueprint('routes', __name__)
 
@@ -83,7 +84,7 @@ def achievements():
     Returns:
         Rendered achievements.html template with carousel slides and configuration
     """
-    slides = get_achievement_slides(url_for)
+    slides = get_achievement_slides()
     return render_template('pages/achievements.html', slides=slides, carousel_id='achievementsCarousel')
 
 @routes.route('/certifications')
@@ -133,7 +134,7 @@ def irl():
     Returns:
         Rendered irl.html template with personal interest slides and carousel configuration
     """
-    slides = get_irl_slides(url_for)
+    slides = get_irl_slides()
     return render_template('pages/irl.html', slides=slides, carousel_id='irlCarousel')
 
 @routes.route('/connect')
