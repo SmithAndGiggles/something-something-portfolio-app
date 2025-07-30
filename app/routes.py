@@ -21,7 +21,7 @@ Route Structure:
 from flask import Blueprint, render_template, request, url_for
 from .data.all_data import (
     get_education_cards, get_certification_cards, get_techstack_cards,
-    get_connect_cards, get_home_card
+    get_connect_cards, get_home_card, get_shared_data
 )
 from .data.achievements import get_achievement_slides
 from .data.irl import get_irl_slides

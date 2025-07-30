@@ -1,39 +1,4 @@
-"""
-Portfolio Data Aggregation Module
-==================================
-
-Centralized data provider for all portfolio content sections. This module implements
-the DRY (Don't Repeat Yourself) principle by consolidating all card data, content,
-and portfolio information in a single maintainable location.
-
-NOW USES CONSTANTS for maximum DRY approach - no more duplicate strings!
-
-Features:
-- Unified data access layer for all portfolio sections
-- DRY helper functions for consistent card generation
-- Dynamic URL generation for logos and assets
-- Type-consistent data structures for template rendering
-- Single source of truth for portfolio content via constants.py
-
-Architecture:
-- Factory functions for each portfolio section (education, certifications, etc.)
-- Internal helper functions for DRY card generation
-- Flask url_for integration for dynamic asset paths
-- Consistent card structure across all content types
-- Constants module for zero duplication
-
-Data Sections:
-- Education: Academic background and formal learning
-- Certifications: Professional credentials and validations  
-- Tech Stack: Technology skills organized by category
-- Connect: Contact information and social links
-- Home: Personal introduction and portfolio overview
-
-Design Philosophy:
-This module prioritizes maintainability by centralizing all content data.
-Updates to portfolio information require changes in only one location (constants.py),
-reducing maintenance overhead and ensuring consistency across the application.
-"""
+"""Portfolio data provider with shared utilities"""
 
 from flask import url_for
 from .constants import (
@@ -41,15 +6,51 @@ from .constants import (
     TECHNOLOGIES, GCP_TECHNOLOGIES, SOCIAL_LINKS, BADGE_TEXT
 )
 
+# Shared data utilities
+def _create_logo_data(filename, alt_text, name=None, path='images/logos'):
+    """Create logo data structure"""
+    return {
+        'name': name or alt_text,
+        'src': url_for('static', filename=f'{path}/{filename}'),
+        'alt': alt_text
+    }
+
+def get_shared_data():
+    """Get common data used across templates"""
+    return {
+        'education_institutions': {
+            key: _create_logo_data(inst['logo'], inst['alt'], inst['name'])
+            for key, inst in INSTITUTIONS.items()
+        },
+        'tech_logos': {
+            key: _create_logo_data(tech['logo'], tech['alt'], tech['name'])
+            for key, tech in TECHNOLOGIES.items()
+        },
+        'common_styles': {
+            'card_default': 'card rounded-4 bg-dark text-white h-100 hover-shadow',
+            'achievement_image': 'w-100 h-100 achievement-media',
+            'media_container': 'achievement-media w-100 h-100',
+            'carousel_slide': 'carousel-item',
+            'tech_card': 'tech-card h-100'
+        },
+        'external_links': {
+            'linkedin_profile': 'https://www.linkedin.com/in/alan-smith-ca/',
+            'github_profile': 'https://github.com/SmithAndGiggles',
+            'credly_base': 'https://www.credly.com/badges/',
+            'mayo_clinic_picc': 'https://www.mayoclinic.org/tests-procedures/picc-line/about/pac-20468748',
+            'portfolio_email': 'mailto:alan@me2u.space'
+        },
+        'meta_data': {
+            'site_title': 'Alan Smith - Portfolio',
+            'site_description': 'Professional portfolio showcasing cloud engineering, full-stack development, and technical achievements.',
+            'author': 'Alan Smith',
+            'keywords': 'cloud engineer, full-stack developer, GCP, Python, Flask, DevOps'
+        }
+    }
+
 def get_education_cards():
-    """
-    Generate education and academic background cards using CONSTANTS
-    
-    Now uses EDUCATION_PROGRAMS and INSTITUTIONS from constants.py
-    No more hardcoded strings!
-    """
-    def edu_card_from_constants(program_data):
-        """DRY helper using constants for education cards"""
+    """Generate education cards"""
+    def _create_card(program_data):
         institution = INSTITUTIONS[program_data['institution']]
         return {
             "href": institution['url'],
@@ -59,17 +60,11 @@ def get_education_cards():
             "subtitle": f"{institution['name']} • {program_data['years']}",
             "badge_text": BADGE_TEXT['learn_more']
         }
-    
-    return [edu_card_from_constants(program) for program in EDUCATION_PROGRAMS]
+    return [_create_card(program) for program in EDUCATION_PROGRAMS]
 
 def get_certification_cards():
-    """
-    Generate professional certification cards using CONSTANTS
-    
-    Now uses CERTIFICATIONS from constants.py - no more hardcoded strings!
-    """
-    def cert_card_from_constants(cert_data):
-        """DRY helper using constants for certification cards"""
+    """Generate certification cards"""
+    def _create_card(cert_data):
         return {
             "href": cert_data['url'],
             "logo_src": url_for('static', filename=f'images/logos/{cert_data["logo"]}'),
@@ -78,93 +73,44 @@ def get_certification_cards():
             "subtitle": cert_data['subtitle'],
             "badge_text": BADGE_TEXT['view_badge_icon']
         }
-    
-    return [cert_card_from_constants(cert) for cert in CERTIFICATIONS.values()]
+    return [_create_card(cert) for cert in CERTIFICATIONS.values()]
 
 def get_techstack_cards():
-    """
-    Generate technology stack cards using CONSTANTS
-    
-    Now uses TECHNOLOGIES and GCP_TECHNOLOGIES from constants.py
-    No more hardcoded strings! Much simpler and maintainable.
-    """
-    def tech_card_from_constants(tech_data):
-        """DRY helper using constants for technology cards"""
+    """Generate tech stack cards by category"""
+    def _create_card(tech_data, logo_path='images/logos'):
         return {
             "href": tech_data['url'],
-            "logo_src": url_for('static', filename=f'images/logos/{tech_data["logo"]}'),
+            "logo_src": url_for('static', filename=f'{logo_path}/{tech_data["logo"]}'),
             "logo_alt": tech_data['alt'],
             "title": tech_data['name'],
             "subtitle": tech_data['description'],
             "badge_text": BADGE_TEXT['learn_more']
         }
     
-    def gcp_card_from_constants(tech_data):
-        """DRY helper for GCP cards (different path)"""
-        return {
-            "href": tech_data['url'],
-            "logo_src": url_for('static', filename=f'images/google-cloud/{tech_data["logo"]}'),
-            "logo_alt": tech_data['alt'],
-            "title": tech_data['name'],
-            "subtitle": tech_data['description'],
-            "badge_text": BADGE_TEXT['learn_more']
-        }
-    
-    # Generate cards by category using constants
-    frontend = [tech_card_from_constants(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'frontend']
-    backend = [tech_card_from_constants(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'backend']
-    infra = [tech_card_from_constants(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'infra']
-    
-    # Add GCP technologies to infrastructure
-    infra.extend([gcp_card_from_constants(tech) for tech in GCP_TECHNOLOGIES.values()])
+    frontend = [_create_card(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'frontend']
+    backend = [_create_card(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'backend']
+    infra = [_create_card(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'infra']
+    infra.extend([_create_card(tech, 'images/google-cloud') for tech in GCP_TECHNOLOGIES.values()])
     
     return {"frontend": frontend, "backend": backend, "infra": infra}
 
 def get_connect_cards():
-    """
-    Generate contact and social connection cards using CONSTANTS
-    
-    Now uses SOCIAL_LINKS from constants.py - no more hardcoded strings!
-    """
-    def connect_card_from_constants(social_data):
-        """DRY helper using constants for social cards"""
+    """Generate social connection cards"""
+    def _create_card(social_data):
+        badge_map = {"linkedin": "View Profile", "github": "View GitHub"}
+        badge_text = next((text for key, text in badge_map.items() if key in social_data['url']), "Send Email")
         return {
             "href": social_data['url'],
             "logo_src": url_for('static', filename=f'images/logos/{social_data["logo"]}'),
             "logo_alt": social_data['alt'],
             "title": social_data['name'],
             "subtitle": social_data['description'],
-            "badge_text": "View Profile" if "linkedin" in social_data['url'] else "View GitHub" if "github" in social_data['url'] else "Send Email"
+            "badge_text": badge_text
         }
-    
-    return [connect_card_from_constants(social) for social in SOCIAL_LINKS.values()]
+    return [_create_card(social) for social in SOCIAL_LINKS.values()]
 
 def get_home_card():
-    """
-    Generate homepage welcome card content
-    
-    Provides the main introduction content for the portfolio homepage.
-    Features personal introduction, professional overview, and engaging
-    call-to-action for visitors to explore the portfolio.
-    
-    Returns:
-        dict: Home card context with image, title, and introduction text
-        
-    Content Features:
-        - Cartoonized professional headshot
-        - Personal welcome message with professional positioning
-        - Portfolio exploration encouragement
-        - Playful personality elements (emoji integration)
-        - Growth mindset messaging (certification goals)
-        
-    Template Usage:
-        Renders as the central hero content on home.html with image,
-        title, and comprehensive introduction text.
-        
-    Design Notes:
-        Balances professional presentation with personality to create
-        an approachable and memorable first impression for visitors.
-    """
+    """Generate homepage welcome card"""
     return {
         'image_src': 'images/content/cartoonized-alan-smith.png',
         'image_alt': 'Cartoonized Alan Smith',
