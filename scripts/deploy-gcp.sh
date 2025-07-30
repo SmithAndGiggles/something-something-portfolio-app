@@ -28,6 +28,7 @@ load_env_overrides "$PROJECT_ROOT/.env"  # Project root .env has highest priorit
 
 # Resolve all configuration with priority: ENV -> pyproject.toml -> defaults
 APP_NAME=$(get_config_value "APP_NAME" "app_name" "$APP_NAME")
+APP_VERSION="${APP_VERSION:-0.0.0}"  # Default to "0.0.0" if not set
 VERSION=$(get_config_value "VERSION" "version" "$APP_VERSION")  
 DOCKER_IMAGE_NAME=$(get_config_value "DOCKER_IMAGE_NAME" "container_image_name" "$DOCKER_IMAGE_NAME")
 IMAGE_TAG=$(get_config_value "IMAGE_TAG" "container_tag" "$DEFAULT_IMAGE_TAG")
