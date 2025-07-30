@@ -1,7 +1,7 @@
 # DRY Carousel Implementation (Card Factory Pattern)
 
 ## Overview
-Carousel implementation following the exact same pattern as `card_factory.py` - simple, direct, and DRY using `generate_carousel_slide()` helper functions.
+Carousel implementation following the exact same pattern as `card_factory.py` - simple, direct, and DRY using `generate_carousel_slide()` helper functions. Now consolidated into a single `carousel_factory.py` file like the card factory.
 
 ## Pattern Match with Card Factory
 
@@ -9,53 +9,51 @@ Carousel implementation following the exact same pattern as `card_factory.py` - 
 ```python
 # card_factory.py
 def get_certification_cards():
-    return [
-        generate_card_data(
-            href="...",
-            logo_src=url_for('static', filename='...'),
-            title="...",
-            subtitle="..."
-        ),
-        generate_card_data(...)
-    ]
+    return [generate_card_data(...)]
+
+def get_education_cards():
+    return [generate_card_data(...)]
+
+def get_frontend_tech_cards():
+    return [generate_card_data(...)]
 ```
 
 ### Carousel Factory Pattern (Same Structure):
 ```python
-# achievements.py  
+# carousel_factory.py  
 def get_achievement_slides():
-    return [
-        generate_carousel_slide(
-            src=url_for('static', filename='images/content/image.jpg'),
-            alt="...",
-            title="...",
-            text="..."
-        ),
-        generate_carousel_slide(...)
-    ]
+    return [generate_carousel_slide(...)]
+
+def get_irl_slides():
+    return [generate_carousel_slide(...)]
+
+# Future carousels can be added here
+def get_projects_slides():
+    return [generate_carousel_slide(...)]
 ```
 
 ## Key Benefits
+- ✅ **Single File**: All carousels in one `carousel_factory.py` like card factory
 - ✅ **Identical Pattern**: Same structure as `card_factory.py`
 - ✅ **DRY Helper**: Uses `generate_carousel_slide()` like `generate_card_data()`
-- ✅ **Simple & Direct**: No complex factory classes needed
-- ✅ **Automatic Video Support**: Helper detects .mp4 files automatically
-- ✅ **Consistent**: Same approach across cards and carousels
+- ✅ **Video Support**: Automatically handles videos in `/static/videos/content/`
+- ✅ **Scalable**: Add new carousel functions to same file
 
 ## File Structure
 ```
 app/data/
-├── card_factory.py      # Cards using generate_card_data()
-├── achievements.py      # Carousels using generate_carousel_slide()
-└── irl.py              # Carousels using generate_carousel_slide()
+├── card_factory.py      # All cards using generate_card_data()
+└── carousel_factory.py  # All carousels using generate_carousel_slide()
 ```
 
 ## Video/Image Support
-The `generate_carousel_slide()` helper automatically detects video files (.mp4, .webm, etc.) and handles them appropriately, just like the card factory handles different logo types.
+- **Images**: `/static/images/content/` and `/static/images/logos/`
+- **Videos**: `/static/videos/content/` (automatically detected)
+- The `generate_carousel_slide()` helper automatically detects video files (.mp4, .webm, etc.)
 
 ## Usage in Routes
 ```python
-from app.data.achievements import get_achievement_slides
+from app.data.carousel_factory import get_achievement_slides, get_irl_slides
 from app.data.card_factory import get_certification_cards
 
 @app.route('/achievements')

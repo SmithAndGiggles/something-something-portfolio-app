@@ -20,13 +20,12 @@ Route Structure:
 
 from flask import Blueprint, render_template, request, url_for
 from .data.all_data import (
-    get_education_cards, get_certification_cards, get_techstack_cards, 
+    get_education_cards, get_certification_cards, get_techstack_cards,
     get_connect_cards, get_home_card
 )
 from .data.achievements import get_achievement_slides
 from .data.irl import get_irl_slides
-
-# Blueprint registration for modular route organization
+from .data.landing_data import get_landing_page_data# Blueprint registration for modular route organization
 # Enables clean separation of routing logic from application factory
 routes = Blueprint('routes', __name__)
 
@@ -153,17 +152,16 @@ def connect():
 @routes.route('/me2u-place')
 def me2u_place_landing():
     """
-    Custom domain landing page route
+    Custom domain landing page route using DRY data approach
     
     Dedicated landing page for me2u.place domain visitors.
-    Provides specialized entry point for the custom domain with potentially
-    different messaging or content focus.
+    Now uses centralized constants and data functions for maintainability.
     
     Note: This route enables multi-domain support while maintaining
-    a single application codebase.
+    a single application codebase with DRY principles.
     
     Returns:
-        Rendered me2u_place_landing.html template for custom domain visitors
+        Rendered landing.html template with landing page data from constants
     """
-    return render_template('pages/me2u_place_landing.html')
+    return render_template('pages/landing.html', **get_landing_page_data())
 
