@@ -359,6 +359,13 @@ SOCIAL_LINKS = {
         'alt': 'LinkedIn Logo',
         'description': 'Connect with me on LinkedIn'
     },
+    'github': {
+        'name': 'GitHub',
+        'url': 'https://github.com/SmithAndGiggles',
+        'logo': 'logo-github.png',
+        'alt': 'GitHub Logo',
+        'description': 'See my projects on GitHub'
+    },
     'email': {
         'name': 'Email',
         'url': f'mailto:{CONTACT_CONFIG["email"]}',
