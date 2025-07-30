@@ -3,6 +3,16 @@
   These replace repetitive style attributes throughout HTML.
 */
 
+/* Scrolling and layout fixes */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 /* Error page container */
 .error-container {
   min-height: 70vh;

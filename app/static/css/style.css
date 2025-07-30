@@ -4,11 +4,9 @@ html, body {
   background-attachment: fixed;
   min-height: 100vh;
   color: #fff;
-  overscroll-behavior-y: contain;
 }
 
 .container, .main-content, main {
-  min-height: 100vh;
   padding-bottom: 2.5rem;
 }
 

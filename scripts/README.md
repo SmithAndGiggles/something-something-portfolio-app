@@ -68,7 +68,7 @@ Sets up local Python development environment with Flask dependencies.
 **What it does**:
 1. Validates project directory structure (checks for pyproject.toml)
 2. Removes any existing virtual environment for clean setup
-3. Creates fresh Python virtual environment (`me2u-venv-flask/`)
+3. Creates fresh Python virtual environment (`venv/`)
 4. Upgrades pip and installs project dependencies
 5. Verifies Flask installation and provides usage instructions
 6. Automatically starts the Flask development server
