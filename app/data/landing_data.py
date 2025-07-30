@@ -3,26 +3,18 @@
 from .constants import LANDING_PAGE, LANDING_CARDS
 
 def get_landing_page_data():
-    """
-    Generate landing page data using constants - DRY approach
-    
-    Returns comprehensive landing page configuration including cards,
-    professional info, and tech badges using centralized constants.
-    
-    Returns:
-        dict: Landing page context with cards, config, and professional data
-    """
-    # Generate cards using constants
-    cards = []
-    for card_key, card_config in LANDING_CARDS.items():
-        cards.append({
-            'icon': card_config['icon'],
-            'title': card_config['title'],
-            'description': card_config['description'],
-            'button_text': card_config['button_text'],
-            'button_class': card_config['button_class'],
-            'url': LANDING_PAGE[card_config['url_key']]
-        })
+    """Generate landing page data from constants"""
+    cards = [
+        {
+            'icon': config['icon'],
+            'title': config['title'],
+            'description': config['description'],
+            'button_text': config['button_text'],
+            'button_class': config['button_class'],
+            'url': LANDING_PAGE[config['url_key']]
+        }
+        for config in LANDING_CARDS.values()
+    ]
     
     return {
         'page_config': LANDING_PAGE,
