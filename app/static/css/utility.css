@@ -3,6 +3,11 @@
   These replace repetitive style attributes throughout HTML.
 */
 
+/* Error page container */
+.error-container {
+  min-height: 70vh;
+}
+
 /* Media utilities */
 .media-container {
   width: 100%;

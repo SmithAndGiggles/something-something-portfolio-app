@@ -1,0 +1,19 @@
+# Scripts Directory - Environment Files
+# Ignore actual environment files but keep the example
+
+# Environment files with sensitive data
+.env.development
+.env.production
+.env.local
+.env
+
+# Keep the example template
+!.env.example
+
+# Backup files
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+*.log

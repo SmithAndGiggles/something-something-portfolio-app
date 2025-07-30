@@ -8,6 +8,44 @@
   - Removes conflicting background colors from child divs.
 */
 
+/* Card styling constants */
+.card-background {
+  background-color: #111214;
+}
+
+.card-dimensions {
+  max-width: 320px;
+  min-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-logo-container {
+  height: 96px;
+  background-color: transparent;
+}
+
+.card-logo {
+  max-height: 60px;
+  object-fit: contain;
+}
+
+/* Error page styling */
+.error-image {
+  width: 600px;
+  height: auto;
+  max-width: 90vw;
+  display: block;
+  margin: 0 auto 2rem auto;
+}
+
+/* Carousel dimensions */
+.carousel-container {
+  height: 60vh;
+  min-height: 350px;
+  max-height: 600px;
+}
+
 .hover-shadow {
   box-shadow: 0 2px 8px 0 rgba(30,30,30,0.18); /* smaller, slightly dark shadow when inactive */
   transition: box-shadow 0.2s cubic-bezier(.4,0,.2,1),

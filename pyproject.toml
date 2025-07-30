@@ -60,3 +60,8 @@ container_port = 8080                    # Port exposed by the container
 # Note: Cloud deployment configuration (GCP_PROJECT_ID, ARTIFACT_REGISTRY, etc.)
 # is intentionally excluded from this file and must be set via environment variables
 # for security and cloud-agnostic design.
+#
+# Environment File Configuration:
+# - Copy scripts/.env.example to scripts/.env.development and scripts/.env.production
+# - Fill in environment-specific values (ignored by git for security)
+# - Scripts automatically load appropriate environment file based on context
