@@ -1,6 +1,7 @@
 # filepath: something-something-portfolio-app/app/data/shared_data.py
 
 from flask import url_for
+from .constants import INSTITUTIONS, TECHNOLOGIES
 
 # DRY helper for creating consistent logo data structures
 def _create_logo_data(filename, alt_text, name=None):
@@ -11,41 +12,22 @@ def _create_logo_data(filename, alt_text, name=None):
         'alt': alt_text
     }
 
-# Centralized logo configurations for reusability
-LOGO_CONFIGS = {
-    'york_university': ('logo-york-u.png', 'York University logo', 'York University'),
-    'george_brown': ('logo-george-brown-college.svg', 'George Brown College logo', 'George Brown College'),
-    'humber_college': ('logo-humber-college.svg', 'Humber College logo', 'Humber College'),
-    'centennial_college': ('logo-centennial-college.jpg', 'Centennial College logo', 'Centennial College'),
-    'python': ('logo-python-logo-notext.png', 'Python'),
-    'javascript': ('logo-js.svg', 'JavaScript'),
-    'html5': ('logo-html.svg', 'HTML5'),
-    'css3': ('logo-css.svg', 'CSS3'),
-    'flask': ('logo-horn-flask.png', 'Flask'),
-    'docker': ('logo-docker-mark-blue.png', 'Docker'),
-    'kubernetes': ('logo-kubernetes-logo-without-workmark.png', 'Kubernetes'),
-    'terraform': ('logo-terraform.png', 'Terraform'),
-    'gcp': ('logo-gcp-associate-engineer.png', 'Google Cloud Platform')
-}
-
 def get_shared_data():
     """
     Centralized data that appears across multiple templates.
-    Uses DRY helpers to reduce duplication and make updates easier.
+    Uses DRY helpers and constants to reduce duplication and make updates easier.
     """
     
-    # Generate education institutions using DRY helper
+    # Generate education institutions using constants
     education_institutions = {
-        key: _create_logo_data(*config) 
-        for key, config in LOGO_CONFIGS.items() 
-        if key in ['york_university', 'george_brown', 'humber_college', 'centennial_college']
+        key: _create_logo_data(inst['logo'], inst['alt'], inst['name'])
+        for key, inst in INSTITUTIONS.items()
     }
     
-    # Generate tech logos using DRY helper  
+    # Generate tech logos using constants
     tech_logos = {
-        key: _create_logo_data(*config[:2])  # Only filename and alt for tech logos
-        for key, config in LOGO_CONFIGS.items()
-        if key in ['python', 'javascript', 'html5', 'css3', 'flask', 'docker', 'kubernetes', 'terraform', 'gcp']
+        key: _create_logo_data(tech['logo'], tech['alt'], tech['name'])
+        for key, tech in TECHNOLOGIES.items()
     }
     
     return {

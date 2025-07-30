@@ -2,6 +2,7 @@
 
 from flask import url_for
 from app.utils.template_helpers import generate_carousel_slide, generate_source_link
+from .constants import EXTERNAL_URLS
 
 # DRY helper function for creating carousel slides with consistent patterns
 def _create_slide(media_path, alt, title, text, highlight=None, sources1=None, sources2=None):
@@ -39,14 +40,14 @@ def _create_source_links(sources_data):
         return None
     return [generate_source_link(href, text) for href, text in sources_data]
 
-# Predefined common sources for reusability
+# Predefined common sources for reusability using constants
 COMMON_SOURCES = {
-    'cancer_society': ('https://cancer.ca/en/cancer-information/cancer-types/acute-myeloid-leukemia-aml/statistics', 'Canadian Cancer Society'),
-    'alberta_health': ('https://www.albertahealthservices.ca/assets/info/hp/cancer/if-hp-cancer-guide-lyhe008-apl.pdf', 'Alberta Health Services'),
-    'leukemia_society': ('https://www.bloodcancers.ca/sites/default/files/2023-02/LSC22103_LLS1001E_AML%20Brochure_E_m4.pdf', 'Leukemia & Lymphoma Society'),
-    'biomedcentral': ('https://bmccancer.biomedcentral.com/articles/10.1186/s12885-023-10612-z', 'BioMed Central'),
-    'donkey_sanctuary': ('https://www.thedonkeysanctuary.ca', 'More about the DSC'),
-    'york_ace': ('https://news.yorku.ca/2005/05/30/york-u-honours-2005-ace-graduates-with-5000-scholarships/', 'Read full article here')
+    'cancer_society': (EXTERNAL_URLS['cancer_society'], 'Canadian Cancer Society'),
+    'alberta_health': (EXTERNAL_URLS['alberta_health_apl'], 'Alberta Health Services'),
+    'leukemia_society': (EXTERNAL_URLS['leukemia_society'], 'Leukemia & Lymphoma Society'),
+    'biomedcentral': (EXTERNAL_URLS['biomedcentral'], 'BioMed Central'),
+    'donkey_sanctuary': (EXTERNAL_URLS['donkey_sanctuary'], 'More about the DSC'),
+    'york_ace': (EXTERNAL_URLS['york_ace_article'], 'Read full article here')
 }
 
 def get_achievement_slides():
