@@ -41,7 +41,7 @@ echo -e "${BLUE}📖 Loading configuration from pyproject.toml...${NC}"
 
 APP_NAME=$(get_toml_value "app_name" "me2u Portfolio")
 VERSION=$(get_toml_value "version" "0.1.0")
-GCP_PROJECT_ID=$(get_toml_value "gcp_project_id" "me2u-prj-app-prod-3aa8")
+GCP_PROJECT_ID=${GCP_PROJECT_ID:-$(get_toml_value "gcp_project_id" "default-gcp-project-id")}
 GCP_REGION=$(get_toml_value "gcp_region" "us-central1")
 ARTIFACT_REGISTRY=$(get_toml_value "artifact_registry" "me2u-artifact-docker")
 DOCKER_REGISTRY_BASE=$(get_toml_value "docker_registry_base" "docker.pkg.dev")
