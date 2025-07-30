@@ -9,13 +9,13 @@
 # ================================================================
 export APP_NAME="me2u Portfolio"
 export APP_VERSION="1.0.0"
-export DOCKER_IMAGE_NAME="portfolio-app"
+export DOCKER_IMAGE_NAME="me2u-app"
 export DEFAULT_IMAGE_TAG="latest"
 
 # ================================================================
 # Development Environment
 # ================================================================
-export DEV_VENV_DIR="me2u-venv-flask"
+export DEV_VENV_DIR="venv"
 export DEV_PORT="8080"
 export DEV_HOST="localhost"
 
@@ -23,7 +23,7 @@ export DEV_HOST="localhost"
 # GCP Configuration Templates (override via environment)
 # ================================================================
 export DEFAULT_GCP_REGION="us-central1"
-export DEFAULT_ARTIFACT_REGISTRY="portfolio-registry"
+export DEFAULT_ARTIFACT_REGISTRY="portfolio"
 
 # ================================================================
 # Script Behavior
