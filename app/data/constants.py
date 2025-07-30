@@ -217,15 +217,11 @@ TECHNOLOGIES = {
         'alt': 'Yamlscript',
         'category': 'infra',
         'description': 'YAML-based Scripting Language'
-    }
-}
-
-# Google Cloud Platform (separate path structure)
-GCP_TECHNOLOGIES = {
+    },
     'cloud_run': {
         'name': 'Google Cloud Run',
         'url': 'https://cloud.google.com/run',
-        'logo': 'cloud-run.png',  # Note: different path (images/google-cloud/)
+        'logo': 'logo-gcp-cloud-run.png',
         'alt': 'Cloud Run',
         'category': 'infra',
         'description': 'Serverless Platform'

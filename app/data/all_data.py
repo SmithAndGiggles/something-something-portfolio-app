@@ -3,7 +3,7 @@
 from flask import url_for
 from .constants import (
     INSTITUTIONS, EDUCATION_PROGRAMS, CERTIFICATIONS, 
-    TECHNOLOGIES, GCP_TECHNOLOGIES, SOCIAL_LINKS, BADGE_TEXT,
+    TECHNOLOGIES, SOCIAL_LINKS, BADGE_TEXT,
     PORTFOLIO_EMAIL
 )
 
@@ -91,7 +91,6 @@ def get_techstack_cards():
     frontend = [_create_card(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'frontend']
     backend = [_create_card(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'backend']
     infra = [_create_card(tech) for tech in TECHNOLOGIES.values() if tech['category'] == 'infra']
-    infra.extend([_create_card(tech, 'images/google-cloud') for tech in GCP_TECHNOLOGIES.values()])
     
     return {"frontend": frontend, "backend": backend, "infra": infra}
 
