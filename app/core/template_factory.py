@@ -1,16 +1,61 @@
 """
-Ultra-DRY template factory - eliminates ALL template repetition.
-Single source of truth for all page layouts and components.
+Template Factory Module - Ultra-DRY Template Generation
+=======================================================
+
+Provides centralized template data structure generation for maximum DRY (Don't Repeat Yourself)
+principles. This factory eliminates template repetition by providing standardized layouts,
+components, and configuration patterns used across the entire portfolio application.
+
+Features:
+- Centralized page layout configuration management
+- Reusable component factory patterns
+- Pre-configured template type definitions
+- Consistent styling and behavior patterns
+- Automatic media type detection and configuration
+
+Architecture:
+- Factory pattern for template data structure generation
+- Static methods for stateless template configuration
+- Component-based design for reusable UI elements
+- Template type abstraction for consistent page layouts
+
+Design Philosophy:
+Single source of truth for all template layouts and components.
+Eliminates code duplication across routes and templates while
+ensuring consistent user experience and maintainable codebase.
+
+Usage:
+Used by routes and data modules to generate consistent template
+contexts without duplicating layout and styling configuration.
 """
 
 from flask import url_for
 
 class TemplateFactory:
-    """Factory for generating consistent template data structures."""
+    """
+    Factory class for generating consistent template data structures
+    
+    Provides standardized page layout configurations and template data
+    generation for consistent presentation across all portfolio pages.
+    Eliminates template configuration duplication and ensures design consistency.
+    """
     
     @staticmethod
     def page_layout(title, content_class="container py-4 px-2 md:px-8 mx-auto", max_width="max-w-[1100px]"):
-        """Standard page layout configuration."""
+        """
+        Generate standard page layout configuration
+        
+        Creates base layout structure used across all portfolio pages
+        with consistent spacing, responsiveness, and animation patterns.
+        
+        Args:
+            title (str): Page title for browser and SEO
+            content_class (str, optional): Base CSS classes for content container
+            max_width (str, optional): Responsive max-width constraint
+            
+        Returns:
+            dict: Base layout configuration for template rendering
+        """
         return {
             "title": title,
             "content_class": f"{content_class} {max_width}",
@@ -19,7 +64,20 @@ class TemplateFactory:
     
     @staticmethod
     def card_grid_page(title, cards, grid_cols="row-cols-1 row-cols-md-3 g-4"):
-        """Generate a complete card grid page."""
+        """
+        Generate complete card grid page configuration
+        
+        Creates full page layout for card-based content (education, certifications,
+        techstack, connect pages) with responsive grid layout and consistent styling.
+        
+        Args:
+            title (str): Page title and heading
+            cards (list): Card data structures for grid rendering
+            grid_cols (str, optional): Bootstrap grid column configuration
+            
+        Returns:
+            dict: Complete card grid page configuration for template rendering
+        """
         layout = TemplateFactory.page_layout(title)
         return {
             **layout,
@@ -30,7 +88,20 @@ class TemplateFactory:
     
     @staticmethod
     def carousel_page(title, slides, carousel_id):
-        """Generate a complete carousel page."""
+        """
+        Generate complete carousel page configuration
+        
+        Creates full page layout for carousel-based content (achievements, irl pages)
+        with interactive slide navigation and multimedia content support.
+        
+        Args:
+            title (str): Page title and heading
+            slides (list): Slide data structures for carousel rendering
+            carousel_id (str): Unique carousel identifier for JavaScript functionality
+            
+        Returns:
+            dict: Complete carousel page configuration for template rendering
+        """
         layout = TemplateFactory.page_layout(title)
         return {
             **layout,
@@ -41,7 +112,19 @@ class TemplateFactory:
     
     @staticmethod
     def horizontal_card_page(title, card_data):
-        """Generate a complete horizontal card page."""
+        """
+        Generate complete horizontal card page configuration
+        
+        Creates full page layout for large horizontal card content (home page)
+        with extended width constraints for featured content presentation.
+        
+        Args:
+            title (str): Page title and heading
+            card_data (dict): Card data structure for horizontal rendering
+            
+        Returns:
+            dict: Complete horizontal card page configuration for template rendering
+        """
         layout = TemplateFactory.page_layout(title, max_width="max-w-4xl xl:max-w-5xl")
         return {
             **layout,
@@ -50,11 +133,29 @@ class TemplateFactory:
         }
 
 class ComponentFactory:
-    """Factory for generating reusable component configurations."""
+    """
+    Factory class for generating reusable component configurations
+    
+    Provides standardized UI component configurations for consistent
+    behavior and styling across portfolio application components.
+    """
     
     @staticmethod
     def carousel_config(carousel_id, slides, interval=20000):
-        """Standard carousel configuration."""
+        """
+        Generate standard carousel component configuration
+        
+        Creates consistent carousel setup with standardized timing,
+        styling, and behavior patterns for multimedia content presentation.
+        
+        Args:
+            carousel_id (str): Unique identifier for carousel instance
+            slides (list): Slide data structures for carousel content
+            interval (int, optional): Auto-advance interval in milliseconds
+            
+        Returns:
+            dict: Complete carousel configuration for component rendering
+        """
         return {
             "id": carousel_id,
             "slides": slides,
@@ -67,7 +168,26 @@ class ComponentFactory:
     
     @staticmethod
     def media_config(src, alt="", media_type=None):
-        """Auto-detect media type and generate config."""
+        """
+        Generate media component configuration with auto-detection
+        
+        Creates media configuration with automatic type detection based on
+        file extension. Supports both image and video content with consistent
+        responsive styling and accessibility features.
+        
+        Args:
+            src (str): Media source path (image or video)
+            alt (str, optional): Alt text for accessibility
+            media_type (str, optional): Override media type detection
+            
+        Returns:
+            dict: Media configuration for component rendering
+            
+        Features:
+            - Automatic media type detection from file extension
+            - Consistent responsive styling across media types
+            - Accessibility support with alt text
+        """
         if media_type is None:
             media_type = 'video' if src.endswith('.mp4') else 'image'
         
@@ -78,26 +198,36 @@ class ComponentFactory:
             "classes": "w-full h-full object-contain"
         }
 
-# Pre-configured page templates
+# Pre-configured Page Template Definitions
+# ========================================
+# Centralized template type configurations for consistent page layouts
+# across the portfolio application. Each template type defines the 
+# template path and associated styling/layout configuration.
+
 PAGE_TEMPLATES = {
     "card_grid": {
         "template": "layouts/card_grid.html",
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-6xl"
+        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-6xl",
+        "description": "Grid layout for card-based content (education, certifications, techstack)"
     },
     "carousel": {
         "template": "layouts/carousel.html", 
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-[1100px]"
+        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-[1100px]",
+        "description": "Interactive carousel for multimedia content (achievements, irl)"
     },
     "horizontal_card": {
         "template": "layouts/horizontal_card.html",
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl"
+        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl",
+        "description": "Large horizontal card layout for featured content (home page)"
     },
     "landing": {
         "template": "layouts/landing.html",
-        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl"
+        "content_class": "container py-4 px-2 md:px-8 mx-auto max-w-4xl xl:max-w-5xl",
+        "description": "Landing page layout for custom domain entry points"
     },
     "error": {
         "template": "layouts/error.html",
-        "content_class": "flex justify-center items-center min-h-[70vh]"
+        "content_class": "flex justify-center items-center min-h-[70vh]",
+        "description": "Error page layout for 400/404/500 error handling"
     }
 }

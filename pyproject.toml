@@ -1,3 +1,16 @@
+# ============================================================================
+# Python Project Configuration - Cloud-Agnostic Portfolio Application
+# ============================================================================
+#
+# This file defines the project metadata, dependencies, and application defaults
+# following Python packaging standards and 12-factor app methodology.
+#
+# Configuration Philosophy:
+# - Safe defaults for development and general settings
+# - No cloud-specific or sensitive values (use environment variables)
+# - DRY principle - single source for application metadata
+# - Cloud-agnostic design for deployment flexibility
+
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -5,28 +18,45 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "me2u-portfolio"
 version = "0.1.0"
-description = "A Flask portfolio application - me to you"
+description = "A cloud-agnostic Flask portfolio application showcasing professional experience"
 dependencies = [
-    "Flask>=2.3.0",
-    "gunicorn>=21.0.0",
-    "toml>=0.10.0",
+    "Flask>=2.3.0",      # Modern Flask with security updates
+    "gunicorn>=21.0.0",  # Production WSGI server for containerized deployments
+    "toml>=0.10.0",      # Configuration file parsing
 ]
 
-# ================================
-# YOUR APP CONFIGURATION
-# ================================
+# ============================================================================
+# APPLICATION CONFIGURATION
+# ============================================================================
+#
+# Default configuration values that can be overridden by environment variables.
+# This section contains ONLY safe, non-sensitive defaults.
+#
+# Security Note: 
+# - No cloud provider IDs, project names, or credentials
+# - All deployment-specific config via environment variables
+# - Safe for public repositories and open source sharing
+#
+# Environment Variable Override Pattern:
+# 1. These defaults (lowest priority)
+# 2. .env file values (development)
+# 3. Environment variables (highest priority - production)
 
 [tool.me2u]
-# Basic app settings
-app_name = "me2u Portfolio"
-version = "0.1.0"
-debug = true
-host = "0.0.0.0"
-port = 8080
+# Application Identity - Safe defaults for display and metadata
+app_name = "me2u Portfolio"           # Display name shown in UI and logs
+version = "0.1.0"                     # Application version (semantic versioning)
 
-# Google Cloud settings
-gcp_project_id = "me2u-prj-app-prod-3aa8"
-gcp_region = "us-central1"
-artifact_registry = "me2u-artifact-docker"
-docker_image_name = "me2u"
-docker_tag = "latest"
+# Development Server Configuration - Local development defaults
+debug = true                          # Enable debug mode (override to false in production)
+host = "0.0.0.0"                     # Bind to all interfaces (use "127.0.0.1" for localhost only)
+port = 8080                          # Default development port
+
+# Container Configuration - Cloud-agnostic defaults
+container_image_name = "portfolio-app"  # Docker image name for builds
+container_tag = "latest"                 # Default container tag (override for versioning)
+container_port = 8080                    # Port exposed by the container
+
+# Note: Cloud deployment configuration (GCP_PROJECT_ID, ARTIFACT_REGISTRY, etc.)
+# is intentionally excluded from this file and must be set via environment variables
+# for security and cloud-agnostic design.

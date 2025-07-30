@@ -1,13 +1,60 @@
 """
-Consolidated data module for maximum DRY.
-All card data, slides, and content in one place.
+Portfolio Data Aggregation Module
+==================================
+
+Centralized data provider for all portfolio content sections. This module implements
+the DRY (Don't Repeat Yourself) principle by consolidating all card data, content,
+and portfolio information in a single maintainable location.
+
+Features:
+- Unified data access layer for all portfolio sections
+- DRY helper functions for consistent card generation
+- Dynamic URL generation for logos and assets
+- Type-consistent data structures for template rendering
+- Single source of truth for portfolio content
+
+Architecture:
+- Factory functions for each portfolio section (education, certifications, etc.)
+- Internal helper functions for DRY card generation
+- Flask url_for integration for dynamic asset paths
+- Consistent card structure across all content types
+
+Data Sections:
+- Education: Academic background and formal learning
+- Certifications: Professional credentials and validations  
+- Tech Stack: Technology skills organized by category
+- Connect: Contact information and social links
+- Home: Personal introduction and portfolio overview
+
+Design Philosophy:
+This module prioritizes maintainability by centralizing all content data.
+Updates to portfolio information require changes in only one location,
+reducing maintenance overhead and ensuring consistency across the application.
 """
 
 from flask import url_for
 
 def get_education_cards():
-    """Education cards with DRY logo helper."""
+    """
+    Generate education and academic background cards
+    
+    Provides comprehensive academic history including degrees, certifications,
+    and individual courses. Uses internal helper function for DRY card generation.
+    
+    Returns:
+        list: Education card contexts for template rendering
+        
+    Card Structure:
+        - University degrees and specialized programs
+        - Professional development courses
+        - Web development and technical training
+        - Consistent "Learn More" badge for external links
+        
+    Template Usage:
+        Cards render via cards.html template with logos, titles, and institutional links
+    """
     def edu_card(href, logo_name, logo_alt, title, subtitle):
+        """DRY helper for consistent education card generation"""
         return {
             "href": href,
             "logo_src": url_for('static', filename=f'images/logos/{logo_name}'),
@@ -41,8 +88,27 @@ def get_education_cards():
     ]
 
 def get_certification_cards():
-    """Certification cards with DRY helper."""
+    """
+    Generate professional certification and credential cards
+    
+    Provides industry certifications, professional validations, and skill credentials.
+    Focuses on verifiable achievements with external badge links for validation.
+    
+    Returns:
+        list: Certification card contexts for template rendering
+        
+    Card Features:
+        - External links to certification validation pages
+        - "View Badge" action with external link icon
+        - Industry-recognized credentials and certifications
+        - Professional skill validations
+        
+    Template Usage:
+        Cards display with certification logos and link to verification pages
+        for professional credential validation.
+    """
     def cert_card(href, logo_name, logo_alt, title, subtitle):
+        """DRY helper for consistent certification card generation"""
         return {
             "href": href,
             "logo_src": url_for('static', filename=f'images/logos/{logo_name}'),
@@ -71,8 +137,30 @@ def get_certification_cards():
     ]
 
 def get_techstack_cards():
-    """All tech stack cards organized by category."""
+    """
+    Generate technology stack cards organized by category
+    
+    Provides comprehensive technical skills showcase organized into frontend,
+    backend, and infrastructure categories. Demonstrates full-stack development
+    capabilities and DevOps proficiency.
+    
+    Returns:
+        dict: Technology cards organized by category:
+            - frontend: Client-side technologies and frameworks
+            - backend: Server-side technologies and databases
+            - infra: DevOps, cloud, and infrastructure tools
+            
+    Card Categories:
+        - Frontend: JavaScript, React, HTML/CSS, UI frameworks
+        - Backend: Python, Java, databases, server technologies
+        - Infrastructure: Cloud platforms, containerization, CI/CD
+        
+    Template Usage:
+        Returns categorized dictionary for separate rendering sections
+        in techstack.html template with category-specific organization.
+    """
     def tech_card(href, logo_name, logo_alt, title, subtitle):
+        """DRY helper for standard technology card generation"""
         return {
             "href": href,
             "logo_src": url_for('static', filename=f'images/logos/{logo_name}'),
@@ -82,8 +170,8 @@ def get_techstack_cards():
             "badge_text": "Learn More"
         }
     
-    # Helper for Google Cloud images (different path)
     def gcp_card(href, logo_name, logo_alt, title, subtitle):
+        """DRY helper for Google Cloud Platform cards (different asset path)"""
         return {
             "href": href,
             "logo_src": url_for('static', filename=f'images/google-cloud/{logo_name}'),
@@ -139,8 +227,31 @@ def get_techstack_cards():
     return {"frontend": frontend, "backend": backend, "infra": infra}
 
 def get_connect_cards():
-    """Connect/social cards."""
+    """
+    Generate contact and social connection cards
+    
+    Provides professional networking and contact information cards.
+    Features dynamic badge text based on platform type for appropriate
+    call-to-action messaging.
+    
+    Returns:
+        list: Contact card contexts for template rendering
+        
+    Connection Types:
+        - LinkedIn: Professional networking profile
+        - GitHub: Code repositories and development activity
+        - Email: Direct contact method
+        
+    Card Features:
+        - Platform-specific badge text for appropriate actions
+        - Professional social media links
+        - Direct contact options
+        
+    Template Usage:
+        Cards render in connect.html with platform-specific styling and actions
+    """
     def connect_card(href, logo_name, logo_alt, title, subtitle):
+        """DRY helper with intelligent badge text based on platform"""
         return {
             "href": href,
             "logo_src": url_for('static', filename=f'images/logos/{logo_name}'),
@@ -160,7 +271,31 @@ def get_connect_cards():
     ]
 
 def get_home_card():
-    """Home page card data."""
+    """
+    Generate homepage welcome card content
+    
+    Provides the main introduction content for the portfolio homepage.
+    Features personal introduction, professional overview, and engaging
+    call-to-action for visitors to explore the portfolio.
+    
+    Returns:
+        dict: Home card context with image, title, and introduction text
+        
+    Content Features:
+        - Cartoonized professional headshot
+        - Personal welcome message with professional positioning
+        - Portfolio exploration encouragement
+        - Playful personality elements (emoji integration)
+        - Growth mindset messaging (certification goals)
+        
+    Template Usage:
+        Renders as the central hero content on home.html with image,
+        title, and comprehensive introduction text.
+        
+    Design Notes:
+        Balances professional presentation with personality to create
+        an approachable and memorable first impression for visitors.
+    """
     return {
         'image_src': 'images/content/cartoonized-alan-smith.png',
         'image_alt': 'Cartoonized Alan Smith',
