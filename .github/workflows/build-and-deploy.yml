@@ -58,6 +58,7 @@ jobs:
       run: |
         gcloud builds submit \
           --config=cloudbuild.yaml \
+          --service-account="projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" \
           --substitutions=_IMAGE_URI="${{ steps.meta.outputs.image_uri }}" \
           .
 
