@@ -27,7 +27,7 @@ jobs:
       id-token: write
     
     outputs:
-      docker_tag: ${{ steps.meta.outputs.docker_tag }}
+      build_result: ${{ steps.meta.outputs.build_result }}
       tag_only: ${{ steps.meta.outputs.tag }}
     
     steps:
@@ -69,7 +69,7 @@ jobs:
         echo "  IMAGE_URI: ${IMAGE_URI}"
         
         echo "tag=${TAG}" >> $GITHUB_OUTPUT
-        echo "docker_tag=${IMAGE_URI}" >> $GITHUB_OUTPUT
+        echo "build_result=${IMAGE_URI}" >> $GITHUB_OUTPUT
         echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
         
         echo "✅ Outputs written to GITHUB_OUTPUT"
@@ -81,23 +81,23 @@ jobs:
         gcloud builds submit \
           --config=cloudbuild.yaml \
           --service-account="projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" \
-          --substitutions=_IMAGE_URI="${{ steps.meta.outputs.docker_tag }}" \
+          --substitutions=_IMAGE_URI="${{ steps.meta.outputs.build_result }}" \
           .
         
         # Verify the image was built and pushed
         echo "Verifying image exists..."
-        gcloud container images describe "${{ steps.meta.outputs.docker_tag }}" || {
+        gcloud container images describe "${{ steps.meta.outputs.build_result }}" || {
           echo "ERROR: Image was not successfully built/pushed"
           exit 1
         }
         
         echo "✅ Build completed successfully"
-        echo "Image: ${{ steps.meta.outputs.docker_tag }}"
+        echo "Image: ${{ steps.meta.outputs.build_result }}"
     
     - name: Verify job outputs
       run: |
         echo "🔍 Final job outputs:"
-        echo "  docker_tag: ${{ steps.meta.outputs.docker_tag }}"
+        echo "  build_result: ${{ steps.meta.outputs.build_result }}"
         echo "  tag: ${{ steps.meta.outputs.tag }}"
         echo "  short_sha: ${{ steps.meta.outputs.short_sha }}"
 
@@ -119,7 +119,6 @@ jobs:
       with:
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
-        create_credentials_file: false
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
@@ -127,18 +126,18 @@ jobs:
     - name: Debug build outputs
       run: |
         echo "🔍 Debug: Build job outputs"
-        echo "docker_tag: ${{ needs.build.outputs.docker_tag }}"
+        echo "build_result: ${{ needs.build.outputs.build_result }}"
         echo "tag_only: ${{ needs.build.outputs.tag_only }}"
         echo "All outputs: ${{ toJson(needs.build.outputs) }}"
         
     - name: Deploy to Cloud Run
       run: |
-        IMAGE_URI="${{ needs.build.outputs.docker_tag }}"
+        IMAGE_URI="${{ needs.build.outputs.build_result }}"
         IMAGE_TAG="${{ needs.build.outputs.tag_only }}"
         
-        # If docker_tag is empty but we have tag_only, reconstruct the URI
+        # If build_result is empty but we have tag_only, reconstruct the URI
         if [ -z "$IMAGE_URI" ] && [ -n "$IMAGE_TAG" ]; then
-          echo "⚠️  WARNING: docker_tag is empty, reconstructing from available data"
+          echo "⚠️  WARNING: build_result is empty, reconstructing from available data"
           IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.DOCKER_IMAGE_NAME }}:${IMAGE_TAG}"
           echo "🔄 Reconstructed IMAGE_URI: $IMAGE_URI"
         fi
