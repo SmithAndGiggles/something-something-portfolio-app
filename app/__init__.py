@@ -31,14 +31,14 @@ from .config import apply_config
 def create_app():
     """
     Create and configure a Flask application instance.
-    
+
     This function implements the application factory pattern, allowing multiple
     app instances to be created with different configurations. Each call returns
     a fully configured Flask application ready for use.
-    
+
     Returns:
         Flask: Configured Flask application instance with all components registered
-        
+
     Components Registered:
         - Blueprint routes: Main application endpoints and navigation
         - Error handlers: Custom 404, 500 error pages with consistent styling
@@ -47,18 +47,17 @@ def create_app():
     """
     # Create the Flask application instance
     app = Flask(__name__)
-    
+
     # Apply configuration from pyproject.toml with environment variable overrides
     apply_config(app)
-    
+
     # Register Blueprint modules for modular route organization
-    app.register_blueprint(routes)       # Main application routes and pages
-    app.register_blueprint(errors)       # Error handling (404, 500, etc.)
-    
+    app.register_blueprint(routes)  # Main application routes and pages
+    app.register_blueprint(errors)  # Error handling (404, 500, etc.)
+
     # Register context processors for global template data
     # These functions run before every template render to inject common variables
-    app.context_processor(inject_nav_links)    # Navigation menu items and links
-    app.context_processor(inject_footer_links) # Footer social media and external links
-    
-    return app
+    app.context_processor(inject_nav_links)  # Navigation menu items and links
+    app.context_processor(inject_footer_links)  # Footer social media and external links
 
+    return app

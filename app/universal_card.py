@@ -25,6 +25,7 @@ Architecture:
 - Type annotations for developer clarity
 """
 
+
 def get_card_context(
     href: str,
     logo_src: str,
@@ -32,15 +33,15 @@ def get_card_context(
     title: str,
     subtitle: str | None = None,
     badge_text: str | None = None,
-    card_class: str | None = None
+    card_class: str | None = None,
 ) -> dict:
     """
     Generate template-ready card context dictionary
-    
+
     Creates standardized card data structure for rendering via cards.html template.
     All portfolio cards (education, certifications, tech stack, etc.) use this
     consistent format for unified presentation.
-    
+
     Args:
         href (str): Target URL for card click navigation
         logo_src (str): Path to card logo/icon image
@@ -49,18 +50,18 @@ def get_card_context(
         subtitle (str, optional): Secondary descriptive text
         badge_text (str, optional): Badge/label text for status/category
         card_class (str, optional): Additional CSS classes for styling
-        
+
     Returns:
         dict: Template context with all card display properties
-        
+
     Template Usage:
         This dictionary structure maps directly to cards.html template variables,
         enabling consistent card rendering across all portfolio sections.
-        
+
     Example:
         card = get_card_context(
             href="https://example.com",
-            logo_src="/static/images/logos/example.png", 
+            logo_src="/static/images/logos/example.png",
             logo_alt="Example Logo",
             title="Example Title",
             subtitle="Example Description",
@@ -75,5 +76,5 @@ def get_card_context(
         "title": title,
         "subtitle": subtitle,
         "badge_text": badge_text,
-        "card_class": card_class
+        "card_class": card_class,
     }
