@@ -90,7 +90,6 @@ jobs:
         # Keyless authentication via Workload Identity Federation
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
-        create_credentials_file: false  # No need for file since we only need token-based auth
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
@@ -173,7 +172,6 @@ jobs:
         # Reuse same Workload Identity configuration as build job
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
-        create_credentials_file: false  # No need for file since we only need token-based auth
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
