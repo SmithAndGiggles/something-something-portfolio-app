@@ -27,7 +27,7 @@ jobs:
       id-token: write
     
     outputs:
-      image_uri: ${{ steps.meta.outputs.image_uri }}
+      container_image: ${{ steps.meta.outputs.container_image }}
       image_tag: ${{ steps.meta.outputs.tag }}
     
     steps:
@@ -69,7 +69,7 @@ jobs:
         echo "  IMAGE_URI: ${IMAGE_URI}"
         
         echo "tag=${TAG}" >> $GITHUB_OUTPUT
-        echo "image_uri=${IMAGE_URI}" >> $GITHUB_OUTPUT
+        echo "container_image=${IMAGE_URI}" >> $GITHUB_OUTPUT
         echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
         
         echo "✅ Outputs written to GITHUB_OUTPUT"
@@ -81,23 +81,23 @@ jobs:
         gcloud builds submit \
           --config=cloudbuild.yaml \
           --service-account="projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" \
-          --substitutions=_IMAGE_URI="${{ steps.meta.outputs.image_uri }}" \
+          --substitutions=_IMAGE_URI="${{ steps.meta.outputs.container_image }}" \
           .
         
         # Verify the image was built and pushed
         echo "Verifying image exists..."
-        gcloud container images describe "${{ steps.meta.outputs.image_uri }}" || {
+        gcloud container images describe "${{ steps.meta.outputs.container_image }}" || {
           echo "ERROR: Image was not successfully built/pushed"
           exit 1
         }
         
         echo "✅ Build completed successfully"
-        echo "Image: ${{ steps.meta.outputs.image_uri }}"
+        echo "Image: ${{ steps.meta.outputs.container_image }}"
     
     - name: Verify job outputs
       run: |
         echo "🔍 Final job outputs:"
-        echo "  image_uri: ${{ steps.meta.outputs.image_uri }}"
+        echo "  container_image: ${{ steps.meta.outputs.container_image }}"
         echo "  tag: ${{ steps.meta.outputs.tag }}"
         echo "  short_sha: ${{ steps.meta.outputs.short_sha }}"
 
@@ -123,25 +123,25 @@ jobs:
     - name: Debug build outputs
       run: |
         echo "🔍 Debug: Build job outputs"
-        echo "image_uri: ${{ needs.build.outputs.image_uri }}"
+        echo "container_image: ${{ needs.build.outputs.container_image }}"
         echo "image_tag: ${{ needs.build.outputs.image_tag }}"
         echo "All outputs: ${{ toJson(needs.build.outputs) }}"
         
     - name: Deploy to Cloud Run
       run: |
-        IMAGE_URI="${{ needs.build.outputs.image_uri }}"
+        IMAGE_URI="${{ needs.build.outputs.container_image }}"
         IMAGE_TAG="${{ needs.build.outputs.image_tag }}"
         
-        # If image_uri is empty but we have image_tag, reconstruct the URI
+        # If container_image is empty but we have image_tag, reconstruct the URI
         if [ -z "$IMAGE_URI" ] && [ -n "$IMAGE_TAG" ]; then
-          echo "⚠️  WARNING: image_uri is empty, reconstructing from available data"
+          echo "⚠️  WARNING: container_image is empty, reconstructing from available data"
           IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.DOCKER_IMAGE_NAME }}:${IMAGE_TAG}"
           echo "🔄 Reconstructed IMAGE_URI: $IMAGE_URI"
         fi
         
         # Validate image URI is not empty
         if [ -z "$IMAGE_URI" ]; then
-          echo "❌ ERROR: No image URI provided from build step and cannot reconstruct"
+          echo "❌ ERROR: No container image URI provided from build step and cannot reconstruct"
           echo "Build outputs: ${{ toJson(needs.build.outputs) }}"
           echo "Available env vars:"
           echo "  PROJECT_ID: ${{ env.PROJECT_ID }}"
@@ -197,7 +197,7 @@ jobs:
     - name: Deployment summary
       run: |
         echo "## 🚀 Deployment Complete!" >> $GITHUB_STEP_SUMMARY
-        echo "- **Image**: ${{ needs.build.outputs.image_uri }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Image**: ${{ needs.build.outputs.container_image }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Tag**: ${{ needs.build.outputs.image_tag }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Service URL**: ${{ steps.deploy-check.outputs.service_url }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Custom Domain**: https://portfolio.me2u.space" >> $GITHUB_STEP_SUMMARY
