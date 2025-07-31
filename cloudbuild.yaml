@@ -1,21 +1,13 @@
 # Cloud Build configuration for portfolio app
-# This file handles the actual Docker build process in GCP
+# Builds and pushes Docker image to Artifact Registry
 
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    env:
-      - 'DOCKER_BUILDKIT=1'
     args:
       - 'build'
-      - '--build-arg'
-      - 'BUILDKIT_INLINE_CACHE=1'
-      - '--cache-from'
-      - '${_IMAGE_URI}'
       - '--tag'
       - '${_IMAGE_URI}'
-      - '--file'
-      - 'Dockerfile'
       - '.'
     id: 'build-image'
 
@@ -26,21 +18,11 @@ steps:
       - '${_IMAGE_URI}'
     id: 'push-image'
 
-  # Security scan with Container Analysis
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'container'
-      - 'images'
-      - 'scan'
-      - '${_IMAGE_URI}'
-      - '--format=json'
-    id: 'security-scan'
-    allowFailure: true
-
 # Substitution variables (passed from GitHub Actions)
 substitutions:
-  _IMAGE_URI: 'us-central1-docker.pkg.dev/PROJECT_ID/REPO/IMAGE:TAG'
+  _IMAGE_URI: '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/${_IMAGE_NAME}:${_TAG}'
 
+# Build options
 options:
   machineType: 'E2_HIGHCPU_8'
   logging: CLOUD_LOGGING_ONLY

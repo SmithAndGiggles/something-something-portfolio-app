@@ -8,7 +8,7 @@ A modern, responsive portfolio website built with Flask and Bootstrap 5.
 - **Modern UI**: Clean, professional interface with smooth transitions
 - **Card-based Layout**: Organized sections for skills, projects, experience, and education
 - **Carousel Navigation**: Interactive carousel for browsing different content sections
-- **Customizable**: Easy configuration through environment variables and config files
+- **Automated CI/CD**: GitHub Actions pipeline for seamless deployment to Google Cloud Run
 
 ## Quick Start
 
@@ -17,7 +17,7 @@ A modern, responsive portfolio website built with Flask and Bootstrap 5.
 - Python 3.8+
 - pip (Python package manager)
 
-### Setup
+### Local Development
 
 1. **Clone and Navigate**
    ```bash
@@ -42,6 +42,27 @@ A modern, responsive portfolio website built with Flask and Bootstrap 5.
 
 5. **Access Your Portfolio**
    Open your browser to `http://localhost:5000`
+
+## Deployment
+
+### Automated CI/CD Pipeline
+
+The application automatically deploys to Google Cloud Run when code is pushed to the `prod` branch.
+
+**Required GitHub Secrets:**
+- `GCP_PROJECT_ID`: Your Google Cloud project ID
+- `GCP_SERVICE_ACCOUNT_EMAIL_PROD`: Service account email for deployment
+- `GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD`: Workload identity provider path
+
+**Required GitHub Variables:**
+- `GCP_REGION_PROD`: Deployment region (e.g., us-central1)
+- `GCP_CLOUD_RUN_SERVICE_NAME`: Cloud Run service name
+- `GCP_ARTIFACT_REGISTRY_REPO_PROD`: Artifact Registry repository name
+- `GCP_APP_DOCKER_IMAGE_NAME`: Docker image name
+
+### Manual Deployment
+
+You can also trigger deployment manually through the GitHub Actions UI.
 
 ## Configuration
 

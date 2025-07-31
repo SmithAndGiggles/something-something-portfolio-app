@@ -1,52 +1,44 @@
 #!/usr/bin/env python3
 """
-Script to automatically fix common flake8 issues
+Modern script to automatically fix common flake8 issues using Python 3.13 features
 """
-import os
 import re
-import glob
+from pathlib import Path
 
-def fix_file(filepath):
-    """Fix common flake8 issues in a Python file"""
-    with open(filepath, 'r') as f:
-        content = f.read()
-    
+def fix_file(filepath: Path) -> None:
+    """Fix common flake8 issues in a Python file using modern Path operations"""
+    content = filepath.read_text()
     original_content = content
     
-    # Fix W293: blank line contains whitespace
-    content = re.sub(r'^[ \t]+$', '', content, flags=re.MULTILINE)
+    # Modern regex fixes with combined operations
+    fixes = [
+        (r'^[ \t]+$', ''),           # W293: blank line contains whitespace  
+        (r'[ \t]+$', ''),            # W291: trailing whitespace
+        (r'\n\n+$', '\n'),           # W391: blank line at end of file
+    ]
     
-    # Fix W291: trailing whitespace
-    content = re.sub(r'[ \t]+$', '', content, flags=re.MULTILINE)
+    for pattern, replacement in fixes:
+        content = re.sub(pattern, replacement, content, flags=re.MULTILINE)
     
-    # Fix W292: no newline at end of file
+    # W292: no newline at end of file
     if content and not content.endswith('\n'):
         content += '\n'
     
-    # Fix W391: blank line at end of file
-    content = re.sub(r'\n\n+$', '\n', content)
-    
     # Save if changed
     if content != original_content:
-        with open(filepath, 'w') as f:
-            f.write(content)
+        filepath.write_text(content)
         print(f"Fixed whitespace issues in {filepath}")
 
-def main():
-    """Fix all Python files in app directory"""
-    app_dir = "app"
+def main() -> None:
+    """Fix all Python files using modern pathlib and list comprehensions"""
+    app_dir = Path("app")
     
-    # Find all Python files
-    python_files = []
-    for root, dirs, files in os.walk(app_dir):
-        # Skip __pycache__ directories
-        dirs[:] = [d for d in dirs if d != '__pycache__']
-        for file in files:
-            if file.endswith('.py'):
-                python_files.append(os.path.join(root, file))
+    # Modern approach: use pathlib.rglob() and list comprehension
+    python_files = [f for f in app_dir.rglob("*.py") if "__pycache__" not in f.parts]
     
     print(f"Found {len(python_files)} Python files to fix")
     
+    # Use modern for-each processing
     for filepath in python_files:
         fix_file(filepath)
     

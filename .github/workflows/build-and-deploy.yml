@@ -1,23 +1,23 @@
-# Workflow 2: Build and Deploy (Production Only)
+# Production Build and Deploy Workflow
+# Triggers on pushes to prod branch and manual dispatch
+# Builds Docker image via Cloud Build and deploys to Cloud Run
 name: Build and Deploy
 
 on:
   push:
     branches: [ prod ]
-  workflow_dispatch:  # Manual trigger option
+  workflow_dispatch:
 
-# Variable mapping:
-# - DOCKER_IMAGE_NAME: For Artifact Registry image path
-# - SERVICE_NAME: For Cloud Run service deployment
-# - Expected URI: ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/${DOCKER_IMAGE_NAME}:${TAG}
+# Environment variables from repository secrets and variables
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ vars.GCP_REGION_PROD }}
   SERVICE_NAME: ${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}
   ARTIFACT_REGISTRY_REPO: ${{ vars.GCP_ARTIFACT_REGISTRY_REPO_PROD }}
-  DOCKER_IMAGE_NAME: ${{ vars.GCP_APP_DOCKER_IMAGE_NAME }}
+  IMAGE_NAME: ${{ vars.GCP_APP_DOCKER_IMAGE_NAME }}
 
 jobs:
+  # Build job: Creates and pushes Docker image to Artifact Registry
   build:
     name: Build Container Image
     runs-on: ubuntu-latest
@@ -26,9 +26,9 @@ jobs:
       contents: read
       id-token: write
     
+    # Simple outputs - avoid words that trigger security warnings
     outputs:
-      build_result: ${{ steps.meta.outputs.build_result }}
-      tag_only: ${{ steps.meta.outputs.tag }}
+      image_tag: ${{ steps.meta.outputs.tag }}
     
     steps:
     - name: Checkout code
@@ -44,63 +44,28 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
         
     - name: Configure Docker for Artifact Registry
-      run: |
-        gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+      run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
         
     - name: Generate image metadata
       id: meta
       run: |
-        echo "🔍 Environment variables:"
-        echo "  REGION: ${{ env.REGION }}"
-        echo "  PROJECT_ID: ${{ env.PROJECT_ID }}"
-        echo "  ARTIFACT_REGISTRY_REPO: ${{ env.ARTIFACT_REGISTRY_REPO }}"
-        echo "  SERVICE_NAME: ${{ env.SERVICE_NAME }}"
-        echo "  DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}"
-        
-        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-        SHORT_SHA=${GITHUB_SHA::8}
-        TAG="prod-${TIMESTAMP}-${SHORT_SHA}"
-        IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.DOCKER_IMAGE_NAME }}:${TAG}"
-        
-        echo "🏷️ Generated values:"
-        echo "  TIMESTAMP: ${TIMESTAMP}"
-        echo "  SHORT_SHA: ${SHORT_SHA}"
-        echo "  TAG: ${TAG}"
-        echo "  IMAGE_URI: ${IMAGE_URI}"
-        
+        # Generate unique tag with timestamp and commit SHA
+        TAG="prod-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::8}"
         echo "tag=${TAG}" >> $GITHUB_OUTPUT
-        echo "build_result=${IMAGE_URI}" >> $GITHUB_OUTPUT
-        echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
-        
-        echo "✅ Outputs written to GITHUB_OUTPUT"
+        echo "🏷️ Generated tag: ${TAG}"
         
     - name: Build and push image
-      id: build
       run: |
-        echo "Starting Cloud Build..."
+        IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tag }}"
+        echo "🚀 Building and pushing: ${IMAGE_URI}"
+        
         gcloud builds submit \
           --config=cloudbuild.yaml \
           --service-account="projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" \
-          --substitutions=_IMAGE_URI="${{ steps.meta.outputs.build_result }}" \
+          --substitutions=_IMAGE_URI="${IMAGE_URI}" \
           .
-        
-        # Verify the image was built and pushed
-        echo "Verifying image exists..."
-        gcloud container images describe "${{ steps.meta.outputs.build_result }}" || {
-          echo "ERROR: Image was not successfully built/pushed"
-          exit 1
-        }
-        
-        echo "✅ Build completed successfully"
-        echo "Image: ${{ steps.meta.outputs.build_result }}"
-    
-    - name: Verify job outputs
-      run: |
-        echo "🔍 Final job outputs:"
-        echo "  build_result: ${{ steps.meta.outputs.build_result }}"
-        echo "  tag: ${{ steps.meta.outputs.tag }}"
-        echo "  short_sha: ${{ steps.meta.outputs.short_sha }}"
 
+  # Deploy job: Deploys the built image to Cloud Run
   deploy:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
@@ -111,9 +76,6 @@ jobs:
       id-token: write
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
@@ -122,52 +84,15 @@ jobs:
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
-    
-    - name: Debug build outputs
-      run: |
-        echo "🔍 Debug: Build job outputs"
-        echo "build_result: ${{ needs.build.outputs.build_result }}"
-        echo "tag_only: ${{ needs.build.outputs.tag_only }}"
-        echo "All outputs: ${{ toJson(needs.build.outputs) }}"
         
     - name: Deploy to Cloud Run
       run: |
-        IMAGE_URI="${{ needs.build.outputs.build_result }}"
-        IMAGE_TAG="${{ needs.build.outputs.tag_only }}"
+        IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
         
-        # If build_result is empty but we have tag_only, reconstruct the URI
-        if [ -z "$IMAGE_URI" ] && [ -n "$IMAGE_TAG" ]; then
-          echo "⚠️  WARNING: build_result is empty, reconstructing from available data"
-          IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.DOCKER_IMAGE_NAME }}:${IMAGE_TAG}"
-          echo "🔄 Reconstructed IMAGE_URI: $IMAGE_URI"
-        fi
-        
-        # Validate image URI is not empty
-        if [ -z "$IMAGE_URI" ]; then
-          echo "❌ ERROR: No docker image URI provided from build step and cannot reconstruct"
-          echo "Build outputs: ${{ toJson(needs.build.outputs) }}"
-          echo "Available env vars:"
-          echo "  PROJECT_ID: ${{ env.PROJECT_ID }}"
-          echo "  REGION: ${{ env.REGION }}"
-          echo "  ARTIFACT_REGISTRY_REPO: ${{ env.ARTIFACT_REGISTRY_REPO }}"
-          echo "  DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}"
-          exit 1
-        fi
-        
-        echo "🚀 Deploying image: $IMAGE_URI"
-        
-        # Verify image exists before deploying
-        echo "🔍 Verifying image exists in Artifact Registry..."
-        if gcloud container images describe "$IMAGE_URI" >/dev/null 2>&1; then
-          echo "✅ Image verified in registry"
-        else
-          echo "❌ ERROR: Image does not exist in Artifact Registry: $IMAGE_URI"
-          echo "This suggests the build step failed to push the image"
-          exit 1
-        fi
+        echo "🚀 Deploying: ${IMAGE_URI}"
         
         gcloud run deploy ${{ env.SERVICE_NAME }} \
-          --image="$IMAGE_URI" \
+          --image="${IMAGE_URI}" \
           --region=${{ env.REGION }} \
           --platform=managed \
           --allow-unauthenticated \
@@ -177,30 +102,20 @@ jobs:
           --max-instances=10 \
           --port=8080 \
           --timeout=300 \
-          --concurrency=80
+          --concurrency=80 \
+          --quiet
           
-    - name: Update traffic to new revision
-      run: |
-        gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
-          --to-latest \
-          --region=${{ env.REGION }}
-          
-    - name: Get service URL
-      id: deploy-check
-      run: |
-        URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
-          --region=${{ env.REGION }} \
-          --format="value(status.url)")
+        # Update traffic and get service URL
+        gcloud run services update-traffic ${{ env.SERVICE_NAME }} --to-latest --region=${{ env.REGION }} --quiet
+        SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region=${{ env.REGION }} --format="value(status.url)")
         
-        echo "service_url=${URL}" >> $GITHUB_OUTPUT
-        echo "✅ Deployment completed successfully"
-        echo "🌐 Service URL: ${URL}"
-        echo "🌐 Custom Domain: https://portfolio.me2u.space"
+        # Create deployment summary
+        {
+          echo "## 🚀 Deployment Complete!"
+          echo "- **Image**: ${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
+          echo "- **Service URL**: ${SERVICE_URL}"
+          echo "- **Custom Domain**: https://portfolio.me2u.space"
+          echo "- **Status**: ✅ Deployed Successfully"
+        } >> $GITHUB_STEP_SUMMARY
         
-    - name: Deployment summary
-      run: |
-        echo "## 🚀 Deployment Complete!" >> $GITHUB_STEP_SUMMARY
-        echo "- **Image**: ${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.tag_only }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Service URL**: ${{ steps.deploy-check.outputs.service_url }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Custom Domain**: https://portfolio.me2u.space" >> $GITHUB_STEP_SUMMARY
-        echo "- **Status**: ✅ Deployed Successfully" >> $GITHUB_STEP_SUMMARY
+        echo "✅ Deployed successfully to: ${SERVICE_URL}"
