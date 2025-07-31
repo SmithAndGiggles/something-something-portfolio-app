@@ -55,12 +55,24 @@ jobs:
         echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
         
     - name: Build and push image
+      id: build
       run: |
+        echo "Starting Cloud Build..."
         gcloud builds submit \
           --config=cloudbuild.yaml \
           --service-account="projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" \
           --substitutions=_IMAGE_URI="${{ steps.meta.outputs.image_uri }}" \
           .
+        
+        # Verify the image was built and pushed
+        echo "Verifying image exists..."
+        gcloud container images describe "${{ steps.meta.outputs.image_uri }}" || {
+          echo "ERROR: Image was not successfully built/pushed"
+          exit 1
+        }
+        
+        echo "✅ Build completed successfully"
+        echo "Image: ${{ steps.meta.outputs.image_uri }}"
 
   deploy:
     name: Deploy to Cloud Run
@@ -80,11 +92,29 @@ jobs:
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+    
+    - name: Debug build outputs
+      run: |
+        echo "🔍 Debug: Build job outputs"
+        echo "image_uri: ${{ needs.build.outputs.image_uri }}"
+        echo "image_tag: ${{ needs.build.outputs.image_tag }}"
+        echo "All outputs: ${{ toJson(needs.build.outputs) }}"
         
     - name: Deploy to Cloud Run
       run: |
+        IMAGE_URI="${{ needs.build.outputs.image_uri }}"
+        
+        # Validate image URI is not empty
+        if [ -z "$IMAGE_URI" ]; then
+          echo "❌ ERROR: No image URI provided from build step"
+          echo "Build outputs: ${{ toJson(needs.build.outputs) }}"
+          exit 1
+        fi
+        
+        echo "🚀 Deploying image: $IMAGE_URI"
+        
         gcloud run deploy ${{ env.SERVICE_NAME }} \
-          --image="${{ needs.build.outputs.image_uri }}" \
+          --image="$IMAGE_URI" \
           --region=${{ env.REGION }} \
           --platform=managed \
           --allow-unauthenticated \
