@@ -2,21 +2,29 @@
 # Production Dockerfile for Flask Portfolio Application
 # ============================================================================
 # 
-# This Dockerfile creates a secure, minimal container optimized for production:
-# - Uses Alpine Linux for smallest attack surface and image size (~50MB base)
+# Multi-stage build for optimized CI/CD and production deployment
+# - Uses Alpine Linux for smallest attack surface and image size
 # - Non-root user execution for security best practices
 # - Cloud-agnostic design - works with any container platform
 # - Production-ready Gunicorn WSGI server with optimized worker configuration
 # - Efficient layer caching for faster builds in CI/CD pipelines
 
+# Build Arguments
+ARG ENVIRONMENT=production
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
 # Base Image: Python 3.13 on Alpine Linux for minimal footprint
-FROM python:3.13-alpine
+FROM python:3.13-alpine as base
 
 # Container Metadata: Used by container registries and orchestration platforms
 LABEL maintainer="Portfolio Application" \
       description="Production Flask portfolio application" \
-      version="1.0.0" \
-      created="2025-07-29"
+      version="${VERSION:-1.0.0}" \
+      created="${BUILD_DATE}" \
+      revision="${VCS_REF}" \
+      environment="${ENVIRONMENT}"
 
 # Security: Create non-root user for running the application
 # This prevents potential privilege escalation attacks and follows container security best practices

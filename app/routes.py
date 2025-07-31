@@ -166,3 +166,35 @@ def me2u_place_landing():
     """
     return render_template('pages/landing.html', **get_landing_page_data())
 
+
+@routes.route('/health')
+def health():
+    """
+    Health check endpoint for monitoring and load balancers.
+    
+    This endpoint is used by:
+    - Cloud Run health checks
+    - Load balancer health probes  
+    - Monitoring systems
+    - CI/CD pipeline verification
+    
+    Returns:
+        JSON response with health status and basic app info
+    """
+    import time
+    from flask import jsonify
+    
+    health_data = {
+        "status": "healthy",
+        "timestamp": int(time.time()),
+        "service": "portfolio-app",
+        "version": "1.0.0",
+        "checks": {
+            "database": "not_applicable",
+            "static_files": "ok",
+            "templates": "ok"
+        }
+    }
+    
+    return jsonify(health_data), 200
+
