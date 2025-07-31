@@ -194,14 +194,14 @@ jobs:
           --region=${{ env.REGION }} \
           --platform=managed \
           --allow-unauthenticated \
-          --memory=512Mi \             # Sufficient for Flask + static assets
-          --cpu=1 \                    # Single vCPU for cost optimization
-          --min-instances=0 \          # Scale to zero for cost efficiency
-          --max-instances=10 \         # Prevent runaway scaling costs
-          --port=8080 \                # Standard container port
-          --timeout=300 \              # 5-minute timeout for long requests
-          --concurrency=80 \           # Optimal concurrent requests per instance
-          --quiet                      # Suppress interactive prompts
+          --memory=512Mi \                 # Sufficient for Flask + static assets
+          --cpu=1 \                        # Single vCPU for cost optimization
+          --min-instances=0 \              # Scale to zero for cost efficiency
+          --max-instances=10 \             # Prevent runaway scaling costs
+          --port=8080 \                    # Standard container port
+          --timeout=300 \                  # 5-minute timeout for long requests
+          --concurrency=80 \               # Optimal concurrent requests per instance
+          --quiet                          # Suppress interactive prompts
         
         # ----------------------------------------
         # Traffic Management and Health Check
