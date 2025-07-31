@@ -53,13 +53,33 @@ host = "0.0.0.0"                     # Bind to all interfaces (use "127.0.0.1" f
 port = 8080                          # Default development port
 
 # Container Configuration - Cloud-agnostic defaults
-container_image_name = "portfolio-app"  # Docker image name for builds
+container_image_name = "portfolio-app"  # Docker image name for builds (maps to GCP_APP_DOCKER_IMAGE_NAME)
 container_tag = "latest"                 # Default container tag (override for versioning)
 container_port = 8080                    # Port exposed by the container
 
-# Note: Cloud deployment configuration (GCP_PROJECT_ID, ARTIFACT_REGISTRY, etc.)
-# is intentionally excluded from this file and must be set via environment variables
+# Cloud Run Deployment Defaults - Safe defaults for production deployment
+# These map to GitHub workflow variables but remain cloud-agnostic
+deployment_region = "us-central1"        # Default deployment region (override via GCP_REGION_PROD)
+service_name = "portfolio-app"           # Default service name (override via GCP_CLOUD_RUN_SERVICE_NAME)
+artifact_registry_repo = "portfolio-docker"  # Default registry repo (override via GCP_ARTIFACT_REGISTRY_REPO_PROD)
+
+# Cloud Run Service Configuration - Production defaults
+memory = "512Mi"                         # Memory allocation for Cloud Run service
+cpu = 1                                  # CPU allocation for Cloud Run service
+min_instances = 0                        # Minimum instances (scale to zero)
+max_instances = 10                       # Maximum instances for scaling
+timeout = 300                            # Request timeout in seconds
+concurrency = 80                         # Maximum concurrent requests per instance
+
+# Note: Sensitive and environment-specific configuration (GCP_PROJECT_ID, service account emails, etc.)
+# is intentionally excluded from this file and must be set via environment variables or GitHub secrets
 # for security and cloud-agnostic design.
+#
+# GitHub Workflow Variable Mapping:
+# - container_image_name → GCP_APP_DOCKER_IMAGE_NAME
+# - deployment_region → GCP_REGION_PROD  
+# - service_name → GCP_CLOUD_RUN_SERVICE_NAME
+# - artifact_registry_repo → GCP_ARTIFACT_REGISTRY_REPO_PROD
 #
 # Environment File Configuration:
 # - Copy scripts/.env.example to scripts/.env.development and scripts/.env.production

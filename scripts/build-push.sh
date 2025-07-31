@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ============================================================================
-# me2u - Dynamic Docker Build & Push Script
+# Portfolio - Dynamic Docker Build & Push Script
 # Reads configuration from pyproject.toml for DRY principles
 # ============================================================================
 
@@ -39,14 +39,15 @@ except Exception as e:
 # Load configuration from pyproject.toml
 echo -e "${BLUE}📖 Loading configuration from pyproject.toml...${NC}"
 
-APP_NAME=$(get_toml_value "app_name" "me2u Portfolio")
+APP_NAME=$(get_toml_value "app_name" "Portfolio")
 VERSION=$(get_toml_value "version" "0.1.0")
-GCP_PROJECT_ID=${GCP_PROJECT_ID:-$(get_toml_value "gcp_project_id" "default-gcp-project-id")}
-GCP_REGION=$(get_toml_value "gcp_region" "us-central1")
-ARTIFACT_REGISTRY=$(get_toml_value "artifact_registry" "me2u-artifact-docker")
-DOCKER_REGISTRY_BASE=$(get_toml_value "docker_registry_base" "docker.pkg.dev")
-DOCKER_IMAGE_NAME=$(get_toml_value "docker_image_name" "me2u")
-DOCKER_TAG=$(get_toml_value "docker_tag" "latest")
+# Cloud-specific values with defaults from pyproject.toml, override via environment variables
+GCP_PROJECT_ID=${GCP_PROJECT_ID:-"default-gcp-project-id"}
+GCP_REGION=${GCP_REGION:-$(get_toml_value "deployment_region" "us-central1")}
+ARTIFACT_REGISTRY=${ARTIFACT_REGISTRY:-$(get_toml_value "artifact_registry_repo" "portfolio-docker")}
+DOCKER_REGISTRY_BASE=${DOCKER_REGISTRY_BASE:-"docker.pkg.dev"}
+DOCKER_IMAGE_NAME=$(get_toml_value "container_image_name" "portfolio-app")
+DOCKER_TAG=$(get_toml_value "container_tag" "latest")
 
 # Allow command line overrides
 IMAGE_NAME=${1:-$DOCKER_IMAGE_NAME}
@@ -113,7 +114,7 @@ echo -e "${GREEN}📦 Registry: $ARTIFACT_REGISTRY${NC}"
 echo -e "${GREEN}🐳 Image: $FULL_IMAGE${NC}"
 echo ""
 echo -e "${BLUE}💡 To deploy this image:${NC}"
-echo -e "   gcloud run deploy me2u-app \\"
+echo -e "   gcloud run deploy portfolio-app \\"
 echo -e "     --image=$FULL_IMAGE \\"
 echo -e "     --region=$GCP_REGION \\"
 echo -e "     --project=$GCP_PROJECT_ID"

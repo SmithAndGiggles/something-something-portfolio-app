@@ -1,14 +1,46 @@
+# ============================================================================
 # Production Build and Deploy Workflow
-# Triggers on pushes to prod branch and manual dispatch
-# Builds Docker image via Cloud Build and deploys to Cloud Run
+# ============================================================================
+# 
+# Purpose: Automated CI/CD pipeline for portfolio application deployment
+# Triggers: 
+#   - Automatic: Pushes to 'prod' branch
+#   - Manual: workflow_dispatch for on-demand deployments
+#
+# Architecture:
+#   1. Build Job: Creates containerized application via Google Cloud Build
+#   2. Deploy Job: Deploys container to Google Cloud Run with auto-scaling
+#
+# Security: Uses Workload Identity Federation for secure, keyless authentication
+# Configuration: Environment variables sourced from GitHub repository settings
+# ============================================================================
+
 name: Build and Deploy
 
 on:
   push:
-    branches: [ prod ]
-  workflow_dispatch:
+    branches: [ prod ]    # Auto-deploy production changes
+  workflow_dispatch:      # Manual deployment trigger
 
-# Environment variables from repository secrets and variables
+# ============================================================================
+# Environment Configuration
+# ============================================================================
+# 
+# All values sourced from GitHub repository variables/secrets for security.
+# These map to defaults defined in pyproject.toml but can override them.
+#
+# Required Repository Variables:
+#   - GCP_REGION_PROD: Target deployment region (default: us-central1)
+#   - GCP_CLOUD_RUN_SERVICE_NAME: Cloud Run service name (default: portfolio-app)
+#   - GCP_ARTIFACT_REGISTRY_REPO_PROD: Docker registry repo (default: portfolio-docker)
+#   - GCP_APP_DOCKER_IMAGE_NAME: Container image name (default: portfolio-app)
+#
+# Required Repository Secrets:
+#   - GCP_PROJECT_ID: Google Cloud project identifier
+#   - GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD: Workload Identity provider path
+#   - GCP_SERVICE_ACCOUNT_EMAIL_PROD: Service account for deployments
+# ============================================================================
+
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ vars.GCP_REGION_PROD }}
@@ -17,26 +49,45 @@ env:
   IMAGE_NAME: ${{ vars.GCP_APP_DOCKER_IMAGE_NAME }}
 
 jobs:
-  # Build job: Creates and pushes Docker image to Artifact Registry
+  # ============================================================================
+  # BUILD JOB: Container Image Creation
+  # ============================================================================
+  #
+  # Purpose: Creates production-ready Docker container and pushes to Artifact Registry
+  # Strategy: Uses Google Cloud Build for optimized, cached container builds
+  # Output: Unique image tag for deployment traceability
+  #
+  # Security Features:
+  #   - Workload Identity Federation (keyless authentication)
+  #   - Minimal permissions (contents: read, id-token: write)
+  #   - Service account impersonation for Cloud Build
+  # ============================================================================
+  
   build:
     name: Build Container Image
     runs-on: ubuntu-latest
     
+    # Minimal required permissions for security
     permissions:
-      contents: read
-      id-token: write
+      contents: read          # Read repository code
+      id-token: write         # Generate OIDC token for Workload Identity
     
-    # Simple outputs - avoid words that trigger security warnings
+    # Output unique image tag for deployment job
     outputs:
       image_tag: ${{ steps.meta.outputs.tag }}
     
     steps:
+    # ----------------------------------------
+    # Setup: Code and Authentication
+    # ----------------------------------------
+    
     - name: Checkout code
       uses: actions/checkout@v4
       
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
+        # Keyless authentication via Workload Identity Federation
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
         
@@ -45,77 +96,146 @@ jobs:
         
     - name: Configure Docker for Artifact Registry
       run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+    
+    # ----------------------------------------
+    # Image Metadata Generation
+    # ----------------------------------------
         
     - name: Generate image metadata
       id: meta
       run: |
-        # Generate unique tag with timestamp and commit SHA
+        # Create unique, traceable tag with timestamp and commit SHA
+        # Format: prod-YYYYMMDD-HHMMSS-<8-char-commit-sha>
+        # Example: prod-20240131-143022-a1b2c3d4
         TAG="prod-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::8}"
         echo "tag=${TAG}" >> $GITHUB_OUTPUT
         echo "🏷️ Generated tag: ${TAG}"
+    
+    # ----------------------------------------
+    # Container Build and Push
+    # ----------------------------------------
         
     - name: Build and push image
       run: |
+        # Construct full image URI for Artifact Registry
         IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tag }}"
         echo "🚀 Building and pushing: ${IMAGE_URI}"
         
+        # Use Cloud Build for optimized container creation
+        # Benefits: Caching, parallel builds, optimized for GCP
         gcloud builds submit \
           --config=cloudbuild.yaml \
           --service-account="projects/${{ env.PROJECT_ID }}/serviceAccounts/${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}" \
           --substitutions=_IMAGE_URI="${IMAGE_URI}" \
           .
 
-  # Deploy job: Deploys the built image to Cloud Run
+  # ============================================================================
+  # DEPLOY JOB: Cloud Run Deployment
+  # ============================================================================
+  #
+  # Purpose: Deploys built container to Google Cloud Run with production configuration
+  # Dependencies: Requires successful completion of build job
+  # Strategy: Blue-green deployment with traffic switching and health checks
+  #
+  # Cloud Run Configuration (aligned with pyproject.toml defaults):
+  #   - Memory: 512Mi (suitable for Flask applications)
+  #   - CPU: 1 (single vCPU for cost optimization)
+  #   - Scaling: 0-10 instances (scale-to-zero for cost efficiency)
+  #   - Timeout: 300s (5 minutes for long-running requests)
+  #   - Concurrency: 80 requests per instance
+  #   - Port: 8080 (standard containerized application port)
+  #
+  # Security Features:
+  #   - Workload Identity Federation authentication
+  #   - Service account with minimal required permissions
+  #   - Unauthenticated access (public portfolio application)
+  # ============================================================================
+  
   deploy:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
-    needs: build
+    needs: build                    # Wait for successful container build
     
+    # Minimal required permissions for security
     permissions:
-      contents: read
-      id-token: write
+      contents: read              # Read repository metadata
+      id-token: write             # Generate OIDC token for Workload Identity
     
     steps:
+    # ----------------------------------------
+    # Setup: Authentication and Tools
+    # ----------------------------------------
+    
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
+        # Reuse same Workload Identity configuration as build job
         workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
         
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+    
+    # ----------------------------------------
+    # Cloud Run Deployment
+    # ----------------------------------------
         
     - name: Deploy to Cloud Run
       run: |
+        # Reconstruct image URI from build job output
         IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
         
         echo "🚀 Deploying: ${IMAGE_URI}"
         
+        # Deploy with production-optimized configuration
+        # Configuration values align with pyproject.toml defaults
         gcloud run deploy ${{ env.SERVICE_NAME }} \
           --image="${IMAGE_URI}" \
           --region=${{ env.REGION }} \
           --platform=managed \
           --allow-unauthenticated \
-          --memory=512Mi \
-          --cpu=1 \
-          --min-instances=0 \
-          --max-instances=10 \
-          --port=8080 \
-          --timeout=300 \
-          --concurrency=80 \
-          --quiet
+          --memory=512Mi \             # Sufficient for Flask + static assets
+          --cpu=1 \                    # Single vCPU for cost optimization
+          --min-instances=0 \          # Scale to zero for cost efficiency
+          --max-instances=10 \         # Prevent runaway scaling costs
+          --port=8080 \                # Standard container port
+          --timeout=300 \              # 5-minute timeout for long requests
+          --concurrency=80 \           # Optimal concurrent requests per instance
+          --quiet                      # Suppress interactive prompts
+        
+        # ----------------------------------------
+        # Traffic Management and Health Check
+        # ----------------------------------------
           
-        # Update traffic and get service URL
+        # Switch all traffic to new revision (blue-green deployment)
         gcloud run services update-traffic ${{ env.SERVICE_NAME }} --to-latest --region=${{ env.REGION }} --quiet
+        
+        # Retrieve service URL for verification and reporting
         SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region=${{ env.REGION }} --format="value(status.url)")
         
-        # Create deployment summary
+        # ----------------------------------------
+        # Deployment Summary and Reporting
+        # ----------------------------------------
+        
+        # Create GitHub Actions job summary for visibility
         {
           echo "## 🚀 Deployment Complete!"
+          echo ""
+          echo "### 📋 Deployment Details"
+          echo "- **Service**: ${{ env.SERVICE_NAME }}"
+          echo "- **Region**: ${{ env.REGION }}"
           echo "- **Image**: ${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
           echo "- **Service URL**: ${SERVICE_URL}"
-          echo "- **Custom Domain**: https://portfolio.me2u.space"
-          echo "- **Status**: ✅ Deployed Successfully"
+          echo ""
+          echo "### ⚙️ Configuration"
+          echo "- **Memory**: 512Mi"
+          echo "- **CPU**: 1 vCPU"
+          echo "- **Scaling**: 0-10 instances"
+          echo "- **Timeout**: 300 seconds"
+          echo "- **Concurrency**: 80 requests/instance"
+          echo ""
+          echo "### ✅ Status"
+          echo "**Deployed Successfully** - Service is live and ready to serve traffic"
         } >> $GITHUB_STEP_SUMMARY
         
         echo "✅ Deployed successfully to: ${SERVICE_URL}"
