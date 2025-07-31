@@ -28,13 +28,17 @@ from .context_processor import inject_nav_links, inject_footer_links
 from .config import apply_config
 
 
-def create_app():
+def create_app(test_config=None):
     """
     Create and configure a Flask application instance.
 
     This function implements the application factory pattern, allowing multiple
     app instances to be created with different configurations. Each call returns
     a fully configured Flask application ready for use.
+
+    Args:
+        test_config (dict, optional): Override configuration for testing.
+                                    If provided, will be applied after default config.
 
     Returns:
         Flask: Configured Flask application instance with all components registered
@@ -50,6 +54,10 @@ def create_app():
 
     # Apply configuration from pyproject.toml with environment variable overrides
     apply_config(app)
+
+    # Apply test configuration if provided (for testing environments)
+    if test_config:
+        app.config.update(test_config)
 
     # Register Blueprint modules for modular route organization
     app.register_blueprint(routes)  # Main application routes and pages
