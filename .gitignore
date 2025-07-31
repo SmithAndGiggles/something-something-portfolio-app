@@ -274,7 +274,6 @@ docs/
 
 # Test directories
 test/
-tests/
 
 # Data files
 *.csv
