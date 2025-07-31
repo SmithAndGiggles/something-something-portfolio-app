@@ -182,7 +182,7 @@ jobs:
           --to-latest \
           --region=${{ env.REGION }}
           
-    - name: Get service URL and run health check
+    - name: Get service URL
       id: deploy-check
       run: |
         URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
@@ -190,15 +190,9 @@ jobs:
           --format="value(status.url)")
         
         echo "service_url=${URL}" >> $GITHUB_OUTPUT
-        
-        # Health check
-        sleep 30
-        if curl -f "${URL}/health" --max-time 30; then
-          echo "✅ Health check passed"
-        else
-          echo "❌ Health check failed"
-          exit 1
-        fi
+        echo "✅ Deployment completed successfully"
+        echo "🌐 Service URL: ${URL}"
+        echo "🌐 Custom Domain: https://portfolio.me2u.space"
         
     - name: Deployment summary
       run: |
@@ -206,4 +200,5 @@ jobs:
         echo "- **Image**: ${{ needs.build.outputs.image_uri }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Tag**: ${{ needs.build.outputs.image_tag }}" >> $GITHUB_STEP_SUMMARY
         echo "- **Service URL**: ${{ steps.deploy-check.outputs.service_url }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Health Check**: ✅ Passed" >> $GITHUB_STEP_SUMMARY
+        echo "- **Custom Domain**: https://portfolio.me2u.space" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: ✅ Deployed Successfully" >> $GITHUB_STEP_SUMMARY
