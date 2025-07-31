@@ -130,15 +130,38 @@ jobs:
     - name: Deploy to Cloud Run
       run: |
         IMAGE_URI="${{ needs.build.outputs.image_uri }}"
+        IMAGE_TAG="${{ needs.build.outputs.image_tag }}"
+        
+        # If image_uri is empty but we have image_tag, reconstruct the URI
+        if [ -z "$IMAGE_URI" ] && [ -n "$IMAGE_TAG" ]; then
+          echo "⚠️  WARNING: image_uri is empty, reconstructing from available data"
+          IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.DOCKER_IMAGE_NAME }}:${IMAGE_TAG}"
+          echo "🔄 Reconstructed IMAGE_URI: $IMAGE_URI"
+        fi
         
         # Validate image URI is not empty
         if [ -z "$IMAGE_URI" ]; then
-          echo "❌ ERROR: No image URI provided from build step"
+          echo "❌ ERROR: No image URI provided from build step and cannot reconstruct"
           echo "Build outputs: ${{ toJson(needs.build.outputs) }}"
+          echo "Available env vars:"
+          echo "  PROJECT_ID: ${{ env.PROJECT_ID }}"
+          echo "  REGION: ${{ env.REGION }}"
+          echo "  ARTIFACT_REGISTRY_REPO: ${{ env.ARTIFACT_REGISTRY_REPO }}"
+          echo "  DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}"
           exit 1
         fi
         
         echo "🚀 Deploying image: $IMAGE_URI"
+        
+        # Verify image exists before deploying
+        echo "🔍 Verifying image exists in Artifact Registry..."
+        if gcloud container images describe "$IMAGE_URI" >/dev/null 2>&1; then
+          echo "✅ Image verified in registry"
+        else
+          echo "❌ ERROR: Image does not exist in Artifact Registry: $IMAGE_URI"
+          echo "This suggests the build step failed to push the image"
+          exit 1
+        fi
         
         gcloud run deploy ${{ env.SERVICE_NAME }} \
           --image="$IMAGE_URI" \
