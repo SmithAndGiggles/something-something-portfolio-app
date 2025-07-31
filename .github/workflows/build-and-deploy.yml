@@ -6,11 +6,16 @@ on:
     branches: [ prod ]
   workflow_dispatch:  # Manual trigger option
 
+# Variable mapping:
+# - DOCKER_IMAGE_NAME: For Artifact Registry image path
+# - SERVICE_NAME: For Cloud Run service deployment
+# - Expected URI: ${REGION}-docker.pkg.dev/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPO}/${DOCKER_IMAGE_NAME}:${TAG}
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ vars.GCP_REGION_PROD }}
   SERVICE_NAME: ${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}
   ARTIFACT_REGISTRY_REPO: ${{ vars.GCP_ARTIFACT_REGISTRY_REPO_PROD }}
+  DOCKER_IMAGE_NAME: ${{ vars.GCP_APP_DOCKER_IMAGE_NAME }}
 
 jobs:
   build:
@@ -45,14 +50,29 @@ jobs:
     - name: Generate image metadata
       id: meta
       run: |
+        echo "🔍 Environment variables:"
+        echo "  REGION: ${{ env.REGION }}"
+        echo "  PROJECT_ID: ${{ env.PROJECT_ID }}"
+        echo "  ARTIFACT_REGISTRY_REPO: ${{ env.ARTIFACT_REGISTRY_REPO }}"
+        echo "  SERVICE_NAME: ${{ env.SERVICE_NAME }}"
+        echo "  DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}"
+        
         TIMESTAMP=$(date +%Y%m%d-%H%M%S)
         SHORT_SHA=${GITHUB_SHA::8}
         TAG="prod-${TIMESTAMP}-${SHORT_SHA}"
-        IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.SERVICE_NAME }}:${TAG}"
+        IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY_REPO }}/${{ env.DOCKER_IMAGE_NAME }}:${TAG}"
+        
+        echo "🏷️ Generated values:"
+        echo "  TIMESTAMP: ${TIMESTAMP}"
+        echo "  SHORT_SHA: ${SHORT_SHA}"
+        echo "  TAG: ${TAG}"
+        echo "  IMAGE_URI: ${IMAGE_URI}"
         
         echo "tag=${TAG}" >> $GITHUB_OUTPUT
         echo "image_uri=${IMAGE_URI}" >> $GITHUB_OUTPUT
         echo "short_sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
+        
+        echo "✅ Outputs written to GITHUB_OUTPUT"
         
     - name: Build and push image
       id: build
@@ -73,6 +93,13 @@ jobs:
         
         echo "✅ Build completed successfully"
         echo "Image: ${{ steps.meta.outputs.image_uri }}"
+    
+    - name: Verify job outputs
+      run: |
+        echo "🔍 Final job outputs:"
+        echo "  image_uri: ${{ steps.meta.outputs.image_uri }}"
+        echo "  tag: ${{ steps.meta.outputs.tag }}"
+        echo "  short_sha: ${{ steps.meta.outputs.short_sha }}"
 
   deploy:
     name: Deploy to Cloud Run
