@@ -8,9 +8,9 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: us-central1
-  SERVICE_NAME: portfolio-app
-  ARTIFACT_REGISTRY_REPO: portfolio-images
+  REGION: ${{ vars.GCP_REGION_PROD }}
+  SERVICE_NAME: ${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}
+  ARTIFACT_REGISTRY_REPO: ${{ vars.GCP_ARTIFACT_REGISTRY_REPO_PROD }}
 
 jobs:
   build:
@@ -32,7 +32,7 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PROD }}
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
         
     - name: Set up Cloud SDK
@@ -74,7 +74,7 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PROD }}
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL_PROD }}
         
     - name: Set up Cloud SDK

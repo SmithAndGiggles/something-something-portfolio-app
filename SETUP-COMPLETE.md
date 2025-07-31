@@ -1,9 +1,14 @@
 # ✅ **Setup Complete with Your Existing Secrets!**
 
-## **🔑 Your GitHub Secrets (Already Configured):**
-- ✅ `GCP_SERVICE_ACCOUNT_EMAIL_PROD`
-- ✅ `GCP_WORKLOAD_IDENTITY_PROVIDER_PROD`
-- ⚠️ `GCP_PROJECT_ID` (make sure this exists)
+## **🔑 Your GitHub Secrets (Sensitive Data):**
+- ✅ `GCP_PROJECT_ID`
+- ✅ `GCP_SERVICE_ACCOUNT_EMAIL_PROD`  
+- ✅ `GCP_WORKLOAD_IDENTITY_PROVIDER_PATH_PROD`
+
+## **🔧 Your GitHub Variables (Configuration):**
+- ✅ `GCP_REGION_PROD` = `us-central1`
+- ✅ `GCP_ARTIFACT_REGISTRY_REPO_PROD` = `me2u-artifact-docker`
+- ✅ `GCP_CLOUD_RUN_SERVICE_NAME` = `portfolio-app-web`
 
 ## **📁 Files Created/Updated:**
 
