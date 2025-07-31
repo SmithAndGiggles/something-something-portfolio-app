@@ -189,19 +189,29 @@ jobs:
         
         # Deploy with production-optimized configuration
         # Configuration values align with pyproject.toml defaults
+        #
+        # Resource Configuration:
+        #   --memory=512Mi: Sufficient for Flask application + static assets
+        #   --cpu=1: Single vCPU for cost optimization
+        #   --min-instances=0: Scale to zero for cost efficiency when no traffic
+        #   --max-instances=10: Prevent runaway scaling costs
+        #   --port=8080: Standard containerized application port
+        #   --timeout=300: 5-minute timeout for long-running requests
+        #   --concurrency=80: Optimal concurrent requests per instance
+        #   --quiet: Suppress interactive prompts for automation
         gcloud run deploy ${{ env.SERVICE_NAME }} \
           --image="${IMAGE_URI}" \
           --region=${{ env.REGION }} \
           --platform=managed \
           --allow-unauthenticated \
-          --memory=512Mi \                 # Sufficient for Flask + static assets
-          --cpu=1 \                        # Single vCPU for cost optimization
-          --min-instances=0 \              # Scale to zero for cost efficiency
-          --max-instances=10 \             # Prevent runaway scaling costs
-          --port=8080 \                    # Standard container port
-          --timeout=300 \                  # 5-minute timeout for long requests
-          --concurrency=80 \               # Optimal concurrent requests per instance
-          --quiet                          # Suppress interactive prompts
+          --memory=512Mi \
+          --cpu=1 \
+          --min-instances=0 \
+          --max-instances=10 \
+          --port=8080 \
+          --timeout=300 \
+          --concurrency=80 \
+          --quiet
         
         # ----------------------------------------
         # Traffic Management and Health Check
