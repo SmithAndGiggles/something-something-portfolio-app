@@ -11,6 +11,7 @@ Architecture:
 - Data layer separation via dedicated data modules
 - Template rendering with context-specific data injection
 - URL generation support for dynamic content (carousels, images)
+- Security: Domain filtering to block direct .run.app access
 
 Route Structure:
 - Core portfolio pages: /, /education, /certifications, /techstack, /connect
@@ -18,7 +19,7 @@ Route Structure:
 - Special landing page: /me2u-place for custom domain routing
 """
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, abort
 from .data.all_data import (
     get_education_cards,
     get_certification_cards,
@@ -32,6 +33,38 @@ from .data.landing_data import get_landing_page_data
 # Blueprint registration for modular route organization
 # Enables clean separation of routing logic from application factory
 routes = Blueprint("routes", __name__)
+
+
+@routes.before_request
+def check_allowed_domains():
+    """
+    Security middleware to block direct Cloud Run .run.app URL access.
+    
+    Only allows access from approved custom domains to prevent unauthorized
+    access via the default Cloud Run URL. This provides cost-effective
+    security without requiring expensive Load Balancer infrastructure.
+    
+    Allowed domains:
+    - portfolio.me2u.space (main portfolio site)
+    - me2u.space (redirect domain)
+    
+    Blocks:
+    - Any .run.app domains (direct Cloud Run access)
+    - Any other unauthorized domains
+    """
+    allowed_hosts = [
+        'portfolio.me2u.space',
+        'me2u.space',
+        'localhost',  # For local development
+        '127.0.0.1',  # For local development
+    ]
+    
+    host = request.headers.get('Host', '').lower().split(':')[0]  # Remove port if present
+    
+    # Block any requests that don't come from allowed domains
+    if host not in allowed_hosts:
+        # Return 404 to hide the existence of the service
+        abort(404)
 
 
 @routes.route("/")

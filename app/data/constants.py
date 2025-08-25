@@ -227,14 +227,14 @@ TECHNOLOGIES = {
         "description": "CI/CD",
     },
     # Configuration & Scripting
-    "yamlscript": {
-        "name": "Yamlscript",
-        "url": "https://yamlscript.org",
-        "logo": "logo-yamlscript.svg",
-        "alt": "Yamlscript",
-        "category": "infra",
-        "description": "YAML-based Scripting Language",
-    },
+    # "yamlscript": {
+    #     "name": "Yamlscript",
+    #     "url": "https://yamlscript.org",
+    #     "logo": "logo-yamlscript.svg",
+    #     "alt": "Yamlscript",
+    #     "category": "infra",
+    #     "description": "YAML-based Scripting Language",
+    # },
 }
 
 # =============================================================================
